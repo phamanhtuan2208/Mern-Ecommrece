@@ -35,6 +35,7 @@ var userSchema = new mongoose.Schema(
         cart: { type: Array, default: [] },
         address: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Address' }],
         wishlist: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Wishlist' }],
+        refreshToken: { type: String },
     },
     {
         timestamps: true,
@@ -51,5 +52,3 @@ userSchema.methods.isPasswordMatched = async function (enteredPassword) {
 
 //Export the model
 module.exports = mongoose.model('User', userSchema);
-
-Auth
