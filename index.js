@@ -3,6 +3,8 @@ const colors = require('colors');
 const dbConnect = require('./server/Config/dbConnect');
 const dotenv = require('dotenv').config();
 const authRouter = require('./server/Routes/authRoute');
+const productRouter = require('./server/Routes/productRoute');
+
 const bodyParser = require('body-parser');
 const { notFound, errorHandler } = require('./server/Middleware/errorHandler');
 const cookieParser = require('cookie-parser');
@@ -18,6 +20,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/user', authRouter);
+app.use('/api/product', productRouter);
 
 app.use(notFound);
 app.use(errorHandler);
