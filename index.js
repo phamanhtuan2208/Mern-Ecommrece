@@ -4,13 +4,16 @@ const dbConnect = require('./server/Config/dbConnect');
 const dotenv = require('dotenv').config();
 const authRouter = require('./server/Routes/authRoute');
 const productRouter = require('./server/Routes/productRoute');
+const morgan = require('morgan');
 
 const bodyParser = require('body-parser');
 const { notFound, errorHandler } = require('./server/Middleware/errorHandler');
 const cookieParser = require('cookie-parser');
+
 const app = express();
 dbConnect();
 
+app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
