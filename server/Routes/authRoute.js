@@ -14,7 +14,7 @@ const {
     updatePassword,
     forgotPasswordToken,
     resetPassword,
-} = require('../Controller/userCtlr');
+} = require('../Controller/userCtrl');
 
 const router = express.Router();
 
