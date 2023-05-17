@@ -4,6 +4,8 @@ const dbConnect = require('./server/Config/dbConnect');
 const dotenv = require('dotenv').config();
 const authRouter = require('./server/Routes/authRoute');
 const productRouter = require('./server/Routes/productRoute');
+const blogRouter = require('./server/Routes/blogRoute');
+
 const morgan = require('morgan');
 
 const bodyParser = require('body-parser');
@@ -24,6 +26,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/user', authRouter);
 app.use('/api/product', productRouter);
+app.use('/api/blog', blogRouter);
 
 app.use(notFound);
 app.use(errorHandler);
