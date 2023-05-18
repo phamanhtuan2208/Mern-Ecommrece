@@ -1,6 +1,7 @@
 const Product = require('../Models/productModel');
 const AsyncHandler = require('express-async-handler');
 const slugify = require('slugify');
+const User = require('../Models/userModel');
 
 //create product
 const createProduct = AsyncHandler(async (req, res) => {
@@ -82,7 +83,7 @@ const getAllProduct = AsyncHandler(async (req, res) => {
             if (skip >= productCount)
                 throw new Error('This Page does not exists');
         }
-        
+
         const product = await query;
         res.json(product);
     } catch (error) {
@@ -101,10 +102,105 @@ const getAProduct = AsyncHandler(async (req, res) => {
     }
 });
 
+//add to wishlist
+const addToWishList = AsyncHandler(async (req, res) => {
+    const { _id } = req.user;
+    const { prodId } = req.body;
+    try {
+        const user = await User.findById(_id);
+        const alreadyAdded = user.wishlist.find(
+            (id) => id.toString() === prodId,
+        );
+        if (alreadyAdded) {
+            let user = await User.findByIdAndUpdate(
+                _id,
+                {
+                    $pull: { wishlist: prodId },
+                },
+                { new: true },
+            );
+            res.json(user);
+        } else {
+            let user = await User.findByIdAndUpdate(
+                _id,
+                {
+                    $push: { wishlist: prodId },
+                },
+                { new: true },
+            );
+            res.json(user);
+        }
+    } catch (error) {
+        throw new Error(error);
+    }
+});
+
+//rating product
+const Rating = AsyncHandler(async (req, res) => {
+    const { _id } = req.user;
+    const { star, prodId, comment } = req.body;
+    try {
+        //rating user
+        const product = await Product.findById(prodId);
+        let alreadyRated = product.ratings.find(
+            (userId) => userId.posterBy.toString() === _id.toString(),
+        );
+        if (alreadyRated) {
+            const updateRating = await Product.updateOne(
+                {
+                    ratings: { $elemMatch: alreadyRated },
+                },
+                {
+                    $set: {
+                        'ratings.$.Star': star,
+                        'ratings.$.Comment': comment,
+                    },
+                },
+                {
+                    new: true,
+                },
+            );
+        } else {
+            const rateProduct = await Product.findByIdAndUpdate(
+                prodId,
+                {
+                    $push: {
+                        ratings: {
+                            Star: star,
+                            Comment: comment,
+                            posterBy: _id,
+                        },
+                    },
+                },
+                { new: true },
+            );
+        }
+        //avg rating
+        const getAllRatings = await Product.findById(prodId);
+        let totalRating = getAllRatings.ratings.length;
+        let ratingsSum = getAllRatings.ratings
+            .map((item) => item.Star)
+            .reduce((prev, curr) => prev + curr, 0);
+        let actualRating = Math.round(ratingsSum / totalRating);
+        let finalProduct = await Product.findByIdAndUpdate(
+            prodId,
+            {
+                totalRatings: actualRating,
+            },
+            { new: true },
+        );
+        res.json(finalProduct);
+    } catch (error) {
+        throw new Error(error);
+    }
+});
+
 module.exports = {
     createProduct,
     getAProduct,
     getAllProduct,
     updateProduct,
     deleteProduct,
+    addToWishList,
+    Rating,
 };
