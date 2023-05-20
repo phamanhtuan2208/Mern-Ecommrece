@@ -8,6 +8,7 @@ const categoryRouter = require('./server/Routes/procategoryRoute');
 const blogRouter = require('./server/Routes/blogRoute');
 const blogCatRouter = require('./server/Routes/blogCatRoute');
 const brandRouter = require('./server/Routes/brandRoute');
+const couponRouter = require('./server/Routes/couponRoute');
 
 const morgan = require('morgan');
 
@@ -18,7 +19,7 @@ const cookieParser = require('cookie-parser');
 const app = express();
 dbConnect();
 
-app.use(morgan('dev')); 
+app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -33,6 +34,7 @@ app.use('/api/blog', blogRouter);
 app.use('/api/category', categoryRouter);
 app.use('/api/blogcategory', blogCatRouter);
 app.use('/api/brand', brandRouter);
+app.use('/api/coupon', couponRouter);
 
 app.use(notFound);
 app.use(errorHandler);
