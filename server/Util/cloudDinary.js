@@ -1,14 +1,14 @@
-const cloudDinary = require('cloudinary');
+const cloudinary = require('cloudinary');
 
-cloudDinary.config({
+cloudinary.config({
     cloud_name: process.env.CLOUDINARY_NAME,
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-const cloudDinaryUploadImg = async (fileToUpload) => {
+const cloudDinaryUploadImg = async (fileToUploads) => {
     return new Promise((resolve) => {
-        cloudDinary.UploadStream.upload(fileToUpload, (result) => {
+        cloudinary.uploader.upload(fileToUploads, (result) => {
             resolve(
                 { url: result.secure_url },
                 {
