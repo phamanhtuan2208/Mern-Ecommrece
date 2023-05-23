@@ -2,6 +2,8 @@ const User = require('../Models/userModel');
 const Product = require('../Models/productModel');
 const Cart = require('../Models/cartModel');
 const Coupon = require('../Models/couponModel');
+const Order = require('../Models/orderModel');
+const uniqid = require('uniqid');
 const AsyncHandler = require('express-async-handler');
 const { generateToken } = require('../Config/jwtToken');
 const validateMongoDBid = require('../Util/validateMongodbld');
@@ -405,7 +407,87 @@ const applyCoupon = AsyncHandler(async (req, res) => {
     res.json(totalAfterDiscount);
 });
 
+//create Order
+const createOrder = AsyncHandler(async (req, res) => {
+    const { COD, couponApplied } = req.body;
+    const { _id } = req.user;
+    const user = await User.findById(_id);
+    try {
+        if (!COD) {
+            throw new Error('Create cash order failed');
+        }
+        let userCart = await Cart.findOne({ orderby: user._id });
+        let finalAmout = 0;
+        if (couponApplied && userCart.totalAfterDiscount) {
+            finalAmout = userCart.totalAfterDiscount;
+        } else {
+            finalAmout = userCart.cartTotal;
+        }
+        let newOrder = await new Order({
+            products: userCart.products,
+            paymentIntent: {
+                id: uniqid(),
+                method: 'COD',
+                amount: finalAmout,
+                status: 'Cash on Delivery',
+                created: Date.now(),
+                currency: 'usd',
+            },
+            orderby: user._id,
+            orderStatus: 'Cash on Delivery',
+        }).save();
+        let update = userCart.products.map((item) => {
+            return {
+                updateOne: {
+                    filter: { _id: item.product._id },
+                    update: {
+                        $inc: { quantity: -item.count, sold: +item.count },
+                    },
+                },
+            };
+        });
+        const updated = await Product.bulkWrite(update, {});
+        res.json({ message: 'success' });
+    } catch (error) {
+        throw new Error(error);
+    }
+});
 
+//get Order
+const getOrders = AsyncHandler(async (req, res) => {
+    const { _id } = req.user;
+    validateMongoDBid(_id);
+    try {
+        const userOrders = await Order.findOne({ orderby: _id })
+            .populate('products.product')
+            .exec();
+        res.json(userOrders);
+    } catch (error) {
+        throw new Error(error);
+    }
+});
+
+//update Order Status
+const updateOrderStatus = AsyncHandler(async (req, res) => {
+    const { status } = req.body;
+    const { id } = req.params;
+    validateMongoDBid(id);
+try {
+        const updateOrder = await Order.findByIdAndUpdate(
+            id,
+            {
+                orderStatus: status,
+                paymentIntent: {
+                    status: status,
+                },
+            },
+            { new: true },
+        );
+        res.json(updateOrder);
+} catch (error) {
+   throw new Error(error) 
+}
+});
 
 module.exports = {
     createUser,
@@ -428,4 +510,7 @@ module.exports = {
     getUserCart,
     emptyCart,
     applyCoupon,
+    createOrder,
+    getOrders,
+    updateOrderStatus,
 };
