@@ -18,6 +18,9 @@ const {
     getWishList,
     saveAddress,
     userCart,
+    getUserCart,
+    emptyCart,
+    applyCoupon,
 } = require('../Controller/userCtrl');
 
 const router = express.Router();
@@ -31,6 +34,9 @@ router.route('/refresh').get(handleRefreshToken);
 router.route('/wishlist').get(authMiddleware, getWishList);
 router.route('/saveaddress').put(authMiddleware, saveAddress);
 router.route('/cart').post(authMiddleware, userCart);
+router.route('/cart').get(authMiddleware, getUserCart);
+router.route('/emptycart').delete(authMiddleware, emptyCart);
+router.route('/cart/applycoupon').post(authMiddleware, applyCoupon);
 
 
 router.route('/password').put(authMiddleware, updatePassword);

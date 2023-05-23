@@ -1,6 +1,7 @@
 const User = require('../Models/userModel');
 const Product = require('../Models/productModel');
 const Cart = require('../Models/cartModel');
+const Coupon = require('../Models/couponModel');
 const AsyncHandler = require('express-async-handler');
 const { generateToken } = require('../Config/jwtToken');
 const validateMongoDBid = require('../Util/validateMongodbld');
@@ -353,6 +354,59 @@ const userCart = AsyncHandler(async (req, res) => {
     }
 });
 
+//get user cart
+const getUserCart = AsyncHandler(async (req, res) => {
+    const { _id } = req.user;
+    validateMongoDBid(_id);
+    try {
+        const cart = await Cart.findOne({ orderby: _id }).populate(
+            'products.product',
+        );
+        res.json(cart);
+    } catch (error) {
+        throw new Error(error);
+    }
+});
+
+//empty cart
+const emptyCart = AsyncHandler(async (req, res) => {
+    const { _id } = req.user;
+    validateMongoDBid(_id);
+    try {
+        const user = await User.findOne({ _id });
+        const cart = await Cart.findOneAndRemove({ orderby: user._id });
+        res.json(cart);
+    } catch (error) {
+        throw new Error(error);
+    }
+});
+
+//apply coupon cart
+const applyCoupon = AsyncHandler(async (req, res) => {
+    const { _id } = req.user;
+    const { coupon } = req.body;
+    const validCoupon = await Coupon.findOne({ name: coupon });
+    if (validCoupon === null) {
+        throw new Error('Invalid Coupon');
+    }
+    const user = await User.findOne({ _id });
+    let { products, cartTotal } = await Cart.findOne({
+        orderby: user._id,
+    }).populate('products.product');
+    let totalAfterDiscount = (
+        cartTotal -
+        (cartTotal * validCoupon.discount) / 100
+    ).toFixed(2);
+    await Cart.findOneAndUpdate(
+        { orderby: user._id },
+        { totalAfterDiscount },
+        { new: true },
+    );
+    res.json(totalAfterDiscount);
+});
+
+
+
 module.exports = {
     createUser,
     loginUserCtrl,
@@ -371,4 +425,7 @@ module.exports = {
     getWishList,
     saveAddress,
     userCart,
+    getUserCart,
+    emptyCart,
+    applyCoupon,
 };
