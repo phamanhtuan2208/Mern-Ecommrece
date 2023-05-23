@@ -1,4 +1,6 @@
 const User = require('../Models/userModel');
+const Product = require('../Models/productModel');
+const Cart = require('../Models/cartModel');
 const AsyncHandler = require('express-async-handler');
 const { generateToken } = require('../Config/jwtToken');
 const validateMongoDBid = require('../Util/validateMongodbld');
@@ -50,8 +52,63 @@ const loginUserCtrl = AsyncHandler(async (req, res) => {
         throw new Error('Invalid Credentials');
     }
 });
+
+//admin login
+const loginAdmin = AsyncHandler(async (req, res) => {
+    const { email, password } = req.body;
+    //check if user exits or not
+    const findAdmin = await User.findOne({ email });
+    if (findAdmin.role !== 'admin') throw new Error('Not Authorised');
+    if (findAdmin && (await findAdmin.isPasswordMatched(password))) {
+        const refreshToken = await generateRefreshToken(findAdmin?._id);
+        const updateUser = await User.findByIdAndUpdate(
+            findAdmin.id,
+            {
+                refreshToken: refreshToken,
+            },
+            { new: true },
+        );
+        res.cookie('refreshToken', refreshToken, {
+            httpOnly: true,
+            maxAge: 72 * 60 * 60 * 1000,
+        });
+        res.json({
+            _id: findAdmin?._id,
+            firstname: findAdmin.firstname,
+            lastname: findAdmin.lastname,
+            email: findAdmin.email,
+            mobile: findAdmin.mobile,
+            token: generateToken(findAdmin._id),
+        });
+    } else {
+        throw new Error('Invalid Credentials');
+    }
+});
+
+//save user Addresss
+const saveAddress = AsyncHandler(async (req, res) => {
+    const { _id } = req.user;
+    validateMongoDBid(_id);
+    try {
+        const saveAddress = await User.findByIdAndUpdate(
+            _id,
+            {
+                address: req?.body?.address,
+            },
+            {
+                new: true,
+            },
+        );
+        res.json({ saveAddress });
+    } catch (error) {
+        throw new Error(error);
+    }
+});
+
 // get all users
 const getAllUser = AsyncHandler(async (req, res) => {
+    const { _id } = req.user;
+    validateMongoDBid(_id);
     try {
         const getUsers = await User.find();
         res.json(getUsers);
@@ -245,7 +302,56 @@ const resetPassword = AsyncHandler(async (req, res) => {
     res.json(user);
 });
 
+//get wishlist
+const getWishList = AsyncHandler(async (req, res) => {
+    const { _id } = req.user;
+    try {
+        const findUser = await User.findById(_id).populate('wishlist');
+        res.json(findUser);
+    } catch (error) {
+        throw new Error(error);
+    }
+});
 
+// add cart + plus price
+const userCart = AsyncHandler(async (req, res) => {
+    const { cart } = req.body;
+    const { _id } = req.user;
+    validateMongoDBid(_id);
+    try {
+        let products = [];
+        const user = await User.findById(_id);
+        //check if user already have product in cart
+        const alreadyExistCart = await Cart.findOne({ orderby: user._id });
+        if (alreadyExistCart) {
+            alreadyExistCart.remove();
+        }
+        for (let i = 0; i < cart.length; i++) {
+            let object = {};
+            object.product = cart[i]._id;
+            object.count = cart[i].count;
+            object.color = cart[i].color;
+            let getPrice = await Product.findById(cart[i]._id)
+                .select('price')
+                .exec();
+            object.price = getPrice.price;
+            products.push(object);
+        }
+        let cartTotal = 0;
+        for (let i = 0; i < products.length; i++) {
+            cartTotal = cartTotal + products[i].price * products[i].count;
+        }
+        // console.log(products, cartTotal);
+        let newCart = await new Cart({
+            products,
+            cartTotal,
+            orderby: user?._id,
+        }).save();
+        res.json(newCart);
+    } catch (error) {
+        throw new Error(error);
+    }
+});
 
 module.exports = {
     createUser,
@@ -261,4 +367,8 @@ module.exports = {
     updatePassword,
     forgotPasswordToken,
     resetPassword,
+    loginAdmin,
+    getWishList,
+    saveAddress,
+    userCart,
 };
