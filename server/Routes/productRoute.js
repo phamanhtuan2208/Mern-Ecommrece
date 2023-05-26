@@ -9,6 +9,7 @@ const {
     addToWishList,
     Rating,
     uploadImage,
+    deleteImage,
 } = require('../Controller/productCtrl');
 const { uploadPhoto, blogImgResize } = require('../Middleware/uploadImage');
 
@@ -16,7 +17,7 @@ const router = express.Router();
 
 router.route('/').post(authMiddleware, isAdmin, createProduct);
 router
-    .route('/upload/:id')
+    .route('/upload')
     .put(
         authMiddleware,
         isAdmin,
@@ -30,5 +31,6 @@ router.route('/rating').put(authMiddleware, Rating);
 router.route('/:id').get(getAProduct);
 router.route('/:id').put(authMiddleware, isAdmin, updateProduct);
 router.route('/:id').delete(authMiddleware, isAdmin, deleteProduct);
+router.route('/deleteimg/:id').delete(authMiddleware, isAdmin, deleteImage);
 
 module.exports = router;
