@@ -36,7 +36,7 @@ const Header = () => {
                             </h1>
                         </div>
                         <div className="col-5">
-                            <div className="input-group">
+                            <div className="input-group input-group-search">
                                 <input
                                     type="text"
                                     className="form-control py-2"
