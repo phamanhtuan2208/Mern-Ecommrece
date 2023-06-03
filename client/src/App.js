@@ -5,6 +5,7 @@ import Layout from './Components/Layout';
 import Home from './Pages/Home';
 import About from './Pages/About';
 import Contact from './Pages/Contact';
+import OurStore from './Pages/OurStore';
 
 function App() {
     return (
@@ -14,7 +15,14 @@ function App() {
                     <Route path="/" element={<Layout></Layout>}>
                         <Route index element={<Home></Home>}></Route>
                         <Route path="about" element={<About></About>}></Route>
-                        <Route path="contact" element={<Contact></Contact>}></Route>
+                        <Route
+                            path="contact"
+                            element={<Contact></Contact>}
+                        ></Route>
+                        <Route
+                            path="store"
+                            element={<OurStore></OurStore>}
+                        ></Route>
                     </Route>
                 </Routes>
             </BrowserRouter>
@@ -23,4 +31,3 @@ function App() {
 }
 
 export default App;
- 
