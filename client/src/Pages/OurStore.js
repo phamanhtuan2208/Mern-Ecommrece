@@ -2,8 +2,12 @@ import React from 'react';
 import ReactStars from 'react-rating-stars-component';
 import BreadCrumb from '../Components/BreadCrumb';
 import Meta from '../Components/Meta';
+import { useState } from 'react';
+import ProductCart from '../Components/ProductCart';
 
 const OutStore = () => {
+    const [grid, setGrid] = useState(4);
+
     return (
         <>
             <Meta title={'Our Store'}></Meta>
@@ -258,21 +262,33 @@ const OutStore = () => {
                                         </p>
                                         <div className="d-flex gap-10 align-items-center grid">
                                             <img
+                                                onClick={() => {
+                                                    setGrid(3);
+                                                }}
                                                 src="images/gr4.svg"
                                                 className="d-block img-fluid"
                                                 alt="grid"
                                             ></img>
                                             <img
+                                                onClick={() => {
+                                                    setGrid(4);
+                                                }}
                                                 src="images/gr3.svg"
                                                 className="d-block img-fluid"
                                                 alt="grid"
                                             ></img>
                                             <img
+                                                onClick={() => {
+                                                    setGrid(6);
+                                                }}
                                                 src="images/gr2.svg"
                                                 className="d-block img-fluid"
                                                 alt="grid"
                                             ></img>
                                             <img
+                                                onClick={() => {
+                                                    setGrid(12);
+                                                }}
                                                 src="images/gr.svg"
                                                 className="d-block img-fluid"
                                                 alt="grid"
@@ -281,8 +297,10 @@ const OutStore = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="product-list pb-5">
-                                
+                            <div className="products-list pb-5">
+                                <div className="d-flex gap-10 flex-wrap">
+                                    <ProductCart grid={grid}></ProductCart>
+                                </div>
                             </div>
                         </div>
                     </div>
