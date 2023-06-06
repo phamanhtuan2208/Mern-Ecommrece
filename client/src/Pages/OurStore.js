@@ -4,6 +4,7 @@ import BreadCrumb from '../Components/BreadCrumb';
 import Meta from '../Components/Meta';
 import { useState } from 'react';
 import ProductCart from '../Components/ProductCart';
+import Color from '../Components/Color';
 
 const OutStore = () => {
     const [grid, setGrid] = useState(4);
@@ -90,17 +91,7 @@ const OutStore = () => {
                                     </div>
                                     <h5 className="sub-title">Color</h5>
                                     <div>
-                                        <ul className="colors ps-0">
-                                            <li></li>
-                                            <li></li>
-                                            <li></li>
-                                            <li></li>
-                                            <li></li>
-                                            <li></li>
-                                            <li></li>
-                                            <li></li>
-                                            <li></li>
-                                        </ul>
+                                        <Color></Color>
                                     </div>
                                     <h5 className="sub-title">Size</h5>
                                     <div className="form-check">
