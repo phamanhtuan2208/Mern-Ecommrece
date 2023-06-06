@@ -6,6 +6,7 @@ import Home from './Pages/Home';
 import About from './Pages/About';
 import Contact from './Pages/Contact';
 import OurStore from './Pages/OurStore';
+import Blog from './Pages/Blog';
 
 function App() {
     return (
@@ -23,6 +24,7 @@ function App() {
                             path="store"
                             element={<OurStore></OurStore>}
                         ></Route>
+                        <Route path="blog" element={<Blog></Blog>}></Route>
                     </Route>
                 </Routes>
             </BrowserRouter>

@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { BsSearch } from 'react-icons/bs';
@@ -166,7 +167,7 @@ const Header = () => {
                                         <NavLink to={'/store'}>
                                             Our Store
                                         </NavLink>
-                                        <NavLink to={''}>Blogs</NavLink>
+                                        <NavLink to={'/blog'}>Blogs</NavLink>
                                         <NavLink to={'/contact'}>
                                             Contact
                                         </NavLink>
