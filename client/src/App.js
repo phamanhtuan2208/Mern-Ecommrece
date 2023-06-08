@@ -9,6 +9,9 @@ import OurStore from './Pages/OurStore';
 import Blog from './Pages/Blog';
 import CompareProduct from './Pages/CompareProduct';
 import Wishlist from './Pages/Wishlist';
+import Signup from './Pages/Signup';
+import Login from './Pages/Login';
+import ForgotPassword from './Pages/ForgotPassword';
 
 function App() {
     return (
@@ -34,6 +37,15 @@ function App() {
                         <Route
                             path="wishlist"
                             element={<Wishlist></Wishlist>}
+                        ></Route>
+                        <Route path="login" element={<Login></Login>}></Route>
+                        <Route
+                            path="signup"
+                            element={<Signup></Signup>}
+                        ></Route>
+                        <Route
+                            path="forgot-password"
+                            element={<ForgotPassword></ForgotPassword>}
                         ></Route>
                     </Route>
                 </Routes>

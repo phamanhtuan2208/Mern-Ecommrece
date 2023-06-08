@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import BreadCrumb from '../Components/BreadCrumb';
 import Meta from '../Components/Meta';
 
-const Login = () => {
+const Signup = () => {
     return (
         <>
-            <Meta title={'Login'}></Meta>
-            <BreadCrumb title={'Login'}></BreadCrumb>
+            <Meta title={'SignUp'}></Meta>
+            <BreadCrumb title={'SignUp'}></BreadCrumb>
             <div className="login-wrapper py-5 home-wrapper-2">
                 <div className="row">
                     <div className="col-12">
@@ -59,4 +59,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default Signup;
