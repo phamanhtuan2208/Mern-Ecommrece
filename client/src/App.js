@@ -12,6 +12,13 @@ import Wishlist from './Pages/Wishlist';
 import Signup from './Pages/Signup';
 import Login from './Pages/Login';
 import ForgotPassword from './Pages/ForgotPassword';
+import Resetpassword from './Pages/Resetpassword';
+import SingleBlog from './Pages/SingleBlog';
+import PrivacyPolicy from './Pages/PrivacyPolicy';
+import RefundPolicy from './Pages/RefundPolicy';
+import ShippingPolicy from './Pages/ShippingPolicy';
+import TermAndCondition from './Pages/TermAndCondition';
+import SingleProduct from './Pages/SingleProduct';
 
 function App() {
     return (
@@ -29,7 +36,15 @@ function App() {
                             path="store"
                             element={<OurStore></OurStore>}
                         ></Route>
+                        <Route
+                            path="store/product/:id"
+                            element={<SingleProduct></SingleProduct>}
+                        ></Route>
                         <Route path="blog" element={<Blog></Blog>}></Route>
+                        <Route
+                            path="blog/:id"
+                            element={<SingleBlog></SingleBlog>}
+                        ></Route>
                         <Route
                             path="compare-product"
                             element={<CompareProduct></CompareProduct>}
@@ -46,6 +61,26 @@ function App() {
                         <Route
                             path="forgot-password"
                             element={<ForgotPassword></ForgotPassword>}
+                        ></Route>
+                        <Route
+                            path="reset-password"
+                            element={<Resetpassword></Resetpassword>}
+                        ></Route>{' '}
+                        <Route
+                            path="privacy-policy"
+                            element={<PrivacyPolicy></PrivacyPolicy>}
+                        ></Route>
+                        <Route
+                            path="refund-policy"
+                            element={<RefundPolicy></RefundPolicy>}
+                        ></Route>{' '}
+                        <Route
+                            path="shipping-policy"
+                            element={<ShippingPolicy></ShippingPolicy>}
+                        ></Route>{' '}
+                        <Route
+                            path="term-conditions"
+                            element={<TermAndCondition></TermAndCondition>}
                         ></Route>
                     </Route>
                 </Routes>

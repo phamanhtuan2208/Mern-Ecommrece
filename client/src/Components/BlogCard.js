@@ -22,8 +22,8 @@ const BlogCard = () => {
                         Irure Lorem minim sit dolor ad culpa sit eu deserunt
                         cupidatat proident do enim.
                     </p>
-                    <Link to="" className="button">
-                        Lorem
+                    <Link to="/blog/:id" className="button">
+                        Read More
                     </Link>
                 </div>
             </div>

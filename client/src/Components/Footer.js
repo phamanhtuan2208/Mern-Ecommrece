@@ -63,17 +63,17 @@ const Footer = () => {
                                     AT@gmail.com
                                 </a>
                                 <div className="social_icons d-flex align-items-center gap-30 mt-4">
-                                    <a className='text-white' to="#">
-                                        <BsLinkedin className='text-white fs-4'></BsLinkedin>
+                                    <a className="text-white" to="#">
+                                        <BsLinkedin className="text-white fs-4"></BsLinkedin>
                                     </a>
-                                    <a className='text-white' to="#">
-                                        <BsInstagram className='text-white fs-4'></BsInstagram>
+                                    <a className="text-white" to="#">
+                                        <BsInstagram className="text-white fs-4"></BsInstagram>
                                     </a>
-                                    <a className='text-white' to="#">
-                                        <BsGithub className='text-white fs-4'></BsGithub>
+                                    <a className="text-white" to="#">
+                                        <BsGithub className="text-white fs-4"></BsGithub>
                                     </a>
-                                    <a className='text-white' to="#">
-                                        <BsYoutube className='text-white fs-4'></BsYoutube>
+                                    <a className="text-white" to="#">
+                                        <BsYoutube className="text-white fs-4"></BsYoutube>
                                     </a>
                                 </div>
                             </div>
@@ -81,19 +81,34 @@ const Footer = () => {
                         <div className="col-3">
                             <h4 className="text-white mb-4">Information</h4>
                             <div className="footer-links d-flex flex-column">
-                                <Link className="text-white py-3 mb-1">
+                                <Link
+                                    className="text-white py-3 mb-1"
+                                    to={'/privacy-policy'}
+                                >
                                     Privacy Policy
                                 </Link>
-                                <Link className="text-white py-3 mb-1">
+                                <Link
+                                    className="text-white py-3 mb-1"
+                                    to={'/refund-policy'}
+                                >
                                     Refund Policy
                                 </Link>
-                                <Link className="text-white py-3 mb-1">
+                                <Link
+                                    className="text-white py-3 mb-1"
+                                    to={'/shipping-policy'}
+                                >
                                     Shipping Policy
                                 </Link>
-                                <Link className="text-white py-3 mb-1">
+                                <Link
+                                    className="text-white py-3 mb-1"
+                                    to={'/term-conditions'}
+                                >
                                     Terms & Conditions
                                 </Link>
-                                <Link className="text-white py-3 mb-1">
+                                <Link
+                                    className="text-white py-3 mb-1"
+                                    to={'/blog'}
+                                >
                                     Blogs
                                 </Link>
                             </div>
