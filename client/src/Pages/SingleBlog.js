@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import BreadCrumb from '../Components/BreadCrumb';
 import Meta from '../Components/Meta';
 import { HiOutlineArrowLeft } from 'react-icons/hi';
+import Blog from '../images/blog-1.jpg';
 
 const SingleBlog = () => {
     return (
@@ -25,7 +26,7 @@ const SingleBlog = () => {
                                     Excepteur cillum nulla cillum laboris
                                     laborum dolore minim.
                                 </h3>
-                                <img src="images/blog-3.jpg" alt="blog"></img>
+                                <img src={Blog} alt="blog"></img>
                                 <p>
                                     Laborum labore eu ad velit dolore irure
                                     velit voluptate aute culpa proident do
@@ -34,7 +35,6 @@ const SingleBlog = () => {
                                     exercitation.Ad proident sit reprehenderit
                                     et ut sint dolor laboris cupidatat aliquip.
                                 </p>
-                                
                             </div>
                         </div>
                     </div>

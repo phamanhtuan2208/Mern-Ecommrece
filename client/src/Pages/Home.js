@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Marquee from 'react-fast-marquee';
 import BlogCard from '../Components/BlogCard';
-import ProductCart from '../Components/ProductCart';
+import ProductCart from '../Components/ProductCard';
 import SpecialProduct from '../Components/SpecialProduct';
 import Meta from '../Components/Meta';
 

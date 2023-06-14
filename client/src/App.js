@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+//page
 import Layout from './Components/Layout';
 import Home from './Pages/Home';
 import About from './Pages/About';
@@ -19,6 +20,7 @@ import RefundPolicy from './Pages/RefundPolicy';
 import ShippingPolicy from './Pages/ShippingPolicy';
 import TermAndCondition from './Pages/TermAndCondition';
 import SingleProduct from './Pages/SingleProduct';
+import Cart from './Pages/Cart';
 
 function App() {
     return (
@@ -81,6 +83,10 @@ function App() {
                         <Route
                             path="term-conditions"
                             element={<TermAndCondition></TermAndCondition>}
+                        ></Route>
+                        <Route
+                            path="cart"
+                            element={<Cart></Cart>}
                         ></Route>
                     </Route>
                 </Routes>

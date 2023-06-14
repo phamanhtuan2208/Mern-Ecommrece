@@ -3,7 +3,7 @@ import ReactStars from 'react-rating-stars-component';
 import BreadCrumb from '../Components/BreadCrumb';
 import Meta from '../Components/Meta';
 import { useState } from 'react';
-import ProductCart from '../Components/ProductCart';
+import ProductCart from '../Components/ProductCard';
 import Color from '../Components/Color';
 
 const OutStore = () => {

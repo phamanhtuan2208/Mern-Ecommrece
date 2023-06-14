@@ -1,5 +1,7 @@
+/* eslint-disable no-script-url */
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
-import ProductCart from '../Components/ProductCart';
+import ProductCart from '../Components/ProductCard';
 import BreadCrumb from '../Components/BreadCrumb';
 import Meta from '../Components/Meta';
 import ReactStars from 'react-rating-stars-component';
@@ -17,6 +19,17 @@ const SingleProduct = () => {
         zoomWidth: 600,
         img: 'https://www.dizo.net/img/qywdasb1.jpg',
     };
+
+    const copyToClipboard = (text) => {
+        console.log('text', text);
+        var textField = document.createElement('textarea');
+        textField.innerText = text;
+        document.body.appendChild(textField);
+        textField.select();
+        document.execCommand('copy');
+        textField.remove();
+    };
+
     return (
         <>
             <Meta title={'Product Name'}></Meta>
@@ -89,7 +102,7 @@ const SingleProduct = () => {
                                         Write a Review
                                     </a>
                                 </div>
-                                <div className="border-bottom py-3">
+                                <div className="py-3">
                                     <div className="d-flex gap-10 align-items-center my-2">
                                         <h3 className="product-heading">
                                             Type:{' '}
@@ -177,16 +190,43 @@ const SingleProduct = () => {
                                     <div className="d-flex align-items-center gap-15">
                                         <div>
                                             <a href="">
-                                                <TbGitCompare className='fs-5 me-2'></TbGitCompare>{' '}
+                                                <TbGitCompare className="fs-5 me-2"></TbGitCompare>{' '}
                                                 Add to Compare
                                             </a>
                                         </div>
                                         <div>
                                             <a href="">
-                                                <AiOutlineHeart className='fs-5 me-2'></AiOutlineHeart> 
+                                                <AiOutlineHeart className="fs-5 me-2"></AiOutlineHeart>
                                                 Add to Wishlist
                                             </a>
                                         </div>
+                                    </div>
+                                    <div className="d-flex gap-10 align-items-center my-3">
+                                        <h3 className="product-heading">
+                                            Shipping & Return:
+                                        </h3>
+                                        <p className="product-data">
+                                            Free shipping and returns available
+                                            on all orders! We ship all US
+                                            domestic orders within
+                                            <b> 5-10 business </b>
+                                            days!
+                                        </p>
+                                    </div>
+                                    <div className="d-flex gap-10 align-items-center my-3">
+                                        <h3 className="product-heading">
+                                            Product Link:
+                                        </h3>
+                                        <a
+                                            onClick={() =>
+                                                copyToClipboard(
+                                                    'https://www.dizo.net/img/qywdasb1.jpg',
+                                                )
+                                            }
+                                            href="javascript:void(0)"
+                                        >
+                                            Copy Product Link
+                                        </a>
                                     </div>
                                 </div>
                             </div>

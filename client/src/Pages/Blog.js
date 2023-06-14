@@ -22,7 +22,6 @@ const Blog = () => {
                                         <li>TV</li>
                                         <li>Camera</li>
                                         <li>Laptop</li>
-                                        
                                     </ul>
                                 </div>
                             </div>
