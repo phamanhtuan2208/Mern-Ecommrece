@@ -21,6 +21,7 @@ import ShippingPolicy from './Pages/ShippingPolicy';
 import TermAndCondition from './Pages/TermAndCondition';
 import SingleProduct from './Pages/SingleProduct';
 import Cart from './Pages/Cart';
+import Checkout from './Pages/Checkout';
 
 function App() {
     return (
@@ -84,9 +85,10 @@ function App() {
                             path="term-conditions"
                             element={<TermAndCondition></TermAndCondition>}
                         ></Route>
+                        <Route path="cart" element={<Cart></Cart>}></Route>
                         <Route
-                            path="cart"
-                            element={<Cart></Cart>}
+                            path="checkout"
+                            element={<Checkout></Checkout>}
                         ></Route>
                     </Route>
                 </Routes>
