@@ -33,7 +33,7 @@ const Header = () => {
                     <div className="row align-items-center">
                         <div className="col-2">
                             <h1>
-                                <Link className="text-white">AT</Link>
+                                <Link className="text-white" to={'/'}>AT</Link>
                             </h1>
                         </div>
                         <div className="col-5">

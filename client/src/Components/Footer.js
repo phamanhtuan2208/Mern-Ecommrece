@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { BsLinkedin, BsGithub, BsYoutube, BsInstagram } from 'react-icons/bs';
@@ -62,16 +63,16 @@ const Footer = () => {
                                     AT@gmail.com
                                 </a>
                                 <div className="social_icons d-flex align-items-center gap-30 mt-4">
-                                    <a className="text-white" to="#">
+                                    <a className="text-white" href="#">
                                         <BsLinkedin className="text-white fs-4"></BsLinkedin>
                                     </a>
-                                    <a className="text-white" to="#">
+                                    <a className="text-white" href="#">
                                         <BsInstagram className="text-white fs-4"></BsInstagram>
                                     </a>
-                                    <a className="text-white" to="#">
+                                    <a className="text-white" href="#">
                                         <BsGithub className="text-white fs-4"></BsGithub>
                                     </a>
-                                    <a className="text-white" to="#">
+                                    <a className="text-white" href="#">
                                         <BsYoutube className="text-white fs-4"></BsYoutube>
                                     </a>
                                 </div>

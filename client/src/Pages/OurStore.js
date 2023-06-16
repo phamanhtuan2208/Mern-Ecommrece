@@ -3,8 +3,9 @@ import ReactStars from 'react-rating-stars-component';
 import BreadCrumb from '../Components/BreadCrumb';
 import Meta from '../Components/Meta';
 import { useState } from 'react';
-import ProductCart from '../Components/ProductCard';
+import ProductCard from '../Components/ProductCard';
 import Color from '../Components/Color';
+import Container from '../Components/Container';
 
 const OutStore = () => {
     const [grid, setGrid] = useState(4);
@@ -13,7 +14,7 @@ const OutStore = () => {
         <>
             <Meta title={'Our Store'}></Meta>
             <BreadCrumb title={'Our Store'}></BreadCrumb>
-            <div className="store-wrapper home-wrapper py-5">
+            <Container class1="store-wrapper home-wrapper py-5">
                 <div className="container-xxl">
                     <div className="row">
                         <div className="col-3">
@@ -216,10 +217,7 @@ const OutStore = () => {
                                             <option value={'manual'}>
                                                 Featured
                                             </option>
-                                            <option
-                                                value={'best-selling'}
-                                                selected="selected"
-                                            >
+                                            <option value={'best-selling'}>
                                                 Best selling
                                             </option>
                                             <option value={'title-ascending'}>
@@ -290,13 +288,13 @@ const OutStore = () => {
                             </div>
                             <div className="products-list pb-5">
                                 <div className="d-flex gap-10 flex-wrap">
-                                    <ProductCart grid={grid}></ProductCart>
+                                    <ProductCard grid={grid}></ProductCard>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </Container>
         </>
     );
 };

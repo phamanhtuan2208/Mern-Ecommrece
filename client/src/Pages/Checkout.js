@@ -2,11 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { BiArrowBack } from 'react-icons/bi';
 import Watch from '../images/watch.jpg';
+import Container from '../Components/Container';
 
 const Checkout = () => {
     return (
         <>
-            <div className="checkout-wrapper py-5 home-wrapper-2">
+            <Container class1="checkout-wrapper py-5 home-wrapper-2">
                 <div className="container-xxl">
                     <div className="row">
                         <div className="col-7">
@@ -58,11 +59,7 @@ const Checkout = () => {
                                             className="form-control form-select"
                                             name=""
                                         >
-                                            <option
-                                                value={''}
-                                                selected
-                                                disabled
-                                            >
+                                            <option value={''} disabled>
                                                 Select Country
                                             </option>
                                         </select>
@@ -107,11 +104,7 @@ const Checkout = () => {
                                             className="form-control form-select"
                                             name=""
                                         >
-                                            <option
-                                                value={''}
-                                                selected
-                                                disabled
-                                            >
+                                            <option value={''} disabled>
                                                 Select State
                                             </option>
                                         </select>
@@ -192,7 +185,7 @@ const Checkout = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </Container>
         </>
     );
 };

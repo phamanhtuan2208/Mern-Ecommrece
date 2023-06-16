@@ -1,14 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Container from '../Components/Container';
 import BreadCrumb from '../Components/BreadCrumb';
 import Meta from '../Components/Meta';
+import CustomInput from '../Components/CustomInput';
 
 const ForgotPassword = () => {
     return (
         <>
             <Meta title={'Forgot Password'}></Meta>
             <BreadCrumb title={'Forgot Password'}></BreadCrumb>
-            <div className="login-wrapper py-5 home-wrapper-2">
+            <Container class1="login-wrapper py-5 home-wrapper-2">
                 <div className="container-xxl">
                     <div className="row">
                         <div className="col-12">
@@ -24,14 +26,13 @@ const ForgotPassword = () => {
                                     action=""
                                     className="d-flex flex-column gap-30"
                                 >
-                                    <div className="">
-                                        <input
-                                            className="form-control"
-                                            type={'email'}
-                                            name="email"
-                                            placeholder="Email"
-                                        ></input>
-                                    </div>
+                                    <CustomInput
+                                        className="form-control"
+                                        type={'email'}
+                                        name="email"
+                                        placeholder="Email"
+                                    ></CustomInput>
+
                                     <div>
                                         <div className=" mt-3 d-flex justify-content-center gap-20 align-items-center flex-column">
                                             <button
@@ -48,7 +49,7 @@ const ForgotPassword = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </Container>
         </>
     );
 };

@@ -1,14 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Container from '../Components/Container';
 import BreadCrumb from '../Components/BreadCrumb';
 import Meta from '../Components/Meta';
+import CustomInput from '../Components/CustomInput';
 
 const Signup = () => {
     return (
         <>
             <Meta title={'SignUp'}></Meta>
             <BreadCrumb title={'SignUp'}></BreadCrumb>
-            <div className="login-wrapper py-5 home-wrapper-2">
+            <Container class1="login-wrapper py-5 home-wrapper-2">
                 <div className="container-xxl">
                     <div className="row">
                         <div className="col-12">
@@ -18,37 +19,34 @@ const Signup = () => {
                                     action=""
                                     className="d-flex flex-column gap-30"
                                 >
-                                    <div className="">
-                                        <input
-                                            className="form-control"
-                                            type={'text'}
-                                            name="name"
-                                            placeholder="Name"
-                                        ></input>
-                                    </div>
-                                    <div className="">
-                                        <input
-                                            className="form-control"
-                                            type={'email'}
-                                            name="email"
-                                            placeholder="Email"
-                                        ></input>
-                                    </div>
-                                    <div className="">
-                                        <input
-                                            className="form-control"
-                                            type={'text'}
-                                            name="mobile"
-                                            placeholder="Mobile Number"
-                                        ></input>
-                                    </div>
+                                    <CustomInput
+                                        className="form-control"
+                                        type={'text'}
+                                        name="name"
+                                        placeholder="Name"
+                                    ></CustomInput>
+
+                                    <CustomInput
+                                        className="form-control"
+                                        type={'email'}
+                                        name="email"
+                                        placeholder="Email"
+                                    ></CustomInput>
+
+                                    <CustomInput
+                                        className="form-control"
+                                        type={'tel'}
+                                        name="mobile"
+                                        placeholder="Mobile Number"
+                                    ></CustomInput>
+
                                     <div className="mt-1">
-                                        <input
+                                        <CustomInput
                                             className="form-control"
                                             type={'password'}
                                             name="password"
                                             placeholder="Password"
-                                        ></input>
+                                        ></CustomInput>
                                     </div>
                                     <div>
                                         <div className=" mt-3 d-flex justify-content-center gap-20 align-items-center">
@@ -62,7 +60,7 @@ const Signup = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </Container>
         </>
     );
 };

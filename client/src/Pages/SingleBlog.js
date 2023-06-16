@@ -4,13 +4,14 @@ import BreadCrumb from '../Components/BreadCrumb';
 import Meta from '../Components/Meta';
 import { HiOutlineArrowLeft } from 'react-icons/hi';
 import Blog from '../images/blog-1.jpg';
+import Container from '../Components/Container';
 
 const SingleBlog = () => {
     return (
-        <div>
+        <>
             <Meta title={'Dynamic Blog Name'}></Meta>
             <BreadCrumb title={'Dynamic Blog Name'}></BreadCrumb>
-            <div className="blog-wrapper home-wrapper-2 py-5">
+            <Container class1="blog-wrapper home-wrapper-2 py-5">
                 <div className="container-xxl">
                     <div className="row">
                         <div className="col-12">
@@ -39,8 +40,8 @@ const SingleBlog = () => {
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            </Container>
+        </>
     );
 };
 

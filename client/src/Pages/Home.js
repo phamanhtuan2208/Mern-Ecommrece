@@ -1,117 +1,123 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import Marquee from 'react-fast-marquee';
 import BlogCard from '../Components/BlogCard';
-import ProductCart from '../Components/ProductCard';
+import ProductCard from '../Components/ProductCard';
 import SpecialProduct from '../Components/SpecialProduct';
 import Meta from '../Components/Meta';
+import Container from '../Components/Container';
+// data
+import { services } from '../Utils/Data';
 
 const Home = () => {
     return (
         <>
             <Meta title={'E Commerce App'}></Meta>
-            <section className="home-wrapper-1 py-5">
-                <div className="container-xxl">
-                    <div className="row">
-                        <div className="col-6">
-                            <div className="main-banner position-relative">
+            <Container class1={'home-wrapper-1 py-5'}>
+                <div className="row">
+                    <div className="col-6">
+                        <div className="main-banner position-relative">
+                            <img
+                                src="images/main-banner-1.jpg"
+                                alt="main banner"
+                                className="img-fluid rounded-3"
+                            ></img>
+                            <div className="main-banner-content position-absolute">
+                                <h4>SUPERCHARGED FOR PROS</h4>
+                                <h5>iPad S13+ Pro</h5>
+                                <p>From $999.00 or $41.62/mo</p>
+                                <button className="button">BUY NOW</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-6">
+                        <div className="d-flex flex-wrap gap-10 justify-content-between align-items-center">
+                            <div className="small-banner position-relative">
                                 <img
-                                    src="images/main-banner-1.jpg"
+                                    src="images/catbanner-01.jpg"
                                     alt="main banner"
                                     className="img-fluid rounded-3"
                                 ></img>
-                                <div className="main-banner-content position-absolute">
-                                    <h4>SUPERCHARGED FOR PROS</h4>
+                                <div className="small-banner-content position-absolute">
+                                    <h4>Best Sake</h4>
                                     <h5>iPad S13+ Pro</h5>
-                                    <p>From $999.00 or $41.62/mo</p>
-                                    <Link className="button">BUY NOW</Link>
+                                    <p>
+                                        From $999.00 <br /> or $41.62/mo
+                                    </p>
                                 </div>
                             </div>
-                        </div>
-                        <div className="col-6">
-                            <div className="d-flex flex-wrap gap-10 justify-content-between align-items-center">
-                                <div className="small-banner position-relative">
-                                    <img
-                                        src="images/catbanner-01.jpg"
-                                        alt="main banner"
-                                        className="img-fluid rounded-3"
-                                    ></img>
-                                    <div className="small-banner-content position-absolute">
-                                        <h4>Best Sake</h4>
-                                        <h5>iPad S13+ Pro</h5>
-                                        <p>
-                                            From $999.00 <br /> or $41.62/mo
-                                        </p>
-                                    </div>
+                            <div className="small-banner position-relative">
+                                <img
+                                    src="images/catbanner-02.jpg"
+                                    alt="main banner"
+                                    className="img-fluid rounded-3"
+                                ></img>
+                                <div className="small-banner-content position-absolute">
+                                    <h4>NEW ARRIVAL</h4>
+                                    <h5>Buy IPad Air</h5>
+                                    <p>
+                                        From $999.00 <br />
+                                        or $41.62/mo
+                                    </p>
                                 </div>
-                                <div className="small-banner position-relative">
-                                    <img
-                                        src="images/catbanner-02.jpg"
-                                        alt="main banner"
-                                        className="img-fluid rounded-3"
-                                    ></img>
-                                    <div className="small-banner-content position-absolute">
-                                        <h4>NEW ARRIVAL</h4>
-                                        <h5>Buy IPad Air</h5>
-                                        <p>
-                                            From $999.00 <br />
-                                            or $41.62/mo
-                                        </p>
-                                    </div>
+                            </div>
+                            <div className="small-banner position-relative">
+                                <img
+                                    src="images/catbanner-03.jpg"
+                                    alt="main banner"
+                                    className="img-fluid rounded-3"
+                                ></img>
+                                <div className="small-banner-content position-absolute">
+                                    <h4>NEW ARRIVAL</h4>
+                                    <h5>Buy IPad Air</h5>
+                                    <p>
+                                        From $999.00 <br />
+                                        or $41.62/mo
+                                    </p>
                                 </div>
-                                <div className="small-banner position-relative">
-                                    <img
-                                        src="images/catbanner-03.jpg"
-                                        alt="main banner"
-                                        className="img-fluid rounded-3"
-                                    ></img>
-                                    <div className="small-banner-content position-absolute">
-                                        <h4>NEW ARRIVAL</h4>
-                                        <h5>Buy IPad Air</h5>
-                                        <p>
-                                            From $999.00 <br />
-                                            or $41.62/mo
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className="small-banner position-relative">
-                                    <img
-                                        src="images/catbanner-04.jpg"
-                                        alt="main banner"
-                                        className="img-fluid rounded-3"
-                                    ></img>
-                                    <div className="small-banner-content position-absolute">
-                                        <h4>NEW ARRIVAL</h4>
-                                        <h5>Buy IPad Air</h5>
-                                        <p>
-                                            From $999.00 <br />
-                                            or $41.62/mo
-                                        </p>
-                                    </div>
+                            </div>
+                            <div className="small-banner position-relative">
+                                <img
+                                    src="images/catbanner-04.jpg"
+                                    alt="main banner"
+                                    className="img-fluid rounded-3"
+                                ></img>
+                                <div className="small-banner-content position-absolute">
+                                    <h4>NEW ARRIVAL</h4>
+                                    <h5>Buy IPad Air</h5>
+                                    <p>
+                                        From $999.00 <br />
+                                        or $41.62/mo
+                                    </p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </section>
-            <section className="home-wrapper-2 py-5">
+            </Container>
+            <Container class1="home-wrapper-2 py-5">
+                {' '}
                 <div className="container-xxl">
                     <div className="row">
                         <div className="col-12">
                             <div className="service d-flex align-items-center justify-content-between">
-                                <div className="d-flex align-items-center gap-15">
-                                    <img
-                                        src="images/service.png"
-                                        alt="services"
-                                    ></img>
-                                    <div>
-                                        <h6>Free Shipping</h6>
-                                        <p className="mb-0">
-                                            From all order over $5
-                                        </p>
+                                {services?.map((data, index) => (
+                                    <div
+                                        className="d-flex align-items-center gap-15"
+                                        key={index}
+                                    >
+                                        <img
+                                            src={data.image}
+                                            alt="services"
+                                        ></img>
+                                        <div>
+                                            <h6>{data.title}</h6>
+                                            <p className="mb-0">
+                                                {data.tagline}
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="d-flex align-items-center gap-15">
+                                ))}
+                                {/* <div className="d-flex align-items-center gap-15">
                                     <img
                                         src="images/service-02.png"
                                         alt="services"
@@ -158,13 +164,13 @@ const Home = () => {
                                             100% Protected Payment
                                         </p>
                                     </div>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     </div>
                 </div>
-            </section>
-            <section className="home-wrapper-2 py-5">
+            </Container>
+            <Container class1="home-wrapper-2 py-5">
                 <div className="container-xxl">
                     <div className="row">
                         <div className="col-12">
@@ -247,8 +253,9 @@ const Home = () => {
                         </div>
                     </div>
                 </div>
-            </section>
-            <section className="featured-wrapper py-5 home-wrapper-2">
+            </Container>
+            <Container class1="featured-wrapper py-5 home-wrapper-2">
+                {' '}
                 <div className="container-xxl">
                     <div className="row">
                         <div className="col-12">
@@ -256,14 +263,14 @@ const Home = () => {
                                 Featured Collections
                             </h3>
                         </div>
-                        <ProductCart></ProductCart>
-                        <ProductCart></ProductCart>
-                        <ProductCart></ProductCart>
-                        <ProductCart></ProductCart>
+                        <ProductCard></ProductCard>
+                        <ProductCard></ProductCard>
+                        <ProductCard></ProductCard>
+                        <ProductCard></ProductCard>
                     </div>
                 </div>
-            </section>
-            <section className="famous-wrapper py-5 home-wrapper-2">
+            </Container>
+            <Container class1="famous-wrapper py-5 home-wrapper-2">
                 <div className="container-xxl">
                     <div className="row">
                         <div className="col-3">
@@ -339,8 +346,8 @@ const Home = () => {
                         </div>
                     </div>
                 </div>
-            </section>
-            <section className="special-wrapper py-5 home-wrapper-2">
+            </Container>
+            <Container class1="special-wrapper py-5 home-wrapper-2">
                 <div className="container-xxl">
                     <div className="row">
                         <div className="col-12">
@@ -354,8 +361,8 @@ const Home = () => {
                         </div>
                     </div>
                 </div>
-            </section>
-            <section className="popular-wrapper py-5 home-wrapper-2">
+            </Container>
+            <Container class1="popular-wrapper py-5 home-wrapper-2">
                 <div className="container-xxl">
                     <div className="row">
                         <div className="col-12">
@@ -365,14 +372,14 @@ const Home = () => {
                         </div>
                     </div>
                     <div className="row">
-                        <ProductCart></ProductCart>
-                        <ProductCart></ProductCart>
-                        <ProductCart></ProductCart>
-                        <ProductCart></ProductCart>
+                        <ProductCard></ProductCard>
+                        <ProductCard></ProductCard>
+                        <ProductCard></ProductCard>
+                        <ProductCard></ProductCard>
                     </div>
                 </div>
-            </section>
-            <section className="marque-wrapper py-5">
+            </Container>
+            <Container class1="marque-wrapper py-5">
                 <div className="container-xxl">
                     <div className="row">
                         <div className="col-12">
@@ -439,8 +446,8 @@ const Home = () => {
                         </div>
                     </div>
                 </div>
-            </section>
-            <section className="blog-wrapper py-5 home-wrapper-2">
+            </Container>
+            <Container class1="blog-wrapper py-5 home-wrapper-2">
                 <div className="container-xxl">
                     <div className="row">
                         <div className="col-12">
@@ -464,7 +471,7 @@ const Home = () => {
                         </div>
                     </div>
                 </div>
-            </section>
+            </Container>
         </>
     );
 };

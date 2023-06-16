@@ -4,13 +4,14 @@ import Meta from '../Components/Meta';
 import Watch from '../images/watch.jpg';
 import { AiFillDelete } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
+import Container from '../Components/Container';
 
 const Cart = () => {
     return (
         <>
             <Meta title={'Cart'}></Meta>
             <BreadCrumb title={'Cart'}></BreadCrumb>
-            <section className="cart-wrapper home-wrapper-2 py-5">
+            <Container class1="cart-wrapper home-wrapper-2 py-5">
                 <div className="container-xxl">
                     <div className="row">
                         <div className="col-12">
@@ -117,7 +118,7 @@ const Cart = () => {
                         </div>
                     </div>
                 </div>
-            </section>
+            </Container>
         </>
     );
 };

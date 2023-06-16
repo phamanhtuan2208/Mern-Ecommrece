@@ -1,7 +1,7 @@
 /* eslint-disable no-script-url */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
-import ProductCart from '../Components/ProductCard';
+import ProductCard from '../Components/ProductCard';
 import BreadCrumb from '../Components/BreadCrumb';
 import Meta from '../Components/Meta';
 import ReactStars from 'react-rating-stars-component';
@@ -10,6 +10,7 @@ import ReactImageZoom from 'react-image-zoom';
 import Color from '../Components/Color';
 import { TbGitCompare } from 'react-icons/tb';
 import { AiOutlineHeart } from 'react-icons/ai';
+import Container from '../Components/Container';
 
 const SingleProduct = () => {
     const [OrderedProduct, setOrderedProduct] = useState(true);
@@ -34,7 +35,7 @@ const SingleProduct = () => {
         <>
             <Meta title={'Product Name'}></Meta>
             <BreadCrumb title={'Product Name'}></BreadCrumb>
-            <div className="main-product-wrapper py-5 home-wrapper-2">
+            <Container class1="main-product-wrapper py-5 home-wrapper-2">
                 <div className="container-xxl p-3 bg-white ">
                     <div className="row">
                         <div className="col-6">
@@ -233,8 +234,8 @@ const SingleProduct = () => {
                         </div>
                     </div>
                 </div>
-            </div>
-            <div className="description-wrapper py-5 home-wrapper-2">
+            </Container>
+            <Container class1="description-wrapper py-5 home-wrapper-2">
                 <div className="container-xxl">
                     <div className="row">
                         <div className="col-12">
@@ -251,8 +252,8 @@ const SingleProduct = () => {
                         </div>
                     </div>
                 </div>
-            </div>
-            <section className="reviews-wrapper home-wrapper-2">
+            </Container>
+            <Container class1="reviews-wrapper home-wrapper-2">
                 <div className="container-xxl">
                     <div className="row">
                         <div className="col-12">
@@ -352,8 +353,8 @@ const SingleProduct = () => {
                         </div>
                     </div>
                 </div>
-            </section>
-            <section className="popular-wrapper py-5 home-wrapper-2">
+            </Container>
+            <Container class1="popular-wrapper py-5 home-wrapper-2">
                 <div className="container-xxl">
                     <div className="row">
                         <div className="col-12">
@@ -363,10 +364,10 @@ const SingleProduct = () => {
                         </div>
                     </div>
                     <div className="row">
-                        <ProductCart></ProductCart>
+                        <ProductCard></ProductCard>
                     </div>
                 </div>
-            </section>
+            </Container>
         </>
     );
 };

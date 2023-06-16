@@ -5,13 +5,14 @@ import Meta from '../Components/Meta';
 import { AiOutlineHome, AiOutlineMail } from 'react-icons/ai';
 import { BiPhoneCall } from 'react-icons/bi';
 import { BiInfoCircle } from 'react-icons/bi';
+import Container from '../Components/Container';
 
 const Contact = () => {
     return (
         <>
             <Meta title={'Contact'}></Meta>
             <BreadCrumb title={'Contact'}></BreadCrumb>
-            <div className="contact-wrapper py-5 home-wrapper-2">
+            <Container class1="contact-wrapper py-5 home-wrapper-2">
                 <div className="container-xxl">
                     <div className="row">
                         <div className="col-12">
@@ -20,9 +21,9 @@ const Contact = () => {
                                 width="600"
                                 height="450"
                                 className="w-100 border-0"
-                                allowfullscreen=""
+                                allowFullScreen=""
                                 loading="lazy"
-                                referrerpolicy="no-referrer-when-downgrade"
+                                referrerPolicy="no-referrer-when-downgrade"
                             ></iframe>
                         </div>
                         <div className="col-12 mt-5">
@@ -105,7 +106,7 @@ const Contact = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </Container>
         </>
     );
 };

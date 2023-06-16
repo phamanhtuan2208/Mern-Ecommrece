@@ -2,13 +2,14 @@ import React from 'react';
 import Color from '../Components/Color';
 import BreadCrumb from '../Components/BreadCrumb';
 import Meta from '../Components/Meta';
+import Container from '../Components/Container';
 
 const CompareProduct = () => {
     return (
         <>
             <Meta title={'Compare Products'}></Meta>
             <BreadCrumb title={'Compare Products'}></BreadCrumb>
-            <div className="compare-product-wrapper py-5 home-wrapper-2">
+            <Container class1="compare-product-wrapper py-5 home-wrapper-2">
                 <div className="container-xxl">
                     <div className="row">
                         <div className="col-3">
@@ -109,7 +110,7 @@ const CompareProduct = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </Container>
         </>
     );
 };

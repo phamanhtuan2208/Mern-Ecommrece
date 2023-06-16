@@ -1,4 +1,5 @@
 import React from 'react';
+import Container from '../Components/Container';
 import BlogCard from '../Components/BlogCard';
 import BreadCrumb from '../Components/BreadCrumb';
 import Meta from '../Components/Meta';
@@ -8,7 +9,7 @@ const Blog = () => {
         <>
             <Meta title={'Blog'}></Meta>
             <BreadCrumb title={'Blog'}></BreadCrumb>
-            <div className="blog-wrapper home-wrapper-2 py-5">
+            <Container class1="blog-wrapper home-wrapper-2 py-5">
                 <div className="container-xxl">
                     <div className="row">
                         <div className="col-3">
@@ -44,7 +45,7 @@ const Blog = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </Container>
         </>
     );
 };

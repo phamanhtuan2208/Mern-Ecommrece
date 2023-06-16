@@ -1,14 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Container from '../Components/Container';
 import BreadCrumb from '../Components/BreadCrumb';
 import Meta from '../Components/Meta';
+import CustomInput from '../Components/CustomInput';
 
 const Login = () => {
     return (
         <>
             <Meta title={'Login'}></Meta>
             <BreadCrumb title={'Login'}></BreadCrumb>
-            <div className="login-wrapper py-5 home-wrapper-2">
+            <Container class1="login-wrapper py-5 home-wrapper-2">
                 <div className="container-xxl">
                     <div className="row">
                         <div className="col-12">
@@ -18,21 +20,20 @@ const Login = () => {
                                     action=""
                                     className="d-flex flex-column gap-30"
                                 >
-                                    <div className="">
-                                        <input
-                                            className="form-control"
-                                            type={'email'}
-                                            name="email"
-                                            placeholder="Email"
-                                        ></input>
-                                    </div>
+                                    <CustomInput
+                                        className="form-control"
+                                        type={'email'}
+                                        name="email"
+                                        placeholder="Email"
+                                    ></CustomInput>
+
                                     <div className="mt-1">
-                                        <input
+                                        <CustomInput
                                             className="form-control"
                                             type={'password'}
                                             name="password"
                                             placeholder="Password"
-                                        ></input>
+                                        ></CustomInput>
                                     </div>
                                     <div>
                                         <Link to={'/forgot-password'}>
@@ -59,7 +60,7 @@ const Login = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </Container>
         </>
     );
 };
