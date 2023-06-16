@@ -224,7 +224,7 @@ const SingleProduct = () => {
                                                     'https://www.dizo.net/img/qywdasb1.jpg',
                                                 )
                                             }
-                                            href="javascript:void(0)"
+                                            href={"javascript:void(0)"}
                                         >
                                             Copy Product Link
                                         </a>

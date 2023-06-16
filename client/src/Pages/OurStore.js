@@ -9,7 +9,6 @@ import Container from '../Components/Container';
 
 const OutStore = () => {
     const [grid, setGrid] = useState(4);
-
     return (
         <>
             <Meta title={'Our Store'}></Meta>
@@ -213,6 +212,7 @@ const OutStore = () => {
                                             name=""
                                             className="form-control form-select"
                                             id=""
+                                            defaultValue={'manual'}
                                         >
                                             <option value={'manual'}>
                                                 Featured
