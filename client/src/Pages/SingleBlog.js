@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import BreadCrumb from '../Components/BreadCrumb';
-import Meta from '../Components/Meta';
+import BreadCrumb from '~/Components/BreadCrumb';
+import Meta from '~/Components/Meta';
 import { HiOutlineArrowLeft } from 'react-icons/hi';
-import Blog from '../images/blog-1.jpg';
-import Container from '../Components/Container';
+import Blog from '~/images/blog-1.jpg';
+import Container from '~/Components/Container';
 
 const SingleBlog = () => {
     return (

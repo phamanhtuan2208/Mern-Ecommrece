@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { BiArrowBack } from 'react-icons/bi';
-import Watch from '../images/watch.jpg';
-import Container from '../Components/Container';
+import Watch from '~/images/watch.jpg';
+import Container from '~/Components/Container';
 
 const Checkout = () => {
     return (

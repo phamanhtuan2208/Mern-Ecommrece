@@ -1,11 +1,11 @@
 /* eslint-disable jsx-a11y/iframe-has-title */
 import React from 'react';
-import BreadCrumb from '../Components/BreadCrumb';
-import Meta from '../Components/Meta';
+import BreadCrumb from '~/Components/BreadCrumb';
+import Meta from '~/Components/Meta';
 import { AiOutlineHome, AiOutlineMail } from 'react-icons/ai';
 import { BiPhoneCall } from 'react-icons/bi';
 import { BiInfoCircle } from 'react-icons/bi';
-import Container from '../Components/Container';
+import Container from '~/Components/Container';
 
 const Contact = () => {
     return (

@@ -1,7 +1,7 @@
 import React from 'react';
-import Container from '../Components/Container';
-import BreadCrumb from '../Components/BreadCrumb';
-import Meta from '../Components/Meta';
+import Container from '~/Components/Container';
+import BreadCrumb from '~/Components/BreadCrumb';
+import Meta from '~/Components/Meta';
 
 const RefundPolicy = () => {
     return (

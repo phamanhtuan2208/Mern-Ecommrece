@@ -1,8 +1,8 @@
 import React from 'react';
-import Container from '../Components/Container';
-import BreadCrumb from '../Components/BreadCrumb';
-import Meta from '../Components/Meta';
-import CustomInput from '../Components/CustomInput';
+import Container from '~/Components/Container';
+import BreadCrumb from '~/Components/BreadCrumb';
+import Meta from '~/Components/Meta';
+import CustomInput from '~/Components/CustomInput';
 
 const Signup = () => {
     return (

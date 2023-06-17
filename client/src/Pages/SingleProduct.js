@@ -1,16 +1,16 @@
 /* eslint-disable no-script-url */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
-import ProductCard from '../Components/ProductCard';
-import BreadCrumb from '../Components/BreadCrumb';
-import Meta from '../Components/Meta';
+import ProductCard from '~/Components/ProductCard';
+import BreadCrumb from '~/Components/BreadCrumb';
+import Meta from '~/Components/Meta';
 import ReactStars from 'react-rating-stars-component';
 import { useState } from 'react';
 import ReactImageZoom from 'react-image-zoom';
-import Color from '../Components/Color';
+import Color from '~/Components/Color';
 import { TbGitCompare } from 'react-icons/tb';
 import { AiOutlineHeart } from 'react-icons/ai';
-import Container from '../Components/Container';
+import Container from '~/Components/Container';
 
 const SingleProduct = () => {
     const [OrderedProduct, setOrderedProduct] = useState(true);

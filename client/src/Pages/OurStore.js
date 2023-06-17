@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactStars from 'react-rating-stars-component';
-import BreadCrumb from '../Components/BreadCrumb';
-import Meta from '../Components/Meta';
+import BreadCrumb from '~/Components/BreadCrumb';
+import Meta from '~/Components/Meta';
 import { useState } from 'react';
-import ProductCard from '../Components/ProductCard';
-import Color from '../Components/Color';
-import Container from '../Components/Container';
+import ProductCard from '~/Components/ProductCard';
+import Color from '~/Components/Color';
+import Container from '~/Components/Container';
 
 const OutStore = () => {
     const [grid, setGrid] = useState(4);

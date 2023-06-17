@@ -1,12 +1,12 @@
 import React from 'react';
 import Marquee from 'react-fast-marquee';
-import BlogCard from '../Components/BlogCard';
-import ProductCard from '../Components/ProductCard';
-import SpecialProduct from '../Components/SpecialProduct';
-import Meta from '../Components/Meta';
-import Container from '../Components/Container';
+import BlogCard from '~/Components/BlogCard';
+import ProductCard from '~/Components/ProductCard';
+import SpecialProduct from '~/Components/SpecialProduct';
+import Meta from '~/Components/Meta';
+import Container from '~/Components/Container';
 // data
-import { services } from '../Utils/Data';
+import { services } from '~/Utils/Data';
 
 const Home = () => {
     return (

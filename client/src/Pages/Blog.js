@@ -1,8 +1,8 @@
 import React from 'react';
-import Container from '../Components/Container';
-import BlogCard from '../Components/BlogCard';
-import BreadCrumb from '../Components/BreadCrumb';
-import Meta from '../Components/Meta';
+import Container from '~/Components/Container';
+import BlogCard from '~/Components/BlogCard';
+import BreadCrumb from '~/Components/BreadCrumb';
+import Meta from '~/Components/Meta';
 
 const Blog = () => {
     return (
