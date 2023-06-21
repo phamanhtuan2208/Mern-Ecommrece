@@ -14,7 +14,7 @@ const BlogList = () => {
         {
             title: 'Product',
             dataIndex: 'address',
-        },
+        }, 
         {
             title: 'Status',
             dataIndex: 'status',
