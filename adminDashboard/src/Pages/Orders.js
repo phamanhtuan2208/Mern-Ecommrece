@@ -1,7 +1,7 @@
 import React from 'react';
 import { Table } from 'antd';
 
-const BlogCartList = () => {
+const Orders = () => {
     const columns = [
         {
             title: 'Name',
@@ -39,4 +39,4 @@ const BlogCartList = () => {
     );
 };
 
-export default BlogCartList;
+export default Orders;
