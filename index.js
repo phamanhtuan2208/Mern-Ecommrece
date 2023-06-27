@@ -11,6 +11,8 @@ const brandRouter = require('./server/Routes/brandRoute');
 const colorRouter = require('./server/Routes/colorRoute');
 const couponRouter = require('./server/Routes/couponRoute');
 const enquiryRouter = require('./server/Routes/enqRoute');
+//cors
+const cors = require('cors');
 
 const morgan = require('morgan');
 
@@ -22,6 +24,7 @@ const app = express();
 dbConnect();
 
 app.use(morgan('dev'));
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());

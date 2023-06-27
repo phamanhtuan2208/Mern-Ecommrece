@@ -110,8 +110,8 @@ const saveAddress = AsyncHandler(async (req, res) => {
 
 // get all users
 const getAllUser = AsyncHandler(async (req, res) => {
-    const { _id } = req.user;
-    validateMongoDBid(_id);
+    // const { _id } = req.user;
+    // validateMongoDBid(_id);
     try {
         const getUsers = await User.find();
         res.json(getUsers);
@@ -472,7 +472,7 @@ const updateOrderStatus = AsyncHandler(async (req, res) => {
     const { status } = req.body;
     const { id } = req.params;
     validateMongoDBid(id);
-try {
+    try {
         const updateOrder = await Order.findByIdAndUpdate(
             id,
             {
@@ -484,9 +484,9 @@ try {
             { new: true },
         );
         res.json(updateOrder);
-} catch (error) {
-   throw new Error(error) 
-}
+    } catch (error) {
+        throw new Error(error);
+    }
 });
 
 module.exports = {
