@@ -31,7 +31,7 @@ const Customers = () => {
     }
     return (
         <div className="my-4">
-            <h3 className="mb-4">Customers</h3>
+            <h3 className="mb-4 title">Customers</h3>
             <div className="">
                 <Table columns={columns} dataSource={data1} />
             </div>

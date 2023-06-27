@@ -31,7 +31,7 @@ const CategoryList = () => {
     }
     return (
         <div className="my-4">
-            <h3 className="mb-4">Category List</h3>
+            <h3 className="mb-4 title">Category List</h3>
             <div className="">
                 <Table columns={columns} dataSource={data1} />
             </div>

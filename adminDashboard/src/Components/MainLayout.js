@@ -1,5 +1,5 @@
 import { Button, Layout, Menu, theme } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
 // react icons
@@ -183,7 +183,7 @@ const MainLayout = () => {
                                 4
                             </span>
                         </div>
-                        <div className="d-flex gap-3 align-items-center">
+                        <div className="d-flex gap-3 align-items-center dropdown">
                             <div>
                                 <img
                                     src={avatar}
@@ -191,11 +191,45 @@ const MainLayout = () => {
                                     style={{ width: '32px', height: '32px' }}
                                 ></img>
                             </div>
-                            <div>
+                            <div
+                                role="button"
+                                id="dropdownMenuLink"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                            >
                                 <h5 className="mb-0">AT</h5>
                                 <p className="mb-0">
                                     anhtuanpham2208@gmail.com
                                 </p>
+                            </div>
+                            <div
+                                className="dropdown-menu"
+                                aria-labelledby="dropdownMenuLink"
+                            >
+                                <li>
+                                    <Link
+                                        className="dropdown-item py-1 mb-1"
+                                        style={{
+                                            heigh: 'auto',
+                                            lineHeight: '20px',
+                                        }}
+                                        to="#"
+                                    >
+                                        View Profile
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        className="dropdown-item py-1 mb-1"
+                                        style={{
+                                            heigh: 'auto',
+                                            lineHeight: '20px',
+                                        }}
+                                        to="#"
+                                    >
+                                        Signout
+                                    </Link>
+                                </li>
                             </div>
                         </div>
                     </div>
