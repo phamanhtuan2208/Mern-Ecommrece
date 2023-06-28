@@ -22,7 +22,7 @@ const Login = () => {
         }),
         onSubmit: (values) => {
             dispatch(login(values));
-            alert(JSON.stringify(values, null, 2));
+            // alert(JSON.stringify(values, null, 2));
         },
     });
     const { user, isLoading, isError, isSuccess, message } = useSelector(
@@ -32,9 +32,10 @@ const Login = () => {
         if (!user == null || isSuccess) {
             navigate('admin');
         } else {
-            alert('not');
+            navigate('');
         }
-    }, [user, isLoading, isError, isSuccess, message]);
+    }, [user, isLoading, isError, isSuccess, navigate]);
+
     return (
         <div
             className="py-4"
@@ -51,6 +52,11 @@ const Login = () => {
             >
                 <h3 className="text-center">Login</h3>
                 <p className="text-center">Login to your account to continue</p>
+                <div className="error text-center">
+                    {message.message === 'Rejected'
+                        ? ' You are not an Admin'
+                        : ''}
+                </div>
                 <form action="" onSubmit={formik.handleSubmit}>
                     <CustomInput
                         name="email"
