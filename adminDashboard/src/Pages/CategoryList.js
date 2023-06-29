@@ -29,15 +29,14 @@ const CategoryList = () => {
         dispatch(getPCategory());
     }, [dispatch]);
 
-    const pCatStat = useSelector((state) => state.pCategory.PCategorys);
+    const pCatState = useSelector((state) => state.pCategory.PCategorys);
 
-    console.log(pCatStat);
 
     const data1 = [];
-    for (let i = 0; i < pCatStat.length; i++) {
+    for (let i = 0; i < pCatState.length; i++) {
         data1.push({
             key: i,
-            title: pCatStat[i].title,
+            title: pCatState[i].title,
             action: (
                 <>
                     <Link to="" className="fs-3 text-danger">

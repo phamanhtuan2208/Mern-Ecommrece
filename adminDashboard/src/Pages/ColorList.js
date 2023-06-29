@@ -29,13 +29,13 @@ const ColorList = () => {
         dispatch(getColors());
     }, [dispatch]);
 
-    const pColorStat = useSelector((state) => state.color.colors);
+    const pColorState = useSelector((state) => state.color.colors);
 
     const data1 = [];
-    for (let i = 0; i < pColorStat.length; i++) {
+    for (let i = 0; i < pColorState.length; i++) {
         data1.push({
             key: i,
-            title: pColorStat[i].title,
+            title: pColorState[i].title,
             action: (
                 <>
                     <Link to="" className="fs-3 text-danger">

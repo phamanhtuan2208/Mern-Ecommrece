@@ -3,10 +3,11 @@ import authReducer from '@/Features/Auth/AuthSlice';
 import CustomerReducer from '@/Features/Customers/CustomerSlice';
 import ProductReducer from '@/Features/Product/ProductSlice';
 import BrandReducer from '@/Features/Brands/BrandSlice';
-import PCategory from '@/Features/PCategory/PCategorySlice';
-import Color from '@/Features/Colors/ColorSlice';
-import Blogs from '@/Features/Blogs/BlogsSlice';
+import PCategoryReducer from '@/Features/PCategory/PCategorySlice';
+import ColorReducer from '@/Features/Colors/ColorSlice';
+import BlogsReducer from '@/Features/Blogs/BlogsSlice';
 import BCategorySlice from '@/Features/BCategory/BCategorySlice';
+import enquiryReducer from '@/Features/Enquiry/EnquirySlice';
 
 export const store = configureStore({
     reducer: {
@@ -14,9 +15,10 @@ export const store = configureStore({
         customer: CustomerReducer,
         product: ProductReducer,
         brand: BrandReducer,
-        pCategory: PCategory,
-        color: Color,
-        blog: Blogs,
+        pCategory: PCategoryReducer,
+        color: ColorReducer,
+        blog: BlogsReducer,
         bCategory: BCategorySlice,
+        enquiry: enquiryReducer,
     },
 });
