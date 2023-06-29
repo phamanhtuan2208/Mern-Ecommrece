@@ -1,12 +1,12 @@
 /* eslint-disable no-undef */
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import PCategory from './PCategoryService';
+import BCategory from './BCategoryService';
 
-export const getPCategory = createAsyncThunk(
-    '/products/getCategory',
+export const getBCategory = createAsyncThunk(
+    '/blogs/getCategory',
     async (thunkAPI) => {
         try {
-            return await PCategory.getCategories();
+            return await BCategory.getBCategories();
         } catch (error) {
             return thunkAPI.rejectWithValue(error);
         }
@@ -14,29 +14,29 @@ export const getPCategory = createAsyncThunk(
 );
 
 const initialState = {
-    PCategorys: [],
+    BCategorys: [],
     isError: false,
     isLoading: false,
     isSuccess: false,
     message: '',
 };
 
-export const PCategorySlice = createSlice({
+export const BCategorySlice = createSlice({
     name: 'category',
     initialState,
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(getPCategory.pending, (state) => {
+            .addCase(getBCategory.pending, (state) => {
                 state.isLoading = true;
             })
-            .addCase(getPCategory.fulfilled, (state, action) => {
+            .addCase(getBCategory.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isError = false;
                 state.isSuccess = false;
-                state.PCategorys = action.payload;
+                state.BCategorys = action.payload;
             })
-            .addCase(getPCategory.rejected, (state, action) => {
+            .addCase(getBCategory.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.isSuccess = false;
@@ -44,4 +44,4 @@ export const PCategorySlice = createSlice({
             });
     },
 });
-export default PCategorySlice.reducer;
+export default BCategorySlice.reducer;

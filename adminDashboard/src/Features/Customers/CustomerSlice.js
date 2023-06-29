@@ -2,7 +2,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import CustomerService from './CustomerService';
 
-export const getUsers = createAsyncThunk('/customer/getCustomers', async (thunkAPI) => {
+export const getUsers = createAsyncThunk('/customers/getCustomers', async (thunkAPI) => {
     try {
         return await CustomerService.getUsers();
     } catch (error) {

@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import ColorService from './ColorService';
 
 export const getColors = createAsyncThunk(
-    '/color/getColor',
+    '/colors/getColor',
     async (thunkAPI) => {
         try {
             return await ColorService.getColors();

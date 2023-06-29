@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import brandService from './BrandService';
 
 export const getBrands = createAsyncThunk(
-    '/brand/getBrands',
+    '/brands/getBrands',
     async (thunkAPI) => {
         try {
             return await brandService.getBrands();

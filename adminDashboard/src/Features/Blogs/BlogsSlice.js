@@ -1,12 +1,12 @@
 /* eslint-disable no-undef */
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import PCategory from './PCategoryService';
+import BlogsService from './BlogsService';
 
-export const getPCategory = createAsyncThunk(
-    '/products/getCategory',
+export const getBlogs = createAsyncThunk(
+    '/blogs/getBlogs',
     async (thunkAPI) => {
         try {
-            return await PCategory.getCategories();
+            return await BlogsService.getBlogs();
         } catch (error) {
             return thunkAPI.rejectWithValue(error);
         }
@@ -14,29 +14,29 @@ export const getPCategory = createAsyncThunk(
 );
 
 const initialState = {
-    PCategorys: [],
+    blogs: [],
     isError: false,
     isLoading: false,
     isSuccess: false,
     message: '',
 };
 
-export const PCategorySlice = createSlice({
-    name: 'category',
+export const blogSlice = createSlice({
+    name: 'color',
     initialState,
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(getPCategory.pending, (state) => {
+            .addCase(getBlogs.pending, (state) => {
                 state.isLoading = true;
             })
-            .addCase(getPCategory.fulfilled, (state, action) => {
+            .addCase(getBlogs.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isError = false;
                 state.isSuccess = false;
-                state.PCategorys = action.payload;
+                state.blogs = action.payload;
             })
-            .addCase(getPCategory.rejected, (state, action) => {
+            .addCase(getBlogs.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.isSuccess = false;
@@ -44,4 +44,4 @@ export const PCategorySlice = createSlice({
             });
     },
 });
-export default PCategorySlice.reducer;
+export default blogSlice.reducer;

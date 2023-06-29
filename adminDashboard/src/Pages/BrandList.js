@@ -15,6 +15,7 @@ const BrandList = () => {
         {
             title: 'Title',
             dataIndex: 'title',
+            sorter: (a, b) => a.title.length - b.title.length,
         },
         {
             title: 'Action',
@@ -30,7 +31,6 @@ const BrandList = () => {
 
     const brandState = useSelector((state) => state.brand.brands);
 
-    console.log(brandState);
 
     const data1 = [];
     for (let i = 0; i < brandState.length; i++) {
