@@ -324,7 +324,7 @@ const userCart = AsyncHandler(async (req, res) => {
     try {
         let products = [];
         const user = await User.findById(_id);
-        //check if user already have product in cart
+        // check if user already have product in cart
         const alreadyExistCart = await Cart.findOne({ orderby: user._id });
         if (alreadyExistCart) {
             alreadyExistCart.remove();
@@ -460,8 +460,22 @@ const getOrders = AsyncHandler(async (req, res) => {
     try {
         const userOrders = await Order.findOne({ orderby: _id })
             .populate('products.product')
+            .populate('orderby')
             .exec();
         res.json(userOrders);
+    } catch (error) {
+        throw new Error(error);
+    }
+});
+
+//get All order
+const getAllOrders = AsyncHandler(async (req, res) => {
+    try {
+        const allUserOrders = await Order.find()
+            .populate('products.product')
+            .populate('orderby')
+            .exec();
+        res.json(allUserOrders);
     } catch (error) {
         throw new Error(error);
     }
@@ -513,4 +527,5 @@ module.exports = {
     createOrder,
     getOrders,
     updateOrderStatus,
+    getAllOrders,
 };

@@ -24,6 +24,7 @@ const {
     createOrder,
     getOrders,
     updateOrderStatus,
+    getAllOrders,
 } = require('../Controller/userCtrl');
 
 const router = express.Router();
@@ -34,6 +35,7 @@ router.route('/login').post(loginUserCtrl);
 router.route('/loginAdmin').post(loginAdmin);
 router.route('/getalluser').get(getAllUser);
 router.route('/getorders').get(authMiddleware, getOrders);
+router.route('/getallorders').get(authMiddleware, isAdmin, getAllOrders);
 router.route('/refresh').get(handleRefreshToken);
 router.route('/wishlist').get(authMiddleware, getWishList);
 router.route('/saveaddress').put(authMiddleware, saveAddress);
