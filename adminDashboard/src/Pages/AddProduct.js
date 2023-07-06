@@ -11,30 +11,47 @@ import Multiselect from 'react-widgets/Multiselect';
 import 'react-widgets/styles.css';
 import { getColors } from '@/Features/Colors/ColorSlice';
 import Dropzone from 'react-dropzone';
-import { uploadImg } from '@/Features/Upload/uploadSlice';
+import { deleteImg, uploadImg } from '@/Features/Upload/uploadSlice';
+import { createProducts } from '@/Features/Product/ProductSlice';
 
 const AddProduct = () => {
     const dispatch = useDispatch();
     const [Color, setColor] = useState([]);
+    const [Images, setImages] = useState([]);
 
     useEffect(() => {
         dispatch(getBrands());
         dispatch(getPCategory());
         dispatch(getColors());
-        formik.values.color = Color;
-    }, []);
+    }, [dispatch]);
 
     const brandState = useSelector((state) => state.brand.brands);
     const PCategoryState = useSelector((state) => state.pCategory.PCategorys);
     const ColorState = useSelector((state) => state.color.colors);
+    const imgUpload = useSelector((state) => state.upload.images);
 
     const colors = [];
     ColorState.forEach((i) => {
         colors.push({
-            _id: i.id,
+            _id: i._id,
             color: i.title,
         });
     });
+
+    const img = [];
+    imgUpload.forEach((i) => {
+        img.push({
+            public_id: i.public_id,
+            url: i.url,
+        });
+    });
+
+    console.log(img);
+
+    useEffect(() => {
+        formik.values.color = Color;
+        formik.values.images = img;
+    }, [Color, img]);
 
     const formik = useFormik({
         initialValues: {
@@ -45,6 +62,7 @@ const AddProduct = () => {
             category: '',
             color: '',
             quantity: '',
+            images: '',
         },
         validationSchema: Yup.object().shape({
             title: Yup.string().required('Title is Required'),
@@ -56,7 +74,8 @@ const AddProduct = () => {
             quantity: Yup.number().required('Quantity is Required'),
         }),
         onSubmit: (values) => {
-            alert(JSON.stringify(values));
+            // alert(JSON.stringify(values));
+            dispatch(createProducts(values));
         },
     });
 
@@ -70,7 +89,7 @@ const AddProduct = () => {
                     className="d-flex gap-3 flex-column"
                 >
                     <CustomInput
-                        type="text"
+                        type={'text'}
                         label="Enter Product List"
                         val={formik.values.title}
                         onCh={formik.handleChange('title')}
@@ -92,7 +111,7 @@ const AddProduct = () => {
                             formik.errors.description}
                     </div>
                     <CustomInput
-                        type="number"
+                        type={'number'}
                         label="Enter Product Price"
                         val={formik.values.price}
                         onCh={formik.handleChange('price')}
@@ -141,13 +160,13 @@ const AddProduct = () => {
                         dataKey="id"
                         textField="color"
                         data={colors}
-                        onChange={((e) => setColor(e), formik.setFieldTouched)}
+                        onChange={(e) => setColor(e)}
                     />
                     <div className="error">
                         {formik.touched.color && formik.errors.color}
                     </div>
                     <CustomInput
-                        type="number"
+                        type={'number'}
                         label="Enter Product Quantity"
                         val={formik.values.quantity}
                         onCh={formik.handleChange('quantity')}
@@ -174,6 +193,28 @@ const AddProduct = () => {
                                 </section>
                             )}
                         </Dropzone>
+                    </div>
+                    <div className="showimages d-flex flex-wrap gap-3">
+                        {imgUpload?.map((i, j) => {
+                            return (
+                                <div key={j} className="position-relative">
+                                    <button
+                                        type={'button'}
+                                        className="btn-close position-absolute"
+                                        style={{ top: '10px', right: '10px' }}
+                                        onClick={() =>
+                                            dispatch(deleteImg(i.public_id))
+                                        }
+                                    ></button>
+                                    <img
+                                        src={i.url}
+                                        alt={'none'}
+                                        width={200}
+                                        height={200}
+                                    ></img>
+                                </div>
+                            );
+                        })}
                     </div>
                     <button className="btn btn-success border-0 rounded-3 my-5">
                         Add Product

@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import uploadService from './uploadService';
 
@@ -17,6 +16,17 @@ export const uploadImg = createAsyncThunk(
     },
 );
 
+export const deleteImg = createAsyncThunk(
+    'delete/images',
+    async (id, thunkAPI) => {
+        try {
+            return await uploadService.deleteImg(id);
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error);
+        }
+    },
+);
+
 const initialState = {
     images: [],
     isError: false,
@@ -26,7 +36,7 @@ const initialState = {
 };
 
 export const imagesSlice = createSlice({
-    name: 'Images',
+    name: 'images',
     initialState,
     reducers: {},
     extraReducers: (builder) => {
@@ -45,6 +55,21 @@ export const imagesSlice = createSlice({
                 state.isError = true;
                 state.isSuccess = false;
                 state.message = action.error;
+            })
+            .addCase(deleteImg.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(deleteImg.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isError = false;
+                state.isSuccess = false;
+                state.images = [];
+            })
+            .addCase(deleteImg.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.isSuccess = false;
+                state.message = action.payload;
             });
     },
 });
