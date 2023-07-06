@@ -20,6 +20,9 @@ import { IoIosNotifications } from 'react-icons/io';
 // avatar
 import avatar from '@/Images/Avatar.jpg';
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const { Header, Sider, Content } = Layout;
 const MainLayout = () => {
     const [collapsed, setCollapsed] = useState(false);
@@ -242,6 +245,17 @@ const MainLayout = () => {
                         background: colorBgContainer,
                     }}
                 >
+                    <ToastContainer
+                        position="top-right"
+                        autoClose={5000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        theme="light"
+                    />
                     <Outlet></Outlet>
                 </Content>
             </Layout>
