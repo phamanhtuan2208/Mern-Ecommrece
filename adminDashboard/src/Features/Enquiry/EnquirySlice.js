@@ -33,7 +33,7 @@ export const inquirySlice = createSlice({
             .addCase(getInquiry.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isError = false;
-                state.isSuccess = false;
+                state.isSuccess = true;
                 state.inquiries = action.payload;
             })
             .addCase(getInquiry.rejected, (state, action) => {
