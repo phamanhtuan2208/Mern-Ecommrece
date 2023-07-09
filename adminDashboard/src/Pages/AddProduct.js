@@ -14,12 +14,11 @@ import { getColors } from '@/Features/Colors/ColorSlice';
 import Dropzone from 'react-dropzone';
 import { deleteImg, uploadImg } from '@/Features/Upload/uploadSlice';
 import { Select } from 'antd';
-import { createProducts } from '@/Features/Product/ProductSlice';
-import { useNavigate } from 'react-router-dom';
+import { createProducts, resetState } from '@/Features/Product/ProductSlice';
 
 const AddProduct = () => {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
+
     const [Color, setColor] = useState([]);
 
     useEffect(() => {
@@ -94,7 +93,7 @@ const AddProduct = () => {
             formik.resetForm();
             setColor(null);
             setTimeout(() => {
-                navigate('/admin/product-list');
+                dispatch(resetState());
             }, 3000);
         },
     });

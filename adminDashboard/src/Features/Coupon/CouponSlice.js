@@ -1,76 +1,75 @@
 /* eslint-disable no-undef */
 import { createSlice, createAsyncThunk, createAction } from '@reduxjs/toolkit';
-import BCategory from './BCategoryService';
+import couponService from './CouponService';
 
-export const getBCategory = createAsyncThunk(
-    '/blogs/getBCategory',
+export const getCoupon = createAsyncThunk(
+    '/coupon/getCoupon',
     async (thunkAPI) => {
         try {
-            return await BCategory.getBCategories();
+            return await couponService.getCoupons();
         } catch (error) {
             return thunkAPI.rejectWithValue(error);
         }
     },
 );
 
-export const createBCategory = createAsyncThunk(
-    '/blogs/createBCategory',
+export const createCoupon = createAsyncThunk(
+    '/coupon/createCoupon',
     async (data, thunkAPI) => {
         try {
-            return await BCategory.createBCategories(data);
+            return await couponService.createCoupons(data);
         } catch (error) {
             return thunkAPI.rejectWithValue(error);
         }
     },
 );
-
 export const resetState = createAction('Reset_all');
 
 const initialState = {
-    BCategorys: [],
+    coupons: [],
     isError: false,
     isLoading: false,
     isSuccess: false,
     message: '',
 };
 
-export const BCategorySlice = createSlice({
-    name: 'category',
+export const couponSlice = createSlice({
+    name: 'coupon',
     initialState,
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(getBCategory.pending, (state) => {
+            .addCase(getCoupon.pending, (state) => {
                 state.isLoading = true;
             })
-            .addCase(getBCategory.fulfilled, (state, action) => {
+            .addCase(getCoupon.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isError = false;
                 state.isSuccess = true;
-                state.BCategorys = action.payload;
+                state.coupons = action.payload;
             })
-            .addCase(getBCategory.rejected, (state, action) => {
+            .addCase(getCoupon.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.isSuccess = false;
                 state.message = action.error;
             })
-            .addCase(createBCategory.pending, (state) => {
+            .addCase(createCoupon.pending, (state) => {
                 state.isLoading = true;
             })
-            .addCase(createBCategory.fulfilled, (state, action) => {
+            .addCase(createCoupon.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isError = false;
                 state.isSuccess = true;
-                state.createdBCategorys = action.payload;
+                state.createCoupons = action.payload;
             })
-            .addCase(createBCategory.rejected, (state, action) => {
+            .addCase(createCoupon.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.isSuccess = false;
                 state.message = action.error;
             })
-        .addCase(resetState, () => initialState);
+            .addCase(resetState, () => initialState);
     },
 });
-export default BCategorySlice.reducer;
+export default couponSlice.reducer;

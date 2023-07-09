@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, createAction } from '@reduxjs/toolkit';
 import brandService from './BrandService';
 
 export const getBrands = createAsyncThunk(
@@ -23,6 +23,7 @@ export const createBrand = createAsyncThunk(
         }
     },
 );
+export const resetState = createAction('Reset_all');
 
 const initialState = {
     brands: [],
@@ -60,14 +61,15 @@ export const brandSlice = createSlice({
                 state.isLoading = false;
                 state.isError = false;
                 state.isSuccess = true;
-                state.createBrand = action.payload;
+                state.createBrands = action.payload;
             })
             .addCase(createBrand.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.isSuccess = false;
                 state.message = action.error;
-            });
+            })
+            .addCase(resetState, () => initialState);
     },
 });
 export default brandSlice.reducer;

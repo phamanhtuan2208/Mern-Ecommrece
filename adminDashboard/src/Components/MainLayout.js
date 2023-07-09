@@ -17,6 +17,7 @@ import { FaClipboardList, FaBloggerB } from 'react-icons/fa';
 import { ImBlog } from 'react-icons/im';
 import { Outlet } from 'react-router-dom';
 import { IoIosNotifications } from 'react-icons/io';
+import { RiCoupon3Line, RiCouponLine } from 'react-icons/ri';
 // avatar
 import avatar from '@/Images/Avatar.jpg';
 
@@ -119,6 +120,23 @@ const MainLayout = () => {
                             key: 'orders',
                             icon: <FaClipboardList className="fs-4" />,
                             label: 'Orders',
+                        },
+                        {
+                            key: 'marketing',
+                            icon: <RiCouponLine className="fs-4" />,
+                            label: 'Marketing',
+                            children: [
+                                {
+                                    key: 'coupon-add',
+                                    icon: <RiCoupon3Line className="fs-4" />,
+                                    label: 'Add Coupon',
+                                },
+                                {
+                                    key: 'coupon-list',
+                                    icon: <RiCouponLine className="fs-4" />,
+                                    label: 'Coupon List',
+                                },
+                            ],
                         },
                         {
                             key: 'blog',

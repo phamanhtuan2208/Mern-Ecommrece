@@ -3,13 +3,16 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useNavigate } from 'react-router-dom';
+
 import { toast } from 'react-toastify';
-import { createCategory } from '@/Features/PCategory/PCategorySlice';
+import {
+    createCategory,
+    resetState,
+} from '@/Features/PCategory/PCategorySlice';
 
 const AddCat = () => {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
+
     const newCat = useSelector((state) => state.pCategory);
 
     const { isSuccess, isError, isLoading, createPCategorys } = newCat;
@@ -34,7 +37,8 @@ const AddCat = () => {
             dispatch(createCategory(values));
             formik.resetForm();
             setTimeout(() => {
-                navigate('/admin/list-category');
+                dispatch(resetState());
+                
             }, 3000);
         },
     });

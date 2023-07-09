@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, createAction } from '@reduxjs/toolkit';
 import BlogsService from './BlogsService';
 
 export const getBlogs = createAsyncThunk(
@@ -14,7 +14,7 @@ export const getBlogs = createAsyncThunk(
 );
 
 export const createBlog = createAsyncThunk(
-    '/blogs/createBlogs',
+    '/blogs/create-blogs',
     async (data, thunkAPI) => {
         try {
             return await BlogsService.createBlog(data);
@@ -23,6 +23,8 @@ export const createBlog = createAsyncThunk(
         }
     },
 );
+
+export const resetState = createAction('Reset_all');
 
 const initialState = {
     blogs: [],
@@ -67,7 +69,8 @@ export const blogSlice = createSlice({
                 state.isError = true;
                 state.isSuccess = false;
                 state.message = action.error;
-            });
+            })
+            .addCase(resetState, () => initialState);
     },
 });
 export default blogSlice.reducer;

@@ -3,13 +3,13 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useNavigate } from 'react-router-dom';
+
 import { toast } from 'react-toastify';
-import { createColor } from '@/Features/Colors/ColorSlice';
+import { createColor, resetState } from '@/Features/Colors/ColorSlice';
 
 const AddColor = () => {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
+
     const newColor = useSelector((state) => state.color);
 
     const { isSuccess, isError, isLoading, createdColors } = newColor;
@@ -34,7 +34,7 @@ const AddColor = () => {
             dispatch(createColor(values));
             formik.resetForm();
             setTimeout(() => {
-                navigate('/admin/list-color');
+                dispatch(resetState());
             }, 3000);
         },
     });

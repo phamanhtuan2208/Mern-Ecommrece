@@ -1,29 +1,30 @@
 import CustomInput from '@/Components/CustomInput';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useNavigate } from 'react-router-dom';
+
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import Dropzone from 'react-dropzone';
 import { deleteImg, uploadImg } from '@/Features/Upload/uploadSlice';
-import { createBlog } from '@/Features/Blogs/BlogsSlice';
+import { createBlog, resetState } from '@/Features/Blogs/BlogsSlice';
+import { getBCategory } from '@/Features/BCategory/BCategorySlice';
 
 const AddBlog = () => {
-    const [desc, setDesc] = useState('');
-    const handleDesc = (e) => {
-        setDesc(e);
-    };
-
     const dispatch = useDispatch();
-    const navigate = useNavigate();
+
+    useEffect(() => {
+        dispatch(getBCategory());
+    }, [dispatch]);
+
     const newBlogs = useSelector((state) => state.blog);
 
     const { isSuccess, isError, isLoading, createdBlogs } = newBlogs;
 
     const imgUpload = useSelector((state) => state.upload.images);
+    const bCategory = useSelector((state) => state.bCategory.BCategorys);
 
     useEffect(() => {
         if (isSuccess && createdBlogs) {
@@ -62,7 +63,7 @@ const AddBlog = () => {
             dispatch(createBlog(values));
             formik.resetForm();
             setTimeout(() => {
-                navigate('/admin/blog-list');
+                dispatch(resetState());
             }, 3000);
         },
     });
@@ -70,7 +71,6 @@ const AddBlog = () => {
     return (
         <>
             <h3 className="mb-4 title">Add Blog</h3>
-
             <div className="">
                 <form
                     action=""
@@ -85,7 +85,7 @@ const AddBlog = () => {
                             onBl={formik.handleBlur('title')}
                             type="text"
                         ></CustomInput>
-                        <div className="error">
+                        <div className="error mt-3">
                             {formik.touched.title && formik.errors.title}
                         </div>
                     </div>
@@ -96,19 +96,28 @@ const AddBlog = () => {
                         onBlur={formik.handleBlur('category')}
                     >
                         <option value={''}>Select Blog Category</option>
-                        <option value={'Popular'}>Popular</option>
-                        <option value={'Special'}>Special</option>
+                        {bCategory.map((i, index) => {
+                            return (
+                                <option key={index} value={i.title}>
+                                    {i.title}
+                                </option>
+                            );
+                        })}
                     </select>
                     <div className="error">
                         {formik.touched.category && formik.errors.category}
                     </div>
                     <ReactQuill
                         theme="snow"
-                        value={desc}
-                        onChange={(e) => {
-                            handleDesc(e);
-                        }}
+                        name="description"
+                        onChange={formik.handleChange('description')}
+                        value={formik.values.description}
                     />
+
+                    <div className="error">
+                        {formik.touched.description &&
+                            formik.errors.description}
+                    </div>
                     <div className="bg-white border-1 p-5 text-center">
                         <Dropzone
                             onDrop={(acceptedFiles) =>
@@ -154,10 +163,7 @@ const AddBlog = () => {
                         </div>
                     </div>
 
-                    <button
-                        type="button"
-                        className="btn btn-success border-0 rounded-3 my-5"
-                    >
+                    <button className="btn btn-success border-0 rounded-3 my-5">
                         Add Blog
                     </button>
                 </form>

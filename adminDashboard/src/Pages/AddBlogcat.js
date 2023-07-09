@@ -3,13 +3,16 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useNavigate } from 'react-router-dom';
+
 import { toast } from 'react-toastify';
-import { createBCategory } from '@/Features/BCategory/BCategorySlice';
+import {
+    createBCategory,
+    resetState,
+} from '@/Features/BCategory/BCategorySlice';
 
 const AddBlogcat = () => {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
+
     const newBlogCat = useSelector((state) => state.bCategory);
 
     const { isSuccess, isError, isLoading, createdBCategorys } = newBlogCat;
@@ -34,7 +37,7 @@ const AddBlogcat = () => {
             dispatch(createBCategory(values));
             formik.resetForm();
             setTimeout(() => {
-                navigate('/admin/blog-category-list');
+                dispatch(resetState());
             }, 3000);
         },
     });
