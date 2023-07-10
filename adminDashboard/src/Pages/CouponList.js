@@ -23,7 +23,7 @@ const CouponList = () => {
         },
         {
             title: 'Time Expire',
-            dataIndex: 'timeexpire',
+            dataIndex: 'expiry',
         },
         {
             title: 'Action',
@@ -45,7 +45,7 @@ const CouponList = () => {
             key: i + 1,
             name: couponState[i].name,
             discount: couponState[i].discount + '%',
-            timeexpire: new Date(couponState[i].expiry).toLocaleString(),
+            expiry: new Date(couponState[i].expiry).toLocaleString(),
             action: (
                 <>
                     <Link to="" className="fs-3 text-danger">
