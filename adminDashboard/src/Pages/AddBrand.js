@@ -70,7 +70,7 @@ const AddBrand = () => {
                 formik.resetForm();
                 setTimeout(() => {
                     dispatch(resetState());
-                }, 100);
+                }, 2000);
             }
         },
     });

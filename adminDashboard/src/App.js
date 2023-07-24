@@ -104,6 +104,10 @@ function App() {
                             element={<AddCat></AddCat>}
                         ></Route>
                         <Route
+                            path="category/:id"
+                            element={<AddCat></AddCat>}
+                        ></Route>
+                        <Route
                             path="product-list"
                             element={<ProductList></ProductList>}
                         ></Route>

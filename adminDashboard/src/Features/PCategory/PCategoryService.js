@@ -25,7 +25,7 @@ const deleteProductCategories = async (id) => {
 const updateProductCategories = async (category) => {
     const response = await axios.put(
         `${base_url}/category/${category.id}`,
-        // { title: category.brandData.title },
+        { title: category.updatedProductsCategories.title },
         config,
     );
     return response.data;
