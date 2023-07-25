@@ -56,6 +56,10 @@ function App() {
                             element={<AddCoupon></AddCoupon>}
                         ></Route>
                         <Route
+                            path="coupon-add/:id"
+                            element={<AddCoupon></AddCoupon>}
+                        ></Route>
+                        <Route
                             path="coupon-list"
                             element={<CouponList></CouponList>}
                         ></Route>
@@ -97,6 +101,10 @@ function App() {
                         ></Route>
                         <Route
                             path="color"
+                            element={<AddColor></AddColor>}
+                        ></Route>
+                        <Route
+                            path="color/:id"
                             element={<AddColor></AddColor>}
                         ></Route>
                         <Route

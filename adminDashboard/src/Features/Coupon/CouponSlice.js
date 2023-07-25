@@ -23,6 +23,40 @@ export const createCoupon = createAsyncThunk(
         }
     },
 );
+
+export const getACoupon = createAsyncThunk(
+    '/coupon/getACoupon',
+    async (id, thunkAPI) => {
+        try {
+            return await couponService.getACoupon(id);
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error);
+        }
+    },
+);
+
+export const deleteCoupon = createAsyncThunk(
+    '/coupon/deleteCoupon',
+    async (id, thunkAPI) => {
+        try {
+            return await couponService.deleteCoupon(id);
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error);
+        }
+    },
+);
+
+export const updateCoupon = createAsyncThunk(
+    '/coupon/updateCoupon',
+    async (id, thunkAPI) => {
+        try {
+            return await couponService.updateCoupons(id);
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error);
+        }
+    },
+);
+
 export const resetState = createAction('Reset_all');
 
 const initialState = {
@@ -54,6 +88,23 @@ export const couponSlice = createSlice({
                 state.isSuccess = false;
                 state.message = action.error;
             })
+            .addCase(getACoupon.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(getACoupon.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isError = false;
+                state.isSuccess = true;
+                state.CouponDataName = action.payload.name;
+                state.CouponDataExpiry = action.payload.expiry;
+                state.CouponDataDiscount = action.payload.discount;
+            })
+            .addCase(getACoupon.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.isSuccess = false;
+                state.message = action.error;
+            })
             .addCase(createCoupon.pending, (state) => {
                 state.isLoading = true;
             })
@@ -64,6 +115,36 @@ export const couponSlice = createSlice({
                 state.createCoupons = action.payload;
             })
             .addCase(createCoupon.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.isSuccess = false;
+                state.message = action.error;
+            })
+            .addCase(deleteCoupon.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(deleteCoupon.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isError = false;
+                state.isSuccess = true;
+                state.deletedCoupon = action.payload;
+            })
+            .addCase(deleteCoupon.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.isSuccess = false;
+                state.message = action.error;
+            })
+            .addCase(updateCoupon.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(updateCoupon.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isError = false;
+                state.isSuccess = true;
+                state.updatedCoupon = action.payload;
+            })
+            .addCase(updateCoupon.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.isSuccess = false;

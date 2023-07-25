@@ -1,12 +1,28 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Table } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { BiEdit } from 'react-icons/bi';
 import { AiFillDelete } from 'react-icons/ai';
-import { getCoupon } from '@/Features/Coupon/CouponSlice';
+import {
+    getCoupon,
+    deleteCoupon,
+    resetState,
+} from '@/Features/Coupon/CouponSlice';
+import CustomModel from '@/Components/customModel';
 
 const CouponList = () => {
+    const [open, setOpen] = useState(false);
+    const [brandId, setBrandId] = useState('');
+    const showModal = (e) => {
+        setOpen(true);
+        setBrandId(e);
+    };
+
+    const hideModal = () => {
+        setOpen(false);
+    };
+
     const columns = [
         {
             title: 'Sno',
@@ -33,6 +49,20 @@ const CouponList = () => {
 
     const dispatch = useDispatch();
 
+    const deleteCoupons = (e) => {
+        dispatch(deleteCoupon(e));
+        setOpen(false);
+
+        setTimeout(() => {
+            dispatch(getCoupon());
+        }, 1000);
+    };
+
+    useEffect(() => {
+        dispatch(resetState());
+        dispatch(getCoupon());
+    }, [dispatch]);
+
     useEffect(() => {
         dispatch(getCoupon());
     }, [dispatch]);
@@ -40,7 +70,7 @@ const CouponList = () => {
     const couponState = useSelector((state) => state.coupon.coupons);
 
     const data1 = [];
-    for (let i = 0; i < couponState.length; i++) {
+    for (let i = 0; i < couponState?.length; i++) {
         data1.push({
             key: i + 1,
             name: couponState[i].name,
@@ -48,12 +78,18 @@ const CouponList = () => {
             expiry: new Date(couponState[i].expiry).toLocaleString(),
             action: (
                 <>
-                    <Link to="" className="fs-3 text-danger">
+                    <Link
+                        to={`/admin/coupon-add/${couponState[i]._id}`}
+                        className="fs-3 text-danger"
+                    >
                         <BiEdit />
                     </Link>
-                    <Link to={''} className="ms-3 fs-3 text-danger">
+                    <button
+                        onClick={() => showModal(couponState[i]._id)}
+                        className="ms-3 fs-3 text-danger bg-transparent border-0"
+                    >
                         <AiFillDelete></AiFillDelete>
-                    </Link>
+                    </button>
                 </>
             ),
         });
@@ -64,6 +100,12 @@ const CouponList = () => {
             <div className="">
                 <Table columns={columns} dataSource={data1} />
             </div>
+            <CustomModel
+                open={open}
+                hideModal={hideModal}
+                title="Are You sure you want to delete this brand?"
+                performAction={() => deleteCoupons(brandId)}
+            ></CustomModel>
         </div>
     );
 };

@@ -1,12 +1,28 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Table } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { getColors } from '@/Features/Colors/ColorSlice';
+import {
+    getColors,
+    deleteColors,
+    resetState,
+} from '@/Features/Colors/ColorSlice';
 import { Link } from 'react-router-dom';
 import { BiEdit } from 'react-icons/bi';
 import { AiFillDelete } from 'react-icons/ai';
+import CustomModel from '@/Components/customModel';
 
 const ColorList = () => {
+    const [open, setOpen] = useState(false);
+    const [ColorId, setColorId] = useState('');
+    const showModal = (e) => {
+        setOpen(true);
+        setColorId(e);
+    };
+
+    const hideModal = () => {
+        setOpen(false);
+    };
+
     const columns = [
         {
             title: 'Sno',
@@ -25,35 +41,57 @@ const ColorList = () => {
 
     const dispatch = useDispatch();
 
+    const deletedColors = (e) => {
+        dispatch(deleteColors(e));
+        setOpen(false);
+
+        setTimeout(() => {
+            dispatch(getColors());
+        }, 1000);
+    };
+
     useEffect(() => {
+        dispatch(resetState());
         dispatch(getColors());
     }, [dispatch]);
 
     const pColorState = useSelector((state) => state.color.colors);
 
     const data1 = [];
-    for (let i = 0; i < pColorState.length; i++) {
+    for (let i = 0; i < pColorState?.length; i++) {
         data1.push({
             key: i,
             title: pColorState[i].title,
             action: (
                 <>
-                    <Link to="" className="fs-3 text-danger">
+                    <Link
+                        to={`/admin/color/${pColorState[i]._id}`}
+                        className="fs-3 text-danger"
+                    >
                         <BiEdit />
                     </Link>
-                    <Link to={''} className="ms-3 fs-3 text-danger">
+                    <button
+                        onClick={() => showModal(pColorState[i]._id)}
+                        className="ms-3 fs-3 text-danger bg-transparent border-0"
+                    >
                         <AiFillDelete></AiFillDelete>
-                    </Link>
+                    </button>
                 </>
             ),
         });
     }
     return (
         <div className="my-4">
-            <h3 className="mb-4 title">Color</h3>
+            <h3 className="mb-4 title">Color List</h3>
             <div className="">
                 <Table columns={columns} dataSource={data1} />
             </div>
+            <CustomModel
+                open={open}
+                hideModal={hideModal}
+                title="Are You sure you want to delete this Color?"
+                performAction={() => deletedColors(ColorId)}
+            ></CustomModel>
         </div>
     );
 };

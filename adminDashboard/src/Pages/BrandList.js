@@ -60,7 +60,7 @@ const BrandList = () => {
     const brandState = useSelector((state) => state.brand.brands);
 
     const data1 = [];
-    for (let i = 0; i < brandState.length; i++) {
+    for (let i = 0; i < brandState?.length; i++) {
         data1.push({
             key: i + 1,
             title: brandState[i].title,
