@@ -68,6 +68,10 @@ function App() {
                             element={<BlogCartList></BlogCartList>}
                         ></Route>
                         <Route
+                            path="blog-category-list/:id"
+                            element={<BlogCartList></BlogCartList>}
+                        ></Route>
+                        <Route
                             path="orders"
                             element={<Orders></Orders>}
                         ></Route>
@@ -97,6 +101,10 @@ function App() {
                         ></Route>
                         <Route
                             path="blog-category"
+                            element={<AddBlogcat></AddBlogcat>}
+                        ></Route>
+                        <Route
+                            path="blog-category/:id"
                             element={<AddBlogcat></AddBlogcat>}
                         ></Route>
                         <Route

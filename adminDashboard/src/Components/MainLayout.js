@@ -146,7 +146,7 @@ const MainLayout = () => {
                                 {
                                     key: 'blog-add',
                                     icon: <ImBlog className="fs-4" />,
-                                    label: 'Add List',
+                                    label: 'Add Blog',
                                 },
                                 {
                                     key: 'blog-list',

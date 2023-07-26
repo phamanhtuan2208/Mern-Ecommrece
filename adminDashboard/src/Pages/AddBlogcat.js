@@ -7,43 +7,88 @@ import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 import {
     createBCategory,
+    editBCategory,
+    getABCategory,
     resetState,
 } from '@/Features/BCategory/BCategorySlice';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const AddBlogcat = () => {
     const dispatch = useDispatch();
+    const location = useLocation();
+    const navigate = useNavigate();
+    const getBlogCatId = location.pathname.split('/')[3];
 
     const newBlogCat = useSelector((state) => state.bCategory);
 
-    const { isSuccess, isError, isLoading, createdBCategorys } = newBlogCat;
+    const {
+        isSuccess,
+        isError,
+        isLoading,
+        createdBCategorys,
+        editedBCategory,
+        BCategoryName,
+    } = newBlogCat;
+
+    useEffect(() => {
+        if (getBlogCatId !== undefined) {
+            dispatch(getABCategory(getBlogCatId));
+            formik.values.title = BCategoryName;
+        } else {
+            dispatch(resetState());
+        }
+    }, [dispatch, BCategoryName, getBlogCatId]);
 
     useEffect(() => {
         if (isSuccess && createdBCategorys) {
             toast.success('Blog Category Added Successfully!');
         }
+        if (isSuccess && editedBCategory) {
+            toast.success('Color Updated Successfully!');
+            navigate('/admin/blog-category-list');
+        }
         if (isError) {
             toast.error('Something Went Wrong!');
         }
-    }, [isSuccess, isError, isLoading, createdBCategorys]);
+    }, [
+        isSuccess,
+        isError,
+        isLoading,
+        createdBCategorys,
+        editedBCategory,
+        navigate,
+    ]);
 
     const formik = useFormik({
+        enableReinitialize: true,
         initialValues: {
-            title: '',
+            title: BCategoryName || '',
         },
         validationSchema: Yup.object().shape({
             title: Yup.string().required('Blog Category is Required'),
         }),
         onSubmit: (values) => {
-            dispatch(createBCategory(values));
-            formik.resetForm();
-            setTimeout(() => {
+            if (getBlogCatId !== undefined) {
+                const data = {
+                    id: getBlogCatId,
+                    BCategoryName: values,
+                };
+                dispatch(editBCategory(data));
                 dispatch(resetState());
-            }, 3000);
+            } else {
+                dispatch(createBCategory(values));
+                formik.resetForm();
+                setTimeout(() => {
+                    dispatch(resetState());
+                }, 3000);
+            }
         },
     });
     return (
         <>
-            <h3 className="mb-4 title">Add Blog Category</h3>
+            <h3 className="mb-4 title">
+                {getBlogCatId !== undefined ? 'Edit' : 'Add'} Blog Category
+            </h3>
             <div>
                 <form
                     onSubmit={formik.handleSubmit}
@@ -60,7 +105,8 @@ const AddBlogcat = () => {
                         {formik.touched.title && formik.errors.title}
                     </div>
                     <button className="btn btn-success border-0 rounded-3 my-5">
-                        Add Blog Category
+                        {getBlogCatId !== undefined ? 'Edit' : 'Add'} Blog
+                        Category
                     </button>
                 </form>
             </div>
