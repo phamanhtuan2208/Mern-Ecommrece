@@ -34,9 +34,9 @@ const AddCoupon = () => {
     useEffect(() => {
         if (getCouponId !== undefined) {
             dispatch(getACoupon(getCouponId));
-            // formik.values.name = CouponDataName;
+            formik.values.name = CouponDataName;
             // formik.values.expiry = CouponDataExpiry;
-            // formik.values.discount = CouponDataDiscount;
+            formik.values.discount = CouponDataDiscount;
         } else {
             dispatch(resetState());
         }
@@ -52,12 +52,7 @@ const AddCoupon = () => {
         if (isSuccess && createCoupons) {
             toast.success('Coupon Added Successfully!');
         }
-        if (
-            isSuccess &&
-            CouponDataName &&
-            CouponDataExpiry &&
-            CouponDataDiscount
-        ) {
+        if (isSuccess && updatedCoupon) {
             toast.success('Coupon Updated Successfully!');
             navigate('/admin/coupon-list');
         }
@@ -66,11 +61,22 @@ const AddCoupon = () => {
         }
     }, [isSuccess, isError, isLoading, createCoupons, updatedCoupon]);
 
+    //formmat mm-dd-yyyy
+    const dateObj = new Date(CouponDataExpiry);
+
+    const month = (dateObj.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based, so we add 1
+    const day = dateObj.getDate().toString().padStart(2, '0');
+    const year = dateObj.getFullYear();
+
+    const formattedDate = `${year}-${month}-${day}`;
+
+    console.clear();
+
     const formik = useFormik({
         enableReinitialize: true,
         initialValues: {
             name: CouponDataName || '',
-            expiry: '',
+            expiry: formattedDate || '',
             discount: CouponDataDiscount || '',
         },
         validationSchema: Yup.object().shape({
@@ -79,17 +85,17 @@ const AddCoupon = () => {
             discount: Yup.string().required('Discount is Required'),
         }),
         onSubmit: (values) => {
-            // if (getCouponId !== undefined) {
-            //     const data = { id: getCouponId, brandData: values };
-            //     dispatch(updateCoupon(data));
-            //     dispatch(resetState());
-            // } else {
-            dispatch(createCoupon(values));
-            formik.resetForm();
-            setTimeout(() => {
+            if (getCouponId !== undefined) {
+                const data = { id: getCouponId, couponData: values };
+                dispatch(updateCoupon(data));
                 dispatch(resetState());
-            }, 3000);
-            // }
+            } else {
+                dispatch(createCoupon(values));
+                formik.resetForm();
+                setTimeout(() => {
+                    dispatch(resetState());
+                }, 3000);
+            }
         },
     });
 

@@ -13,10 +13,10 @@ import CustomModel from '@/Components/customModel';
 
 const CouponList = () => {
     const [open, setOpen] = useState(false);
-    const [brandId, setBrandId] = useState('');
+    const [CouponId, setCouponId] = useState('');
     const showModal = (e) => {
         setOpen(true);
-        setBrandId(e);
+        setCouponId(e);
     };
 
     const hideModal = () => {
@@ -104,7 +104,7 @@ const CouponList = () => {
                 open={open}
                 hideModal={hideModal}
                 title="Are You sure you want to delete this brand?"
-                performAction={() => deleteCoupons(brandId)}
+                performAction={() => deleteCoupons(CouponId)}
             ></CustomModel>
         </div>
     );

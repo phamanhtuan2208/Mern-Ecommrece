@@ -25,9 +25,11 @@ const deleteCoupon = async (id) => {
 const updateCoupons = async (coupon) => {
     const response = await axios.put(
         `${base_url}/Coupon/${coupon.id}`,
-        { name: coupon.CouponDataName },
-        { expiry: coupon.CouponDataExpiry },
-        { discount: coupon.CouponDataDiscount },
+        {
+            name: coupon.couponData.name,
+            expiry: coupon.couponData.expiry,
+            discount: coupon.couponData.discount,
+        },
         config,
     );
     return response.data;
