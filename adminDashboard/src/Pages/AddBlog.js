@@ -9,31 +9,56 @@ import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import Dropzone from 'react-dropzone';
 import { deleteImg, uploadImg } from '@/Features/Upload/uploadSlice';
-import { createBlog, resetState } from '@/Features/Blogs/BlogsSlice';
+import {
+    createBlog,
+    getABlog,
+    resetState,
+    updateBlog,
+} from '@/Features/Blogs/BlogsSlice';
 import { getBCategory } from '@/Features/BCategory/BCategorySlice';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const AddBlog = () => {
     const dispatch = useDispatch();
+    const location = useLocation();
+    const navigate = useNavigate();
+    const getBlogId = location.pathname.split('/')[3];
 
     useEffect(() => {
-        dispatch(getBCategory());
-    }, [dispatch]);
+        if (getBlogId !== undefined) {
+            dispatch(getABlog(getBlogId));
+        } else {
+            dispatch(resetState());
+        }
+    }, [dispatch, getBlogId]);
 
     const newBlogs = useSelector((state) => state.blog);
-
-    const { isSuccess, isError, isLoading, createdBlogs } = newBlogs;
-
     const imgUpload = useSelector((state) => state.upload.images);
     const bCategory = useSelector((state) => state.bCategory.BCategorys);
+
+    const {
+        isSuccess,
+        isError,
+        isLoading,
+        createdBlogs,
+        updatedBlog,
+        blogName,
+        blogDesc,
+        blogCategory,
+    } = newBlogs;
 
     useEffect(() => {
         if (isSuccess && createdBlogs) {
             toast.success('Blog Added Successfully!');
         }
+        if (isSuccess && updatedBlog) {
+            toast.success('Blog updated Successfully!');
+            navigate(`/admin/blog-list`);
+        }
         if (isError) {
             toast.error('Something Went Wrong!');
         }
-    }, [isSuccess, isError, isLoading, createdBlogs]);
+    }, [isSuccess, isError, isLoading, createdBlogs, updatedBlog, navigate]);
 
     const img = [];
     imgUpload.forEach((i) => {
@@ -44,14 +69,16 @@ const AddBlog = () => {
     });
 
     useEffect(() => {
-        formik.values.images = img;
-    }, [img]);
+        dispatch(resetState());
+        dispatch(getBCategory());
+    }, [dispatch]);
 
     const formik = useFormik({
+        enableReinitialize: true,
         initialValues: {
-            title: '',
-            description: '',
-            category: '',
+            title: blogName || '',
+            description: blogDesc || '',
+            category: blogCategory || '',
             images: '',
         },
         validationSchema: Yup.object().shape({
@@ -60,20 +87,30 @@ const AddBlog = () => {
             category: Yup.string().required('Category is Required'),
         }),
         onSubmit: (values) => {
-            dispatch(createBlog(values));
-            formik.resetForm();
-            setTimeout(() => {
+            if (getBlogId !== undefined) {
+                const data = {
+                    id: getBlogId,
+                    blogData: values,
+                };
+                dispatch(updateBlog(data));
                 dispatch(resetState());
-            }, 3000);
+            } else {
+                dispatch(createBlog(values));
+                formik.resetForm();
+                setTimeout(() => {
+                    dispatch(resetState());
+                }, 3000);
+            }
         },
     });
 
     return (
         <>
-            <h3 className="mb-4 title">Add Blog</h3>
+            <h3 className="mb-4 title">
+                {getBlogId !== undefined ? 'Edit' : 'Add'} Blog
+            </h3>
             <div className="">
                 <form
-                    action=""
                     onSubmit={formik.handleSubmit}
                     className="d-flex gap-3 flex-column"
                 >
@@ -110,10 +147,9 @@ const AddBlog = () => {
                     <ReactQuill
                         theme="snow"
                         name="description"
-                        onChange={formik.handleChange('description')}
-                        value={formik.values.description}
+                        onChange={formik?.handleChange('description')}
+                        value={formik?.values?.description}
                     />
-
                     <div className="error">
                         {formik.touched.description &&
                             formik.errors.description}
@@ -163,8 +199,11 @@ const AddBlog = () => {
                         </div>
                     </div>
 
-                    <button className="btn btn-success border-0 rounded-3 my-5">
-                        Add Blog
+                    <button
+                        type="submit"
+                        className="btn btn-success border-0 rounded-3 my-5"
+                    >
+                        {getBlogId !== undefined ? 'Edit' : 'Add'} Blog
                     </button>
                 </form>
             </div>

@@ -23,10 +23,12 @@ const updateBlog = AsyncHandler(async (req, res) => {
     const { id } = req.params;
     validateMongoDBid(id);
     try {
-        const updateBlog = await Blog.findById(id, req.body, { new: true });
+        const updatedBlog = await Blog.findByIdAndUpdate(id, req.body, {
+            new: true,
+        });
         res.json({
             status: 'success update',
-            updateBlog,
+            updatedBlog,
         });
     } catch (error) {
         throw new Error(error);

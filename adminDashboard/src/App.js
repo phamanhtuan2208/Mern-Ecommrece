@@ -52,6 +52,10 @@ function App() {
                             element={<AddBlog></AddBlog>}
                         ></Route>
                         <Route
+                            path="blog-add/:id"
+                            element={<AddBlog></AddBlog>}
+                        ></Route>
+                        <Route
                             path="coupon-add"
                             element={<AddCoupon></AddCoupon>}
                         ></Route>
