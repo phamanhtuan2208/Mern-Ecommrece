@@ -23,6 +23,7 @@ import AddProduct from './Pages/AddProduct';
 import CouponList from './Pages/CouponList';
 import AddCoupon from './Pages/AddCoupon';
 import ViewEnq from './Pages/ViewEnq';
+import ViewOrder from './Pages/ViewOrder';
 
 function App() {
     return (
@@ -83,6 +84,10 @@ function App() {
                         <Route
                             path="orders"
                             element={<Orders></Orders>}
+                        ></Route>
+                        <Route
+                            path="orders/:id"
+                            element={<ViewOrder></ViewOrder>}
                         ></Route>
                         <Route
                             path="customers"
