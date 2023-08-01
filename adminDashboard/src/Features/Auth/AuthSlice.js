@@ -47,6 +47,25 @@ export const getOrderByUser = createAsyncThunk(
     },
 );
 
+export const logOut = createAsyncThunk('/user/logOut', async (thunkAPI) => {
+    try {
+        return await authService.logOut();
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error);
+    }
+});
+
+export const forgotPassword = createAsyncThunk(
+    '/user/forgotPassword',
+    async (data, thunkAPI) => {
+        try {
+            return await authService.forgotPassword(data);
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error);
+        }
+    },
+);
+
 export const authSlice = createSlice({
     name: 'auth',
     initialState: initialState,
@@ -99,6 +118,35 @@ export const authSlice = createSlice({
                 state.isSuccess = false;
                 state.isError = true;
                 state.orders = null;
+                state.message = action.error;
+            })
+            .addCase(logOut.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(logOut.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = false;
+                state.message = 'logOut';
+            })
+            .addCase(logOut.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = false;
+                state.isError = true;
+                state.message = action.error;
+            })
+            .addCase(forgotPassword.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(forgotPassword.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.isError = false;
+                state.dataForgotPassword = action.payload;
+            })
+            .addCase(forgotPassword.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = false;
+                state.isError = true;
                 state.message = action.error;
             });
     },

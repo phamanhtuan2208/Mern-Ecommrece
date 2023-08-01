@@ -33,10 +33,25 @@ const getOrder = async (id) => {
     return response.data;
 };
 
+const logOut = async () => {
+    const response = await axios.get(`${base_url}/user/logout`);
+    return response.data;
+};
+
+const forgotPassword = async (email) => {
+    const response = await axios.post(
+        `${base_url}/user/forgotpasswordtoken`,
+        email,
+    );
+    return response.data;
+};
+
 const authService = {
     login,
     getOrder,
     getOrders,
+    logOut,
+    forgotPassword,
 };
 
 export default authService;

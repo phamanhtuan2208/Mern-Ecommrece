@@ -23,6 +23,8 @@ import avatar from '@/Images/Avatar.jpg';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useDispatch } from 'react-redux';
+import { logOut } from '@/Features/Auth/AuthSlice';
 
 const { Header, Sider, Content } = Layout;
 const MainLayout = () => {
@@ -32,6 +34,11 @@ const MainLayout = () => {
     } = theme.useToken();
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const userLocalStore = localStorage.getItem('user')
+        ? JSON.parse(localStorage.getItem('user'))
+        : null;
 
     return (
         <Layout>
@@ -218,9 +225,15 @@ const MainLayout = () => {
                                 data-bs-toggle="dropdown"
                                 aria-expanded="false"
                             >
-                                <h5 className="mb-0">AT</h5>
+                                <h5 className="mb-0">
+                                    {userLocalStore.firstname
+                                        ? userLocalStore.firstname
+                                        : 'Admin'}
+                                </h5>
                                 <p className="mb-0">
-                                    anhtuanpham2208@gmail.com
+                                    {userLocalStore.email
+                                        ? userLocalStore.email
+                                        : 'Admin'}
                                 </p>
                             </div>
                             <div
@@ -240,16 +253,26 @@ const MainLayout = () => {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link
+                                    <button
                                         className="dropdown-item py-1 mb-1"
                                         style={{
                                             heigh: 'auto',
                                             lineHeight: '20px',
                                         }}
-                                        to="#"
+                                        onClick={() => {
+                                            dispatch(logOut());
+                                            setTimeout(() => {
+                                                if (true) {
+                                                    localStorage.removeItem(
+                                                        'user',
+                                                    );
+                                                    navigate('/');
+                                                }
+                                            }, 2000);
+                                        }}
                                     >
-                                        Signout
-                                    </Link>
+                                        LogOut
+                                    </button>
                                 </li>
                             </div>
                         </div>

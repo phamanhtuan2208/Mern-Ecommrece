@@ -2,4 +2,6 @@ https://www.youtube.com/watch?v=S6Yd5cPtXr4&t=484s Done
 
 https://www.youtube.com/watch?v=S6Yd5cPtXr4&list=PL0g02APOH8okXhOQLOLcB_nifs1U41im5 #18
 
-adminDashboard: logout, page profile
+
+adminDashboard:
+page reset password
