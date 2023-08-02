@@ -2,9 +2,7 @@ import React, { useEffect } from 'react';
 import { Table } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getOrderByUser } from '@/Features/Auth/AuthSlice';
-import { Link, useLocation } from 'react-router-dom';
-import { BiEdit } from 'react-icons/bi';
-import { AiFillDelete } from 'react-icons/ai';
+import { useLocation } from 'react-router-dom';
 
 const ViewOrder = () => {
     const location = useLocation();
@@ -40,10 +38,6 @@ const ViewOrder = () => {
             title: 'Date',
             dataIndex: 'date',
         },
-        {
-            title: 'Action',
-            dataIndex: 'action',
-        },
     ];
 
     const dispatch = useDispatch();
@@ -68,17 +62,6 @@ const ViewOrder = () => {
             color: ordersState[i].product.color,
             amount: ordersState[i].product.price,
             date: ordersState[i].product.createdAt,
-
-            action: (
-                <>
-                    <Link to="" className="fs-3 text-danger">
-                        <BiEdit />
-                    </Link>
-                    <Link to={''} className="ms-3 fs-3 text-danger">
-                        <AiFillDelete></AiFillDelete>
-                    </Link>
-                </>
-            ),
         });
     }
     return (
