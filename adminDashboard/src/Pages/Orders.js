@@ -41,9 +41,9 @@ const Orders = () => {
         dispatch(getOrders());
     }, [dispatch]);
 
-    const ordersState = useSelector((state) => state.auth.orders);
+    const ordersState = useSelector((state) => state?.auth?.orders);
     const data1 = [];
-    for (let i = 0; i < ordersState.length; i++) {
+    for (let i = 0; i < ordersState?.length; i++) {
         data1.push({
             key: i + 1,
             name: ordersState[i].orderby.firstname,

@@ -66,6 +66,17 @@ export const forgotPassword = createAsyncThunk(
     },
 );
 
+export const resetPassword = createAsyncThunk(
+    '/user/resetPassword',
+    async (data, thunkAPI) => {
+        try {
+            return await authService.resetPassword(data);
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error);
+        }
+    },
+);
+
 export const authSlice = createSlice({
     name: 'auth',
     initialState: initialState,
@@ -146,6 +157,22 @@ export const authSlice = createSlice({
             .addCase(forgotPassword.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isSuccess = false;
+                state.isError = true;
+                state.message = action.error;
+            })
+            .addCase(resetPassword.pending, (state) => {
+                state.isLoading = true;
+                state.isSuccessReset = false;
+            })
+            .addCase(resetPassword.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccessReset = true;
+                state.isError = false;
+                state.dataResetPassword = action.payload;
+            })
+            .addCase(resetPassword.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isSuccessReset = false;
                 state.isError = true;
                 state.message = action.error;
             });

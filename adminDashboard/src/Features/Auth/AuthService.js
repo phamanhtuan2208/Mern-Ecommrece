@@ -46,12 +46,21 @@ const forgotPassword = async (email) => {
     return response.data;
 };
 
+const resetPassword = async (data) => {
+    const response = await axios.put(
+        `${base_url}/user/resetpassword/${data.id}`,
+        { password: data.password },
+    );
+    return response.data;
+};
+
 const authService = {
     login,
     getOrder,
     getOrders,
     logOut,
     forgotPassword,
+    resetPassword,
 };
 
 export default authService;
