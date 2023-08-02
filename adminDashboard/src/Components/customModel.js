@@ -2,11 +2,11 @@ import React from 'react';
 import { Modal } from 'antd';
 
 const CustomModel = (props) => {
-    const { open, hideModal, performAction, title } = props;
+    const { open, hideModal, performAction, title, title2 } = props;
     return (
         <>
             <Modal
-                title="Confirmation"
+                title={title2}
                 open={open}
                 onOk={performAction}
                 onCancel={hideModal}

@@ -3,8 +3,6 @@ import { Table } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getOrders } from '@/Features/Auth/AuthSlice';
 import { Link } from 'react-router-dom';
-import { BiEdit } from 'react-icons/bi';
-import { AiFillDelete } from 'react-icons/ai';
 
 const Orders = () => {
     const columns = [
@@ -29,10 +27,6 @@ const Orders = () => {
             title: 'Date',
             dataIndex: 'date',
         },
-        {
-            title: 'Action',
-            dataIndex: 'action',
-        },
     ];
 
     const dispatch = useDispatch();
@@ -54,17 +48,6 @@ const Orders = () => {
             ),
             amount: ordersState[i].paymentIntent.amount,
             date: new Date(ordersState[i].createdAt).toLocaleString(),
-
-            action: (
-                <>
-                    <Link to="" className="fs-3 text-danger">
-                        <BiEdit />
-                    </Link>
-                    <Link to={''} className="ms-3 fs-3 text-danger">
-                        <AiFillDelete></AiFillDelete>
-                    </Link>
-                </>
-            ),
         });
     }
     return (

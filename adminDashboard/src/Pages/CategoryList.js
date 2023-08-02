@@ -88,6 +88,7 @@ const CategoryList = () => {
                 <Table columns={columns} dataSource={data1} />
             </div>
             <CustomModel
+                title2="Confirmation"
                 open={open}
                 hideModal={hideModal}
                 title="Are You sure you want to delete this product category?"

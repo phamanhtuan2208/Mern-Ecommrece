@@ -1,5 +1,5 @@
 import { Button, Layout, Menu, theme } from 'antd';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
 // react icons
@@ -25,9 +25,18 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch } from 'react-redux';
 import { logOut } from '@/Features/Auth/AuthSlice';
+import CustomModel from './customModel';
 
 const { Header, Sider, Content } = Layout;
 const MainLayout = () => {
+    const [open, setOpen] = useState(false);
+    const showModal = () => {
+        setOpen(true);
+    };
+    const hideModal = () => {
+        setOpen(false);
+    };
+
     const [collapsed, setCollapsed] = useState(false);
     const {
         token: { colorBgContainer },
@@ -241,17 +250,28 @@ const MainLayout = () => {
                                 aria-labelledby="dropdownMenuLink"
                             >
                                 <li>
-                                    <Link
+                                    <button
                                         className="dropdown-item py-1 mb-1"
                                         style={{
                                             heigh: 'auto',
                                             lineHeight: '20px',
                                         }}
-                                        to="#"
+                                        onClick={showModal}
                                     >
-                                        View Profile
-                                    </Link>
+                                        More Profile
+                                    </button>
                                 </li>
+                                <CustomModel
+                                    title2="Your Information"
+                                    open={open}
+                                    hideModal={hideModal}
+                                    title={`Full Name: ${
+                                        userLocalStore.firstname +
+                                        ' ' +
+                                        userLocalStore.lastname
+                                    } Mobile: ${userLocalStore.mobile} `}
+                                    performAction={hideModal}
+                                ></CustomModel>
                                 <li>
                                     <button
                                         className="dropdown-item py-1 mb-1"
