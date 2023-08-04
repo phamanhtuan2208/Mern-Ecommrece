@@ -646,6 +646,11 @@ footer .input-group-text {
     background-color: var(--color-131921);
     color: white;
 }
+
+.error {
+    color: red;
+    font-size: 12px;
+}
 /*  auth card end */
 
 /* Policy Page */
