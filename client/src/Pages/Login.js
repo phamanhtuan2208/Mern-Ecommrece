@@ -4,8 +4,31 @@ import Container from '~/Components/Container';
 import BreadCrumb from '~/Components/BreadCrumb';
 import Meta from '~/Components/Meta';
 import CustomInput from '~/Components/CustomInput';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+import { useDispatch } from 'react-redux';
+import { loginUser } from '~/features/User/userSlice';
 
 const Login = () => {
+    const dispatch = useDispatch();
+
+    const signUpYup = yup.object({
+        email: yup.string().required('Email is require'),
+        password: yup.string().required('Password is require'),
+    });
+
+    const formik = useFormik({
+        enableReinitialize: true,
+        initialValues: {
+            email: '',
+            password: '',
+        },
+        validationSchema: signUpYup,
+        onSubmit: (values) => {
+            dispatch(loginUser(values));
+        },
+    });
+
     return (
         <>
             <Meta title={'Login'}></Meta>
@@ -17,6 +40,7 @@ const Login = () => {
                             <div className="auth-card">
                                 <h3 className="text-center mb-3">Login</h3>
                                 <form
+                                    onSubmit={formik.handleSubmit}
                                     action=""
                                     className="d-flex flex-column gap-30"
                                 >
@@ -25,7 +49,15 @@ const Login = () => {
                                         type={'email'}
                                         name="email"
                                         placeholder="Email"
+                                        value={formik.values.email}
+                                        onChange={formik.handleChange('email')}
+                                        onBlur={formik.handleBlur('email')}
                                     ></CustomInput>
+
+                                    <div className="error">
+                                        {formik.touched.email &&
+                                            formik.errors.email}
+                                    </div>
 
                                     <div className="mt-1">
                                         <CustomInput
@@ -33,7 +65,19 @@ const Login = () => {
                                             type={'password'}
                                             name="password"
                                             placeholder="Password"
+                                            value={formik.values.password}
+                                            onChange={formik.handleChange(
+                                                'password',
+                                            )}
+                                            onBlur={formik.handleBlur(
+                                                'password',
+                                            )}
                                         ></CustomInput>
+
+                                        <div className="error">
+                                            {formik.touched.password &&
+                                                formik.errors.password}
+                                        </div>
                                     </div>
                                     <div>
                                         <Link to={'/forgot-password'}>

@@ -30,7 +30,6 @@ const Signup = () => {
         },
         validationSchema: signUpYup,
         onSubmit: (values) => {
-            console.log(values);
             dispatch(registerUser(values));
         },
     });
