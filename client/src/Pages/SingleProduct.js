@@ -1,6 +1,6 @@
 /* eslint-disable no-script-url */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react';
+import React, { useEffect } from 'react';
 import ProductCard from '~/Components/ProductCard';
 import BreadCrumb from '~/Components/BreadCrumb';
 import Meta from '~/Components/Meta';
@@ -11,15 +11,19 @@ import Color from '~/Components/Color';
 import { TbGitCompare } from 'react-icons/tb';
 import { AiOutlineHeart } from 'react-icons/ai';
 import Container from '~/Components/Container';
+import { useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAProduct } from '~/features/Product/productSlice';
 
 const SingleProduct = () => {
+    const location = useLocation();
+    const dispatch = useDispatch();
+    const getProductId = location.pathname.split('/')[3];
     const [OrderedProduct, setOrderedProduct] = useState(true);
-    const props = {
-        width: 400,
-        height: 600,
-        zoomWidth: 600,
-        img: 'https://www.dizo.net/img/qywdasb1.jpg',
-    };
+
+    useEffect(() => {
+        dispatch(getAProduct(getProductId));
+    }, [dispatch, getProductId]);
 
     const copyToClipboard = (text) => {
         console.log('text', text);
@@ -29,6 +33,17 @@ const SingleProduct = () => {
         textField.select();
         document.execCommand('copy');
         textField.remove();
+    };
+
+    const productState = useSelector((state) => state?.product?.SingleProduct);
+
+    console.log(productState);
+
+    const props = {
+        width: 400,
+        height: 600,
+        zoomWidth: 600,
+        img: `${productState?.images[0]?.url}`,
     };
 
     return (
@@ -45,47 +60,30 @@ const SingleProduct = () => {
                                 </div>
                             </div>
                             <div className="other-product-images d-flex flex-wrap gap-15">
-                                <div className="">
-                                    <img
-                                        src="https://www.dizo.net/img/qywdasb1.jpg"
-                                        className="img-fluid"
-                                        alt=""
-                                    ></img>
-                                </div>
-                                <div className="">
-                                    <img
-                                        src="https://www.dizo.net/img/qywdasb1.jpg"
-                                        className="img-fluid"
-                                        alt=""
-                                    ></img>
-                                </div>
-                                <div className="">
-                                    <img
-                                        src="https://www.dizo.net/img/qywdasb1.jpg"
-                                        className="img-fluid"
-                                        alt=""
-                                    ></img>
-                                </div>
-                                <div className="">
-                                    <img
-                                        src="https://www.dizo.net/img/qywdasb1.jpg"
-                                        className="img-fluid"
-                                        alt=""
-                                    ></img>
-                                </div>
+                                {productState?.images.map((items, index) => {
+                                    return (
+                                        <div className="" key={index}>
+                                            <img
+                                                src={items?.url}
+                                                className="img-fluid"
+                                                alt=""
+                                            ></img>
+                                        </div>
+                                    );
+                                })}
                             </div>
                         </div>
                         <div className="col-6">
                             <div className="main-product-details">
                                 <div className="border-bottom">
                                     <h3 className="title">
-                                        Magna irure et labore qui magna ex
-                                        laborum duis fugiat deserunt minim est
-                                        occaecat culpa.
+                                        {productState?.title}
                                     </h3>
                                 </div>
                                 <div className="border-bottom py-3">
-                                    <p className="price">$100</p>
+                                    <p className="price">
+                                        $ {productState?.price}
+                                    </p>
                                     <div className="d-flex align-items-center gap-10">
                                         <ReactStars
                                             count={5}
@@ -114,7 +112,9 @@ const SingleProduct = () => {
                                         <h3 className="product-heading">
                                             Brand:
                                         </h3>
-                                        <p className="product-data">Havells</p>
+                                        <p className="product-data">
+                                            {productState?.brand}
+                                        </p>
                                     </div>
                                     <div className="d-flex gap-10 align-items-center my-2">
                                         <h3 className="product-heading">
@@ -126,13 +126,18 @@ const SingleProduct = () => {
                                         <h3 className="product-heading">
                                             Tag:
                                         </h3>
-                                        <p className="product-data">Watch</p>
+                                        <p className="product-data">
+                                            {' '}
+                                            {productState?.tags}
+                                        </p>
                                     </div>
                                     <div className="d-flex gap-10 align-items-center my-2">
                                         <h3 className="product-heading">
-                                            Availablity:
+                                            Availability:
                                         </h3>
-                                        <p className="product-data">In Stock</p>
+                                        <p className="product-data">
+                                            {productState?.category}
+                                        </p>
                                     </div>
 
                                     <div className="d-flex gap-10 flex-column mt-2 mb-3">
@@ -221,10 +226,10 @@ const SingleProduct = () => {
                                         <a
                                             onClick={() =>
                                                 copyToClipboard(
-                                                    'https://www.dizo.net/img/qywdasb1.jpg',
+                                                    window.location.href,
                                                 )
                                             }
-                                            href={"javascript:void(0)"}
+                                            href={'javascript:void(0)'}
                                         >
                                             Copy Product Link
                                         </a>
@@ -241,13 +246,11 @@ const SingleProduct = () => {
                         <div className="col-12">
                             <h4>Description</h4>
                             <div className="bg-white p-3">
-                                <p>
-                                    Adipisicing incididunt pariatur sunt
-                                    adipisicing deserunt est eu ea laboris magna
-                                    sunt. Adipisicing ex nisi deserunt nulla ut
-                                    laborum ipsum sunt ipsum sit ullamco eu
-                                    culpa.
-                                </p>
+                                <p
+                                    dangerouslySetInnerHTML={{
+                                        __html: productState?.description,
+                                    }}
+                                ></p>
                             </div>
                         </div>
                     </div>
@@ -333,7 +336,9 @@ const SingleProduct = () => {
                                                     count={5}
                                                     // onChange={ratingChanged}
                                                     size={24}
-                                                    value={3}
+                                                    value={
+                                                        productState?.totalRatings
+                                                    }
                                                     activeColor="#ffd700"
                                                     edit={false}
                                                 />

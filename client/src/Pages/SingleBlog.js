@@ -11,7 +11,6 @@ import { getABlog } from '~/features/blogs/blogSlice';
 const SingleBlog = () => {
     const dispatch = useDispatch();
     const location = useLocation();
-
     const getIdBlog = location.pathname.split('/')[2];
 
     useEffect(() => {

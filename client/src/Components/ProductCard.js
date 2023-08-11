@@ -43,13 +43,7 @@ const ProductCard = (props) => {
                                     <img src={Wish} alt="wishlist"></img>
                                 </button>
                             </div>
-                            <Link
-                                to={`${
-                                    location.pathname === '/'
-                                        ? '/store/product/:id'
-                                        : 'product/:id'
-                                }`}
-                            >
+                            <div>
                                 <div className="product-image">
                                     <img
                                         src={item?.images[0]?.url}
@@ -87,12 +81,14 @@ const ProductCard = (props) => {
                                     ></p>
                                     <p className="price">$ {item?.price}</p>
                                 </div>
-                            </Link>
+                            </div>
                             <div className="action-bar position-absolute">
                                 <div className="d-flex flex-column gap-15">
-                                    <button className="border-0 bg-transparent">
-                                        <img src={View} alt="view"></img>
-                                    </button>
+                                    <Link to={`/store/product/${item?._id}`}>
+                                        <button className="border-0 bg-transparent">
+                                            <img src={View} alt="view"></img>
+                                        </button>
+                                    </Link>
                                     <button className="border-0 bg-transparent">
                                         <img
                                             src={ProductCompare}

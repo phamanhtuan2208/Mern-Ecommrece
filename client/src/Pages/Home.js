@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import Marquee from 'react-fast-marquee';
 import BlogCard from '~/Components/BlogCard';
-import ProductCard from '~/Components/ProductCard';
 import SpecialProduct from '~/Components/SpecialProduct';
 import Meta from '~/Components/Meta';
 import Container from '~/Components/Container';
@@ -12,7 +11,7 @@ import { addToWishList, getAllProduct } from '~/features/Product/productSlice';
 // data
 import { services } from '~/Utils/Data';
 import * as moment from 'moment';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import ReactStars from 'react-rating-stars-component';
 //import img
 import ProductCompare from '~/images/prodcompare.svg';
@@ -23,6 +22,8 @@ import View from '~/images/view.svg';
 
 const Home = () => {
     const dispatch = useDispatch();
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         getProducts();
@@ -322,58 +323,52 @@ const Home = () => {
                                                         ></img>
                                                     </button>
                                                 </div>
-                                                <Link
-                                                    to={`${
-                                                        location.pathname ===
-                                                        '/'
-                                                            ? '/store/product/:id'
-                                                            : 'product/:id'
-                                                    }`}
-                                                >
-                                                    <div className="product-image">
-                                                        <img
-                                                            src={
-                                                                item?.images[0]
-                                                                    ?.url
-                                                            }
-                                                            className="img-fluid mx-auto"
-                                                            width={160}
-                                                            alt="ProductImage"
-                                                        ></img>
-                                                        <img
-                                                            src={
-                                                                item?.images[1]
-                                                                    ?.url
-                                                            }
-                                                            className="img-fluid mx-auto"
-                                                            width={160}
-                                                            alt="ProductImage"
-                                                        ></img>
-                                                    </div>
-                                                    <div className="product-details">
-                                                        <h6 className="brand">
-                                                            {item?.brand}
-                                                        </h6>
-                                                        <h5 className="product-title">
-                                                            {item?.title}
-                                                        </h5>
-                                                        <ReactStars
-                                                            count={5}
-                                                            // onChange={ratingChanged}
-                                                            size={24}
-                                                            value={item?.totalRatings.toString()}
-                                                            activeColor="#ffd700"
-                                                            edit={false}
-                                                        />
-                                                        <p className="price">
-                                                            $ {item?.price}
-                                                        </p>
-                                                    </div>
-                                                </Link>
+                                                <div className="product-image">
+                                                    <img
+                                                        src={
+                                                            item?.images[0]?.url
+                                                        }
+                                                        className="img-fluid mx-auto"
+                                                        width={160}
+                                                        alt="ProductImage"
+                                                    ></img>
+                                                    <img
+                                                        src={
+                                                            item?.images[1]?.url
+                                                        }
+                                                        className="img-fluid mx-auto"
+                                                        width={160}
+                                                        alt="ProductImage"
+                                                    ></img>
+                                                </div>
+                                                <div className="product-details">
+                                                    <h6 className="brand">
+                                                        {item?.brand}
+                                                    </h6>
+                                                    <h5 className="product-title">
+                                                        {item?.title}
+                                                    </h5>
+                                                    <ReactStars
+                                                        count={5}
+                                                        // onChange={ratingChanged}
+                                                        size={24}
+                                                        value={item?.totalRatings.toString()}
+                                                        activeColor="#ffd700"
+                                                        edit={false}
+                                                    />
+                                                    <p className="price">
+                                                        $ {item?.price}
+                                                    </p>
+                                                </div>
                                                 <div className="action-bar position-absolute">
                                                     <div className="d-flex flex-column gap-15">
                                                         <button className="border-0 bg-transparent">
                                                             <img
+                                                                onClick={() =>
+                                                                    navigate(
+                                                                        `/store/product/${item._id}`,
+                                                                    )
+                                                                }
                                                                 src={View}
                                                                 alt="view"
                                                             ></img>
@@ -493,6 +488,7 @@ const Home = () => {
                                         return (
                                             <SpecialProduct
                                                 key={index}
+                                                id = {item?._id}
                                                 title={item?.title}
                                                 brand={item?.brand}
                                                 totalRating={item?.totalRatings.toString()}
