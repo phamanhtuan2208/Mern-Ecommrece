@@ -7,15 +7,25 @@ import Meta from '~/Components/Meta';
 import Container from '~/Components/Container';
 import { getAllBlogs } from '~/features/blogs/blogSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { addToWishList, getAllProduct } from '~/features/Product/productSlice';
 
 // data
 import { services } from '~/Utils/Data';
 import * as moment from 'moment';
+import { Link, useLocation } from 'react-router-dom';
+import ReactStars from 'react-rating-stars-component';
+//import img
+import ProductCompare from '~/images/prodcompare.svg';
+import Wish from '~/images/wish.svg';
+// import Wishlist from '~/images/wishlist.svg';
+import AddCart from '~/images/add-cart.svg';
+import View from '~/images/view.svg';
 
 const Home = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
+        getProducts();
         getBlogState();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -23,8 +33,18 @@ const Home = () => {
     const getBlogState = () => {
         dispatch(getAllBlogs());
     };
+    const getProducts = () => {
+        dispatch(getAllProduct());
+    };
+
+    const addToWishListState = (id) => {
+        dispatch(addToWishList(id));
+    };
+
+    let location = useLocation();
 
     const blogsState = useSelector((state) => state?.blog?.BlogsData);
+    const productState = useSelector((state) => state?.product?.ProductData);
 
     return (
         <>
@@ -280,10 +300,105 @@ const Home = () => {
                                 Featured Collections
                             </h3>
                         </div>
-                        <ProductCard></ProductCard>
-                        <ProductCard></ProductCard>
-                        <ProductCard></ProductCard>
-                        <ProductCard></ProductCard>
+                        {productState &&
+                            // eslint-disable-next-line array-callback-return
+                            productState?.map((item, index) => {
+                                if (item?.tags === 'Features') {
+                                    return (
+                                        <div key={index} className={`col-3`}>
+                                            <div className="product-card position-relative">
+                                                <div className="wishlist-icon position-absolute">
+                                                    <button
+                                                        className="border-0 bg-transparent"
+                                                        onClick={() => {
+                                                            addToWishListState(
+                                                                item?._id,
+                                                            );
+                                                        }}
+                                                    >
+                                                        <img
+                                                            src={Wish}
+                                                            alt="wishlist"
+                                                        ></img>
+                                                    </button>
+                                                </div>
+                                                <Link
+                                                    to={`${
+                                                        location.pathname ===
+                                                        '/'
+                                                            ? '/store/product/:id'
+                                                            : 'product/:id'
+                                                    }`}
+                                                >
+                                                    <div className="product-image">
+                                                        <img
+                                                            src={
+                                                                item?.images[0]
+                                                                    ?.url
+                                                            }
+                                                            className="img-fluid mx-auto"
+                                                            width={160}
+                                                            alt="ProductImage"
+                                                        ></img>
+                                                        <img
+                                                            src={
+                                                                item?.images[1]
+                                                                    ?.url
+                                                            }
+                                                            className="img-fluid mx-auto"
+                                                            width={160}
+                                                            alt="ProductImage"
+                                                        ></img>
+                                                    </div>
+                                                    <div className="product-details">
+                                                        <h6 className="brand">
+                                                            {item?.brand}
+                                                        </h6>
+                                                        <h5 className="product-title">
+                                                            {item?.title}
+                                                        </h5>
+                                                        <ReactStars
+                                                            count={5}
+                                                            // onChange={ratingChanged}
+                                                            size={24}
+                                                            value={item?.totalRatings.toString()}
+                                                            activeColor="#ffd700"
+                                                            edit={false}
+                                                        />
+                                                        <p className="price">
+                                                            $ {item?.price}
+                                                        </p>
+                                                    </div>
+                                                </Link>
+                                                <div className="action-bar position-absolute">
+                                                    <div className="d-flex flex-column gap-15">
+                                                        <button className="border-0 bg-transparent">
+                                                            <img
+                                                                src={View}
+                                                                alt="view"
+                                                            ></img>
+                                                        </button>
+                                                        <button className="border-0 bg-transparent">
+                                                            <img
+                                                                src={
+                                                                    ProductCompare
+                                                                }
+                                                                alt="compare"
+                                                            ></img>
+                                                        </button>
+                                                        <button className="border-0 bg-transparent">
+                                                            <img
+                                                                src={AddCart}
+                                                                alt="addcart"
+                                                            ></img>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    );
+                                }
+                            })}
                     </div>
                 </div>
             </Container>
@@ -371,10 +486,23 @@ const Home = () => {
                             <h3 className="section-heading">Special Product</h3>
                         </div>
                         <div className="row">
-                            <SpecialProduct></SpecialProduct>
-                            <SpecialProduct></SpecialProduct>
-                            <SpecialProduct></SpecialProduct>
-                            <SpecialProduct></SpecialProduct>
+                            {productState &&
+                                // eslint-disable-next-line array-callback-return
+                                productState?.map((item, index) => {
+                                    if (item?.tags === 'Special') {
+                                        return (
+                                            <SpecialProduct
+                                                key={index}
+                                                title={item?.title}
+                                                brand={item?.brand}
+                                                totalRating={item?.totalRatings.toString()}
+                                                price={item?.price}
+                                                sold={item?.sold}
+                                                quantity={item?.quantity}
+                                            ></SpecialProduct>
+                                        );
+                                    }
+                                })}
                         </div>
                     </div>
                 </div>
@@ -389,10 +517,105 @@ const Home = () => {
                         </div>
                     </div>
                     <div className="row">
-                        <ProductCard></ProductCard>
-                        <ProductCard></ProductCard>
-                        <ProductCard></ProductCard>
-                        <ProductCard></ProductCard>
+                        {productState &&
+                            // eslint-disable-next-line array-callback-return
+                            productState?.map((item, index) => {
+                                if (item?.tags === 'Popular') {
+                                    return (
+                                        <div key={index} className={`col-3`}>
+                                            <div className="product-card position-relative">
+                                                <div className="wishlist-icon position-absolute">
+                                                    <button
+                                                        className="border-0 bg-transparent"
+                                                        onClick={() => {
+                                                            addToWishListState(
+                                                                item?._id,
+                                                            );
+                                                        }}
+                                                    >
+                                                        <img
+                                                            src={Wish}
+                                                            alt="wishlist"
+                                                        ></img>
+                                                    </button>
+                                                </div>
+                                                <Link
+                                                    to={`${
+                                                        location.pathname ===
+                                                        '/'
+                                                            ? '/store/product/:id'
+                                                            : 'product/:id'
+                                                    }`}
+                                                >
+                                                    <div className="product-image">
+                                                        <img
+                                                            src={
+                                                                item?.images[0]
+                                                                    ?.url
+                                                            }
+                                                            className="img-fluid mx-auto"
+                                                            width={160}
+                                                            alt="ProductImage"
+                                                        ></img>
+                                                        <img
+                                                            src={
+                                                                item?.images[1]
+                                                                    ?.url
+                                                            }
+                                                            className="img-fluid mx-auto"
+                                                            width={160}
+                                                            alt="ProductImage"
+                                                        ></img>
+                                                    </div>
+                                                    <div className="product-details">
+                                                        <h6 className="brand">
+                                                            {item?.brand}
+                                                        </h6>
+                                                        <h5 className="product-title">
+                                                            {item?.title}
+                                                        </h5>
+                                                        <ReactStars
+                                                            count={5}
+                                                            // onChange={ratingChanged}
+                                                            size={24}
+                                                            value={item?.totalRatings.toString()}
+                                                            activeColor="#ffd700"
+                                                            edit={false}
+                                                        />
+                                                        <p className="price">
+                                                            $ {item?.price}
+                                                        </p>
+                                                    </div>
+                                                </Link>
+                                                <div className="action-bar position-absolute">
+                                                    <div className="d-flex flex-column gap-15">
+                                                        <button className="border-0 bg-transparent">
+                                                            <img
+                                                                src={View}
+                                                                alt="view"
+                                                            ></img>
+                                                        </button>
+                                                        <button className="border-0 bg-transparent">
+                                                            <img
+                                                                src={
+                                                                    ProductCompare
+                                                                }
+                                                                alt="compare"
+                                                            ></img>
+                                                        </button>
+                                                        <button className="border-0 bg-transparent">
+                                                            <img
+                                                                src={AddCart}
+                                                                alt="addcart"
+                                                            ></img>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    );
+                                }
+                            })}
                     </div>
                 </div>
             </Container>
@@ -475,6 +698,7 @@ const Home = () => {
                     </div>
                     <div className="row">
                         {blogsState &&
+                            // eslint-disable-next-line array-callback-return
                             blogsState?.map((item, index) => {
                                 if (index < 4) {
                                     return (

@@ -19,7 +19,7 @@ const Wishlist = () => {
     };
 
     const wishlistState = useSelector(
-        (state) => state.auth?.wishlist?.wishlist,
+        (state) => state?.auth?.wishlist?.wishlist,
     );
 
     const removeFromWishList = (id) => {
