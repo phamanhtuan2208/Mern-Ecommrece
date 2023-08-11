@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const BlogCard = () => {
+const BlogCard = (props) => {
+    const { id, title, description, date, image } = props;
+
     return (
         <>
             <div className="blog-card">
@@ -13,16 +15,15 @@ const BlogCard = () => {
                     ></img>
                 </div>
                 <div className="blog-content">
-                    <p className="date">1 Dec, 2023</p>
-                    <h5 className="title">
-                        A beautiful sunday morning renaissance
-                    </h5>
-                    <p className="desc">
-                        {' '}
-                        Irure Lorem minim sit dolor ad culpa sit eu deserunt
-                        cupidatat proident do enim.
-                    </p>
-                    <Link to="/blog/:id" className="button">
+                    <p className="date">{date}</p>
+                    <h5 className="title">{title}</h5>
+                    <p
+                        className="desc"
+                        dangerouslySetInnerHTML={{
+                            __html: description?.substr(0, 70) + '...',
+                        }}
+                    ></p>
+                    <Link to={'/blog/' + id} className="button">
                         Read More
                     </Link>
                 </div>

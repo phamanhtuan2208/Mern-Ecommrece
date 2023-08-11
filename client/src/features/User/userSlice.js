@@ -24,6 +24,17 @@ export const loginUser = createAsyncThunk(
     },
 );
 
+export const getUserProductWishList = createAsyncThunk(
+    'user/wishlist',
+    async (thunkAPI) => {
+        try {
+            return await authService.getUserWishlist();
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error);
+        }
+    },
+);
+
 const initialState = {
     user: '',
     isError: false,
@@ -85,6 +96,22 @@ export const authSlice = createSlice({
                         `User Available or Something went Wrong, Error Code: ${action.payload.message}`,
                     );
                 }
+            })
+            .addCase(getUserProductWishList.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(getUserProductWishList.fulfilled, (state, action) => {
+                state.isSuccess = true;
+                state.isError = false;
+                state.isLoading = false;
+                state.message = '';
+                state.wishlist = action.payload;
+            })
+            .addCase(getUserProductWishList.rejected, (state, action) => {
+                state.isSuccess = false;
+                state.isError = true;
+                state.isLoading = false;
+                state.message = action.error;
             })
             .addCase(resetState, () => initialState);
     },

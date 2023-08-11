@@ -1,14 +1,31 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Marquee from 'react-fast-marquee';
 import BlogCard from '~/Components/BlogCard';
 import ProductCard from '~/Components/ProductCard';
 import SpecialProduct from '~/Components/SpecialProduct';
 import Meta from '~/Components/Meta';
 import Container from '~/Components/Container';
+import { getAllBlogs } from '~/features/blogs/blogSlice';
+import { useDispatch, useSelector } from 'react-redux';
+
 // data
 import { services } from '~/Utils/Data';
+import * as moment from 'moment';
 
 const Home = () => {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        getBlogState();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    const getBlogState = () => {
+        dispatch(getAllBlogs());
+    };
+
+    const blogsState = useSelector((state) => state?.blog?.BlogsData);
+
     return (
         <>
             <Meta title={'E Commerce App'}></Meta>
@@ -457,18 +474,26 @@ const Home = () => {
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-3">
-                            <BlogCard></BlogCard>
-                        </div>
-                        <div className="col-3">
-                            <BlogCard></BlogCard>
-                        </div>
-                        <div className="col-3">
-                            <BlogCard></BlogCard>
-                        </div>
-                        <div className="col-3">
-                            <BlogCard></BlogCard>
-                        </div>
+                        {blogsState &&
+                            blogsState?.map((item, index) => {
+                                if (index < 4) {
+                                    return (
+                                        <div className="col-3" key={index}>
+                                            <BlogCard
+                                                id={item?._id}
+                                                title={item?.title}
+                                                description={item?.description}
+                                                image={item?.images[0]?.url}
+                                                date={moment(
+                                                    item?.createdAt,
+                                                ).format(
+                                                    'MMMM Do YYYY, h:mm a',
+                                                )}
+                                            ></BlogCard>
+                                        </div>
+                                    );
+                                }
+                            })}
                     </div>
                 </div>
             </Container>

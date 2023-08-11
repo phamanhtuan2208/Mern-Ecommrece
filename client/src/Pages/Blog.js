@@ -1,10 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Container from '~/Components/Container';
 import BlogCard from '~/Components/BlogCard';
 import BreadCrumb from '~/Components/BreadCrumb';
 import Meta from '~/Components/Meta';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllBlogs } from '~/features/blogs/blogSlice';
+import * as moment from 'moment';
 
 const Blog = () => {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        getBlogState();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    const getBlogState = () => {
+        dispatch(getAllBlogs());
+    };
+
+    const blogsState = useSelector((state) => state?.blog?.BlogsData);
     return (
         <>
             <Meta title={'Blog'}></Meta>
@@ -29,18 +44,29 @@ const Blog = () => {
                         </div>
                         <div className="col-9">
                             <div className="row">
-                                <div className="col-6 mb-3">
-                                    <BlogCard></BlogCard>
-                                </div>
-                                <div className="col-6 mb-3">
-                                    <BlogCard></BlogCard>
-                                </div>
-                                <div className="col-6 mb-3">
-                                    <BlogCard></BlogCard>
-                                </div>
-                                <div className="col-6 mb-3">
-                                    <BlogCard></BlogCard>
-                                </div>
+                                {blogsState &&
+                                    blogsState?.map((item, index) => {
+                                        return (
+                                            <div
+                                                className="col-6 mb-3"
+                                                key={index}
+                                            >
+                                                <BlogCard
+                                                    id={item?._id}
+                                                    title={item?.title}
+                                                    description={
+                                                        item?.description
+                                                    }
+                                                    image={item?.images[0]?.url}
+                                                    date={moment(
+                                                        item?.createdAt,
+                                                    ).format(
+                                                        'MMMM Do YYYY, h:mm a',
+                                                    )}
+                                                ></BlogCard>
+                                            </div>
+                                        );
+                                    })}
                             </div>
                         </div>
                     </div>
