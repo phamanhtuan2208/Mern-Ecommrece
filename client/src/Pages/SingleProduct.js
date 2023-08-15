@@ -14,12 +14,16 @@ import Container from '~/Components/Container';
 import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAProduct } from '~/features/Product/productSlice';
+import { toast } from 'react-toastify';
+import { addProdToCart } from '~/features/User/userSlice';
 
 const SingleProduct = () => {
     const location = useLocation();
     const dispatch = useDispatch();
     const getProductId = location.pathname.split('/')[3];
     const [OrderedProduct, setOrderedProduct] = useState(true);
+    const [ColorP, setColor] = useState(null);
+    const [Quantity, setQuantity] = useState(1);
 
     useEffect(() => {
         dispatch(getAProduct(getProductId));
@@ -37,7 +41,21 @@ const SingleProduct = () => {
 
     const productState = useSelector((state) => state?.product?.SingleProduct);
 
-    console.log(productState);
+    const cartData = {
+        productId: productState?._id,
+        quantity: Quantity,
+        color: ColorP,
+        price: productState?.price,
+    };
+
+    const upLoadCart = () => {
+        if (ColorP === null) {
+            toast.error('Please Choose the Color');
+            return false;
+        } else {
+            dispatch(addProdToCart(cartData));
+        }
+    };
 
     const props = {
         width: 400,
@@ -163,7 +181,10 @@ const SingleProduct = () => {
                                         <h3 className="product-heading">
                                             Color:
                                         </h3>
-                                        <Color></Color>
+                                        <Color
+                                            colorData={productState?.color}
+                                            setColor={setColor}
+                                        ></Color>
                                     </div>
                                     <div className="d-flex align-items-center gap-15 align-items-center my-2 flex-row mb-3">
                                         <h3 className="product-heading">
@@ -179,12 +200,19 @@ const SingleProduct = () => {
                                                 min={1}
                                                 max={10}
                                                 defaultValue={1}
+                                                onChange={(e) =>
+                                                    setQuantity(e.target.value)
+                                                }
+                                                value={Quantity}
                                             ></input>
                                         </div>
                                         <div className="d-flex align-items-center gap-30 ms-5">
                                             <button
                                                 className="button border-0 m-3"
                                                 type="submit"
+                                                onClick={() => {
+                                                    upLoadCart();
+                                                }}
                                             >
                                                 Add to Cart
                                             </button>
