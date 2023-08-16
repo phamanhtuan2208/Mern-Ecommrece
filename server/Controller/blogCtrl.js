@@ -143,7 +143,6 @@ const disLikeBlog = AsyncHandler(async (req, res) => {
     const loginUserId = req?.user?._id;
     //Find if the user has Disliked the blog
     const isDisliked = blog?.isDisliked;
-    console.log(isDisliked);
     //Find the user if he like the blog
     const alreadyLiked = blog?.likes?.find(
         (userId) => userId?.toString() === loginUserId?.toString(),

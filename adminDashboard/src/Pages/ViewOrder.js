@@ -50,8 +50,6 @@ const ViewOrder = () => {
         (state) => state.auth?.ordersByUser?.products,
     );
 
-    console.log(ordersState);
-
     const data1 = [];
     for (let i = 0; i < ordersState?.length; i++) {
         data1.push({

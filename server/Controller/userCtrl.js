@@ -147,7 +147,6 @@ const deleteAUser = AsyncHandler(async (req, res) => {
 //handle refresh token
 const handleRefreshToken = AsyncHandler(async (req, res) => {
     const cookie = req.cookies;
-    console.log(cookie);
     if (!cookie?.refreshToken) {
         throw new Error('NO Refresh Token in Cookies');
     }
@@ -315,7 +314,7 @@ const getWishList = AsyncHandler(async (req, res) => {
     }
 });
 
-// add cart + plus price
+// add cart
 const userCart = AsyncHandler(async (req, res) => {
     const { productId, color, quantity, price } = req.body;
     const { _id } = req.user;
@@ -343,6 +342,41 @@ const getUserCart = AsyncHandler(async (req, res) => {
             .populate('productId')
             .populate('color');
         res.json(cart);
+    } catch (error) {
+        throw new Error(error);
+    }
+});
+
+//remove product from cart
+const removeProductFromCart = AsyncHandler(async (req, res) => {
+    const { _id } = req.user;
+    const { cartItemId } = req.params;
+    validateMongoDBid(_id);
+    try {
+        const deleteProductFromCart = await Cart.deleteOne({
+            userId: _id,
+            _id: cartItemId,
+        });
+        res.json(deleteProductFromCart);
+    } catch (error) {
+        throw new Error(error);
+    }
+});
+
+//updateProductQuantityFromCart
+const updateProductQuantityFromCart = AsyncHandler(async (req, res) => {
+    const { _id } = req.user;
+    const { cartItemId } = req.params;
+    const { newQuantity } = req.body;
+    validateMongoDBid(_id);
+    try {
+        const cartItem = await Cart.findOne({
+            userId: _id,
+            _id: cartItemId,
+        });
+        cartItem.quantity = newQuantity;
+        cartItem.save();
+        res.json(cartItem);
     } catch (error) {
         throw new Error(error);
     }
@@ -522,4 +556,6 @@ module.exports = {
     updateOrderStatus,
     getAllOrders,
     getOrderByUserId,
+    removeProductFromCart,
+    updateProductQuantityFromCart,
 };

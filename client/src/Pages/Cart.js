@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import BreadCrumb from '~/Components/BreadCrumb';
 import Meta from '~/Components/Meta';
 import Watch from '~/images/watch.jpg';
@@ -6,15 +6,43 @@ import { AiFillDelete } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import Container from '~/Components/Container';
 import { useDispatch, useSelector } from 'react-redux';
-import { getProdCart } from '~/features/User/userSlice';
+import {
+    deleteCartProduct,
+    getProdCart,
+    updateCartProduct,
+} from '~/features/User/userSlice';
 
 const Cart = () => {
     const dispatch = useDispatch();
+    const [ProductUpdateDetail, setProductUpdateDetail] = useState(null);
     const userCartState = useSelector((state) => state?.auth?.getCartProduct);
 
     useEffect(() => {
-        dispatch(getProdCart());
+        setTimeout(() => {
+            dispatch(getProdCart());
+        }, 300);
     }, [dispatch]);
+
+    const deleteACartProduct = (cartItemId) => {
+        dispatch(deleteCartProduct(cartItemId));
+        setTimeout(() => {
+            dispatch(getProdCart());
+        }, 500);
+    };
+
+    useEffect(() => {
+        if (ProductUpdateDetail != null) {
+            dispatch(
+                updateCartProduct({
+                    cartItemId: ProductUpdateDetail?.cartItemId,
+                    newQuantity: ProductUpdateDetail?.quantity,
+                }),
+            );
+            setTimeout(() => {
+                dispatch(getProdCart());
+            }, 500);
+        }
+    }, [ProductUpdateDetail, dispatch]);
 
     return (
         <>
@@ -78,12 +106,37 @@ const Cart = () => {
                                                         id=""
                                                         min={1}
                                                         max={10}
-                                                        value={item?.quantity}
+                                                        value={
+                                                            ProductUpdateDetail
+                                                                ? ProductUpdateDetail?.quantity
+                                                                : item?.quantity
+                                                        }
+                                                        onChange={(e) => {
+                                                            setProductUpdateDetail(
+                                                                {
+                                                                    quantity:
+                                                                        e.target
+                                                                            .value,
+                                                                    cartItemId:
+                                                                        item?._id,
+                                                                },
+                                                            );
+                                                        }}
                                                     ></input>
                                                 </div>
                                                 <div>
                                                     &nbsp;{' '}
-                                                    <AiFillDelete className="text-danger"></AiFillDelete>
+                                                    <AiFillDelete
+                                                        className="text-danger"
+                                                        onClick={() =>
+                                                            deleteACartProduct(
+                                                                item?._id,
+                                                            )
+                                                        }
+                                                        style={{
+                                                            cursor: 'pointer',
+                                                        }}
+                                                    ></AiFillDelete>
                                                 </div>
                                             </div>
                                             <div className="cart-col-4">
@@ -99,7 +152,7 @@ const Cart = () => {
                         </div>
                         <div className="col-12 py-2 mt-4">
                             <div className="d-flex justify-content-between align-items-baseline">
-                                <Link className="button" to={'/product'}>
+                                <Link className="button" to={'/store'}>
                                     Continue To shopping
                                 </Link>
 

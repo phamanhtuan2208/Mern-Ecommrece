@@ -29,8 +29,22 @@ const addToCart = async (cartData) => {
 };
 
 const getCart = async () => {
-    const response = await axios.get(
-        `${base_url}/user/cart`,
+    const response = await axios.get(`${base_url}/user/cart`, config);
+    return response.data;
+};
+
+const removeProductFromCart = async (cartItemId) => {
+    const response = await axios.delete(
+        `${base_url}/user/deletecart/${cartItemId}`,
+        config,
+    );
+    return response.data;
+};
+
+const updateProductFromCart = async (cartDetail) => {
+    const response = await axios.put(
+        `${base_url}/user/updatequantity/${cartDetail?.cartItemId}`,
+        { newQuantity: cartDetail?.newQuantity },
         config,
     );
     return response.data;
@@ -42,4 +56,6 @@ export const authService = {
     getUserWishlist,
     addToCart,
     getCart,
+    removeProductFromCart,
+    updateProductFromCart,
 };

@@ -26,6 +26,8 @@ const {
     updateOrderStatus,
     getAllOrders,
     getOrderByUserId,
+    removeProductFromCart,
+    updateProductQuantityFromCart,
 } = require('../Controller/userCtrl');
 
 const router = express.Router();
@@ -46,6 +48,12 @@ router.route('/wishlist').get(authMiddleware, getWishList);
 router.route('/saveaddress').put(authMiddleware, saveAddress);
 router.route('/cart').post(authMiddleware, userCart);
 router.route('/cart').get(authMiddleware, getUserCart);
+router
+    .route('/deletecart/:cartItemId')
+    .delete(authMiddleware, removeProductFromCart);
+router
+    .route('/updatequantity/:cartItemId')
+    .put(authMiddleware, updateProductQuantityFromCart);
 router.route('/emptycart').delete(authMiddleware, emptyCart);
 router.route('/cart/applycoupon').post(authMiddleware, applyCoupon);
 router.route('/cart/cashorder').post(authMiddleware, createOrder);

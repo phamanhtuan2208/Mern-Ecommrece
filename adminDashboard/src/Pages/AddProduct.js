@@ -100,7 +100,7 @@ const AddProduct = () => {
 
     const handleColors = (e) => {
         setColor(e);
-        console.log(Color);
+       
     };
 
     return (
