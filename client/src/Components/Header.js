@@ -1,9 +1,32 @@
 /* eslint-disable jsx-a11y/alt-text */
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { BsSearch } from 'react-icons/bs';
+import { useDispatch, useSelector } from 'react-redux';
+import { getProdCart } from '~/features/User/userSlice';
 
 const Header = () => {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        setTimeout(() => {
+            dispatch(getProdCart());
+        }, 300);
+    }, [dispatch]);
+
+    const [total, setTotal] = useState(null);
+    const cartState = useSelector((state) => state?.auth?.getCartProduct);
+
+    useEffect(() => {
+        let sum = 0;
+        for (let index = 0; index < cartState?.length; index++) {
+            sum =
+                sum +
+                Number(cartState[index].quantity) * cartState[index].price;
+            setTotal(sum);
+        }
+    }, [cartState]);
+
     return (
         <>
             <header className="header-top-strip py-3">
@@ -33,7 +56,9 @@ const Header = () => {
                     <div className="row align-items-center">
                         <div className="col-2">
                             <h1>
-                                <Link className="text-white" to={'/'}>AT</Link>
+                                <Link className="text-white" to={'/'}>
+                                    AT
+                                </Link>
                             </h1>
                         </div>
                         <div className="col-5">
@@ -111,9 +136,13 @@ const Header = () => {
                                         ></img>
                                         <div className="d-flex flex-column gap-10">
                                             <span className="badge bg-white text-dark">
-                                                0
+                                                {cartState?.length
+                                                    ? cartState?.length
+                                                    : '0'}
                                             </span>
-                                            <p className="mb-0">$500</p>
+                                            <p className="mb-0">
+                                                ${total ? total : '0'}
+                                            </p>
                                         </div>
                                     </Link>
                                 </div>

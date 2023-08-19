@@ -16,6 +16,7 @@ const Cart = () => {
     const dispatch = useDispatch();
     const [ProductUpdateDetail, setProductUpdateDetail] = useState(null);
     const userCartState = useSelector((state) => state?.auth?.getCartProduct);
+    const [totalAmount, setTotalAmount] = useState(null);
 
     useEffect(() => {
         setTimeout(() => {
@@ -43,6 +44,17 @@ const Cart = () => {
             }, 500);
         }
     }, [ProductUpdateDetail, dispatch]);
+
+    useEffect(() => {
+        let sum = 0;
+        for (let index = 0; index < userCartState?.length; index++) {
+            sum =
+                sum +
+                Number(userCartState[index].quantity) *
+                    userCartState[index].price;
+            setTotalAmount(sum);
+        }
+    }, [userCartState]);
 
     return (
         <>
@@ -156,16 +168,24 @@ const Cart = () => {
                                     Continue To shopping
                                 </Link>
 
-                                <div className="d-flex align-items-end flex-column">
-                                    <h4>Subtotal: $1000</h4>
-                                    <p>
-                                        Taxes and shipping calculated at
-                                        checkout
-                                    </p>
-                                    <Link to={'/checkout'} className="button">
-                                        Checkout
-                                    </Link>
-                                </div>
+                                {(totalAmount !== null ||
+                                    totalAmount !== 0) && (
+                                    <>
+                                        <div className="d-flex align-items-end flex-column">
+                                            <h4>Subtotal: $ {totalAmount}</h4>
+                                            <p>
+                                                Taxes and shipping calculated at
+                                                checkout
+                                            </p>
+                                            <Link
+                                                to={'/checkout'}
+                                                className="button"
+                                            >
+                                                Checkout
+                                            </Link>
+                                        </div>
+                                    </>
+                                )}
                             </div>
                         </div>
                     </div>
