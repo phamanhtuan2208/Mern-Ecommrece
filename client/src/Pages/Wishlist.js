@@ -36,7 +36,7 @@ const Wishlist = () => {
             <Container class1="wishlist-wrapper home-wrapper-2 py-5">
                 <div className="container-xxl">
                     <div className="row">
-                        {wishlistState.length === 0 && (
+                        {wishlistState?.length === 0 && (
                             <div className="text-center fs-3">No Data</div>
                         )}
                         {wishlistState?.map((item, index) => {

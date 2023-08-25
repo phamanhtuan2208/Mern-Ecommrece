@@ -22,6 +22,8 @@ import TermAndCondition from './Pages/TermAndCondition';
 import SingleProduct from './Pages/SingleProduct';
 import Cart from './Pages/Cart';
 import Checkout from './Pages/Checkout';
+import { PrivateRoutes } from './Routing/privateRoutes';
+import { OpenRoutes } from './Routing/openRoutes';
 
 function App() {
     return (
@@ -56,10 +58,21 @@ function App() {
                             path="wishlist"
                             element={<Wishlist></Wishlist>}
                         ></Route>
-                        <Route path="login" element={<Login></Login>}></Route>
+                        <Route
+                            path="login"
+                            element={
+                                <OpenRoutes>
+                                    <Login></Login>
+                                </OpenRoutes>
+                            }
+                        ></Route>
                         <Route
                             path="signup"
-                            element={<Signup></Signup>}
+                            element={
+                                <OpenRoutes>
+                                    <Signup></Signup>
+                                </OpenRoutes>
+                            }
                         ></Route>
                         <Route
                             path="forgot-password"
@@ -85,10 +98,21 @@ function App() {
                             path="term-conditions"
                             element={<TermAndCondition></TermAndCondition>}
                         ></Route>
-                        <Route path="cart" element={<Cart></Cart>}></Route>
+                        <Route
+                            path="cart"
+                            element={
+                                <PrivateRoutes>
+                                    <Cart></Cart>
+                                </PrivateRoutes>
+                            }
+                        ></Route>
                         <Route
                             path="checkout"
-                            element={<Checkout></Checkout>}
+                            element={
+                                <PrivateRoutes>
+                                    <Checkout></Checkout>
+                                </PrivateRoutes>
+                            }
                         ></Route>
                     </Route>
                 </Routes>

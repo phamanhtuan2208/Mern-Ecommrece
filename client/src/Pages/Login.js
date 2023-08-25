@@ -1,16 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Container from '~/Components/Container';
 import BreadCrumb from '~/Components/BreadCrumb';
 import Meta from '~/Components/Meta';
 import CustomInput from '~/Components/CustomInput';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '~/features/User/userSlice';
 
 const Login = () => {
     const dispatch = useDispatch();
+    const authState = useSelector((state) => state.auth);
+    const navigate = useNavigate();
 
     const signUpYup = yup.object({
         email: yup.string().required('Email is require'),
@@ -26,6 +28,11 @@ const Login = () => {
         validationSchema: signUpYup,
         onSubmit: (values) => {
             dispatch(loginUser(values));
+            setTimeout(() => {
+                if (authState.isSuccess) {
+                    navigate('/');
+                }
+            }, 2000);
         },
     });
 
@@ -84,7 +91,7 @@ const Login = () => {
                                             Forgot Password?
                                         </Link>
 
-                                        <div className=" mt-3 d-flex justify-content-center gap-20 align-items-center">
+                                        <div className="mt-3 d-flex justify-content-center gap-20 align-items-center">
                                             <button
                                                 className="button border-0 m-3"
                                                 type="submit"

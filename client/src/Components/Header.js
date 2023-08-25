@@ -16,6 +16,11 @@ const Header = () => {
 
     const [total, setTotal] = useState(null);
     const cartState = useSelector((state) => state?.auth?.getCartProduct);
+    const authState = useSelector((state) => state?.auth);
+
+    const userLocalStore = localStorage.getItem('user')
+        ? JSON.parse(localStorage.getItem('user'))
+        : null;
 
     useEffect(() => {
         let sum = 0;
@@ -111,19 +116,58 @@ const Header = () => {
                                     </Link>
                                 </div>
                                 <div>
-                                    <Link
-                                        to={'/login'}
-                                        className="d-flex align-items-center gap-10 text-white"
-                                    >
-                                        <img
-                                            src="images/user.svg"
-                                            alt="user"
-                                        ></img>
-                                        <p>
-                                            Login <br />
-                                            Login
-                                        </p>
-                                    </Link>
+                                    {authState?.auth === '' ||
+                                    userLocalStore?.lastname === undefined ? (
+                                        <Link
+                                            to={'/login'}
+                                            className="d-flex align-items-center gap-10 text-white"
+                                        >
+                                            <img
+                                                src="images/user.svg"
+                                                alt="user"
+                                            ></img>
+                                            <p>
+                                                Login <br />
+                                                Login
+                                            </p>
+                                        </Link>
+                                    ) : (
+                                        <div
+                                            className="d-flex align-items-center gap-10 text-white dropdown"
+                                            style={{ cursor: 'pointer' }}
+                                        >
+                                            <div
+                                                className="dropdown-toggle d-flex align-items-center gap-15 "
+                                                id="dropdownMenuButton"
+                                                data-bs-toggle="dropdown"
+                                            >
+                                                <img
+                                                    src="images/user.svg"
+                                                    alt="user"
+                                                ></img>
+                                                welcome <br />
+                                                {userLocalStore?.lastname}
+                                            </div>
+                                            <ul
+                                                class="dropdown-menu header-bottom"
+                                                aria-labelledby="dropdownMenuButton1"
+                                                style={{
+                                                    backgroundColor: '#000000',
+                                                }}
+                                            >
+                                                <li>
+                                                    <div class="dropdown-item text-white">
+                                                        Profile
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="dropdown-item text-white">
+                                                        Log Out
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    )}
                                 </div>
                                 <div>
                                     <Link
