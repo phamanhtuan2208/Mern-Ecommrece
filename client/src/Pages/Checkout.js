@@ -36,6 +36,8 @@ const Checkout = () => {
         pinCode: yup.string().required('PinCode is required'),
     });
 
+    console.log(cartProductState);
+
     useEffect(() => {
         let sumTotal = 0;
         for (let index = 0; index < cartState?.length; index++) {

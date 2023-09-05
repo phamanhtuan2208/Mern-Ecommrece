@@ -53,26 +53,32 @@ var orderSchema = new mongoose.Schema(
                 required: true,
             },
         },
-        OrderItem: {
-            product: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'Product',
-                require: true,
+        orderItems: [
+            {
+                product: {
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref: 'Product',
+                    require: true,
+                },
+
+                color: {
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref: 'Color',
+                    require: true,
+                },
+
+                quantity: {
+                    type: Number,
+                    require: true,
+                },
+
+                price: {
+                    type: Number,
+                    require: true,
+                },
             },
-            color: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'Color',
-                require: true,
-            },
-            Quantity: {
-                type: Number,
-                require: true,
-            },
-            price: {
-                type: Number,
-                require: true,
-            },
-        },
+        ],
+
         paidAt: {
             require: true,
             type: Date,

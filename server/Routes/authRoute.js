@@ -28,6 +28,7 @@ const {
     getOrderByUserId,
     removeProductFromCart,
     updateProductQuantityFromCart,
+    getMyOrders,
 } = require('../Controller/userCtrl');
 const { payMent, paymentVerification } = require('../Controller/payMentCtrl');
 
@@ -38,7 +39,7 @@ router.route('/register').post(createUser);
 router.route('/login').post(loginUserCtrl);
 router.route('/loginAdmin').post(loginAdmin);
 router.route('/getalluser').get(getAllUser);
-// router.route('/getorders').get(authMiddleware, getOrders);
+router.route('/getMyOrder').get(authMiddleware, getMyOrders);
 // router.route('/getallorders').get(authMiddleware, isAdmin, getAllOrders);
 router
     .route('/getorderbyuser/:id')

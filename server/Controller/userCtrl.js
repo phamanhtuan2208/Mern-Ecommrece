@@ -388,7 +388,7 @@ const createOrder = AsyncHandler(async (req, res) => {
     const {
         shippingInfo,
         orderItems,
-        orderPrice,
+        totalPrice,
         totalPriceAfterDiscount,
         paymentInfo,
     } = req.body;
@@ -397,7 +397,7 @@ const createOrder = AsyncHandler(async (req, res) => {
             user: _id,
             shippingInfo,
             orderItems,
-            orderPrice,
+            totalPrice,
             totalPriceAfterDiscount,
             paymentInfo,
         });
@@ -565,6 +565,20 @@ const updateOrderStatus = AsyncHandler(async (req, res) => {
     }
 });
 
+const getMyOrders = AsyncHandler(async (req, res) => {
+    const { _id } = req.user;
+    try {
+        const orders = await Order.find({ user: _id })
+            .populate('user')
+            .populate('orderItems.product')
+            .populate('orderItems.color');
+
+        res.json(orders);
+    } catch (error) {
+        throw new Error(error);
+    }
+});
+
 module.exports = {
     createUser,
     loginUserCtrl,
@@ -593,4 +607,5 @@ module.exports = {
     getOrderByUserId,
     removeProductFromCart,
     updateProductQuantityFromCart,
+    getMyOrders,
 };

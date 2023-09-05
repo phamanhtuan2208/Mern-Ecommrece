@@ -252,6 +252,9 @@ const Header = () => {
                                         <NavLink to={'/store'}>
                                             Our Store
                                         </NavLink>
+                                        <NavLink to={'/my-order'}>
+                                            My Orders
+                                        </NavLink>
                                         <NavLink to={'/blog'}>Blogs</NavLink>
                                         <NavLink to={'/contact'}>
                                             Contact
