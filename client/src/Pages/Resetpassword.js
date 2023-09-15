@@ -3,8 +3,34 @@ import Container from '~/Components/Container';
 import BreadCrumb from '~/Components/BreadCrumb';
 import Meta from '~/Components/Meta';
 import CustomInput from '~/Components/CustomInput';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import * as yup from 'yup';
+import { useFormik } from 'formik';
+import { ResetPass } from '~/features/User/userSlice';
 
-const Resetpassword = () => {
+const ResetPassword = () => {
+    const location = useLocation();
+    const getToken = location?.pathname?.split('/')[2];
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const signUpYup = yup.object({
+        password: yup.string().required('Password is require'),
+    });
+
+    const formik = useFormik({
+        enableReinitialize: true,
+        initialValues: {
+            password: '',
+        },
+        validationSchema: signUpYup,
+        onSubmit: (values) => {
+            dispatch(ResetPass({ token: getToken, password: values.password }));
+        },
+    });
+
     return (
         <>
             <Meta title={'Reset Password'}></Meta>
@@ -18,6 +44,7 @@ const Resetpassword = () => {
                                     Reset Password
                                 </h3>
                                 <form
+                                    onSubmit={formik.handleSubmit}
                                     action=""
                                     className="d-flex flex-column gap-30"
                                 >
@@ -26,15 +53,16 @@ const Resetpassword = () => {
                                         type={'password'}
                                         name="password"
                                         placeholder="Password"
+                                        value={formik.values.password}
+                                        onChange={formik.handleChange(
+                                            'password',
+                                        )}
+                                        onBlur={formik.handleBlur('password')}
                                     ></CustomInput>
-
-                                    <CustomInput
-                                        className="form-control"
-                                        type={'password'}
-                                        name="confassword"
-                                        placeholder="Confirm Password"
-                                    ></CustomInput>
-
+                                    <div className="error">
+                                        {formik.touched.password &&
+                                            formik.errors.password}
+                                    </div>
                                     <div>
                                         <div className=" mt-3 d-flex justify-content-center gap-20 align-items-center">
                                             <button className="button border-0 m-3">
@@ -52,4 +80,4 @@ const Resetpassword = () => {
     );
 };
 
-export default Resetpassword;
+export default ResetPassword;

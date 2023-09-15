@@ -4,8 +4,29 @@ import Container from '~/Components/Container';
 import BreadCrumb from '~/Components/BreadCrumb';
 import Meta from '~/Components/Meta';
 import CustomInput from '~/Components/CustomInput';
+import * as yup from 'yup';
+import { useFormik } from 'formik';
+import { useDispatch } from 'react-redux';
+import { ForgotPass } from '~/features/User/userSlice';
 
 const ForgotPassword = () => {
+    const dispatch = useDispatch();
+
+    const ForgotPasswordYup = yup.object({
+        email: yup.string().required('Email is require'),
+    });
+
+    const formik = useFormik({
+        enableReinitialize: true,
+        initialValues: {
+            email: '',
+        },
+        validationSchema: ForgotPasswordYup,
+        onSubmit: (values) => {
+            dispatch(ForgotPass(values));
+        },
+    });
+
     return (
         <>
             <Meta title={'Forgot Password'}></Meta>
@@ -23,6 +44,7 @@ const ForgotPassword = () => {
                                     password
                                 </p>
                                 <form
+                                    onSubmit={formik.handleSubmit}
                                     action=""
                                     className="d-flex flex-column gap-30"
                                 >
@@ -31,8 +53,14 @@ const ForgotPassword = () => {
                                         type={'email'}
                                         name="email"
                                         placeholder="Email"
+                                        value={formik.values.email}
+                                        onChange={formik.handleChange('email')}
+                                        onBlur={formik.handleBlur('email')}
                                     ></CustomInput>
-
+                                    <div className="error">
+                                        {formik.touched.email &&
+                                            formik.errors.email}
+                                    </div>
                                     <div>
                                         <div className=" mt-3 d-flex justify-content-center gap-20 align-items-center flex-column">
                                             <button

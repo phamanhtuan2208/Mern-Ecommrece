@@ -4,6 +4,7 @@ import { NavLink, Link } from 'react-router-dom';
 import { BsSearch } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProdCart } from '~/features/User/userSlice';
+import { Typeahead } from 'react-bootstrap-typeahead';
 
 const Header = () => {
     const dispatch = useDispatch();
@@ -31,6 +32,11 @@ const Header = () => {
             setTotal(sum);
         }
     }, [cartState]);
+
+    const handleLogOut = () => {
+        localStorage.clear();
+        window.location.reload();
+    };
 
     return (
         <>
@@ -164,6 +170,11 @@ const Header = () => {
                                                     </Link>
                                                 </li>
                                                 <li>
+                                                    <div className="dropdown-item text-white">
+                                                        Reset Password
+                                                    </div>
+                                                </li>
+                                                <li onClick={handleLogOut}>
                                                     <div className="dropdown-item text-white">
                                                         Log Out
                                                     </div>

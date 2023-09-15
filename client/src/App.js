@@ -13,7 +13,7 @@ import Wishlist from './Pages/Wishlist';
 import Signup from './Pages/Signup';
 import Login from './Pages/Login';
 import ForgotPassword from './Pages/ForgotPassword';
-import Resetpassword from './Pages/Resetpassword';
+import ResetPassword from './Pages/ResetPassword';
 import SingleBlog from './Pages/SingleBlog';
 import PrivacyPolicy from './Pages/PrivacyPolicy';
 import RefundPolicy from './Pages/RefundPolicy';
@@ -77,13 +77,17 @@ function App() {
                             }
                         ></Route>
                         <Route
-                            path="forgot-password"
-                            element={<ForgotPassword></ForgotPassword>}
-                        ></Route>
-                        <Route
-                            path="reset-password"
-                            element={<Resetpassword></Resetpassword>}
+                            path="reset-password/:id"
+                            element={<ResetPassword></ResetPassword>}
                         ></Route>{' '}
+                        <Route
+                            path="forgot-password"
+                            element={
+                                <OpenRoutes>
+                                    <ForgotPassword></ForgotPassword>
+                                </OpenRoutes>
+                            }
+                        ></Route>
                         <Route
                             path="privacy-policy"
                             element={<PrivacyPolicy></PrivacyPolicy>}

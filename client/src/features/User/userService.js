@@ -69,6 +69,24 @@ const updateUser = async (data) => {
     return response.data;
 };
 
+const ForgotPassToken = async (data) => {
+    const response = await axios.post(
+        `${base_url}/user/forgotpasswordtoken`,
+        data,
+        config,
+    );
+    return response.data;
+};
+
+const ResetPasswordToken = async (data) => {
+    const response = await axios.put(
+        `${base_url}/user/resetpassword/${data?.token}`,
+        { password: data?.password },
+        config,
+    );
+    return response.data;
+};
+
 export const authService = {
     register,
     login,
@@ -80,4 +98,6 @@ export const authService = {
     createOrder,
     getUserOrder,
     updateUser,
+    ForgotPassToken,
+    ResetPasswordToken,
 };
