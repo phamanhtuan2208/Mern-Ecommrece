@@ -149,19 +149,22 @@ const Header = () => {
                                                 {userLocalStore?.lastname}
                                             </div>
                                             <ul
-                                                class="dropdown-menu header-bottom"
+                                                className="dropdown-menu header-bottom"
                                                 aria-labelledby="dropdownMenuButton1"
                                                 style={{
                                                     backgroundColor: '#000000',
                                                 }}
                                             >
                                                 <li>
-                                                    <div class="dropdown-item text-white">
+                                                    <Link
+                                                        className="dropdown-item text-white"
+                                                        to={'/profile'}
+                                                    >
                                                         Profile
-                                                    </div>
+                                                    </Link>
                                                 </li>
                                                 <li>
-                                                    <div class="dropdown-item text-white">
+                                                    <div className="dropdown-item text-white">
                                                         Log Out
                                                     </div>
                                                 </li>

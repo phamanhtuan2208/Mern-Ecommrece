@@ -101,6 +101,17 @@ export const getUsersOrder = createAsyncThunk(
     },
 );
 
+export const updateAProfile = createAsyncThunk(
+    'user/updateUser',
+    async (data, thunkAPI) => {
+        try {
+            return await authService.updateUser(data);
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error);
+        }
+    },
+);
+
 const initialState = {
     user: '',
     isError: false,
@@ -298,6 +309,27 @@ export const authSlice = createSlice({
                 state.isError = true;
                 state.isLoading = false;
                 state.message = action.error;
+            })
+            .addCase(updateAProfile.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(updateAProfile.fulfilled, (state, action) => {
+                state.isSuccess = true;
+                state.isError = false;
+                state.isLoading = false;
+                state.updateAUser = action.payload;
+                if (state.isSuccess) {
+                    toast.success('Profile Updated Successfully, save change when you login again');
+                }
+            })
+            .addCase(updateAProfile.rejected, (state, action) => {
+                state.isSuccess = false;
+                state.isError = true;
+                state.isLoading = false;
+                state.message = action.error;
+                if (state.isError) {
+                    toast.error('Something went Wrong Or infected');
+                }
             })
             .addCase(resetState, () => initialState);
     },

@@ -60,10 +60,12 @@ const createOrder = async (orderDetail) => {
 };
 
 const getUserOrder = async () => {
-    const response = await axios.get(
-        `${base_url}/user/getMyOrder`,
-        config,
-    );
+    const response = await axios.get(`${base_url}/user/getMyOrder`, config);
+    return response.data;
+};
+
+const updateUser = async (data) => {
+    const response = await axios.put(`${base_url}/user/edituser`, data, config);
     return response.data;
 };
 
@@ -77,4 +79,5 @@ export const authService = {
     updateProductFromCart,
     createOrder,
     getUserOrder,
+    updateUser,
 };
