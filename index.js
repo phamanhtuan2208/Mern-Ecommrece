@@ -48,5 +48,5 @@ app.use('/api/upload', uploadRouter);
 app.use(notFound);
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
 app.listen(PORT, console.log(`server started on PORT ${PORT}`.yellow.bold));

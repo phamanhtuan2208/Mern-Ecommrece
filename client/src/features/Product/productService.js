@@ -22,8 +22,20 @@ const addToWishList = async (prodId) => {
     return response.data;
 };
 
+const rateProduct = async (data) => {
+    const response = await axios.put(
+        `${base_url}/product/rating`,
+
+        data,
+
+        config,
+    );
+    return response.data;
+};
+
 export const productService = {
     getProducts,
     addToWishList,
     getSingleProduct,
+    rateProduct,
 };

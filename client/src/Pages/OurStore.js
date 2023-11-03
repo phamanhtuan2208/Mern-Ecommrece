@@ -22,6 +22,7 @@ const OutStore = () => {
     const getProducts = () => {
         dispatch(getAllProduct());
     };
+
     return (
         <>
             <Meta title={'Our Store'}></Meta>
