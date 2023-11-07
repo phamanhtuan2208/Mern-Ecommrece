@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
-import ReactStars from 'react-rating-stars-component';
+// import ReactStars from 'react-rating-stars-component';
 import BreadCrumb from '~/Components/BreadCrumb';
 import Meta from '~/Components/Meta';
 import { useState } from 'react';
 import ProductCard from '~/Components/ProductCard';
-import Color from '~/Components/Color';
 import Container from '~/Components/Container';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllProduct } from '~/features/Product/productSlice';
@@ -13,14 +12,46 @@ const OutStore = () => {
     const dispatch = useDispatch();
     const [grid, setGrid] = useState(4);
     const productState = useSelector((state) => state?.product?.ProductData);
+    const [Brands, setBrands] = useState([]);
+    const [Categories, setCategories] = useState([]);
+    const [Tags, setTags] = useState([]);
+    // const [ColorState, setColorState] = useState([]);
+
+    //filter States
+    const [Tag, setTag] = useState(null);
+    const [Category, setCategory] = useState(null);
+    const [Brand, setBrand] = useState(null);
+    const [minPrice, setMinPrice] = useState(null);
+    const [maxPrice, setMaxPrice] = useState(null);
+    const [sort, setSort] = useState(null);
+
+    useEffect(() => {
+        let newBrands = [];
+        let category = [];
+        let newTags = [];
+        // let newColors = [];
+        for (let index = 0; index < productState?.length; index++) {
+            const element = productState[index];
+            newBrands.push(element.brand);
+            category.push(element.category);
+            newTags.push(element.tags);
+            // newColors.push(element.color);
+        }
+        // setColorState(newColors);
+        setBrands(newBrands);
+        setCategories(category);
+        setTags(newTags);
+    }, [productState]);
 
     useEffect(() => {
         getProducts();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [sort, Tag, Brand, Category, minPrice, maxPrice]);
 
     const getProducts = () => {
-        dispatch(getAllProduct());
+        dispatch(
+            getAllProduct({ sort, Tag, Brand, Category, minPrice, maxPrice }),
+        );
     };
 
     return (
@@ -37,32 +68,30 @@ const OutStore = () => {
                                 </h3>
                                 <div>
                                     <ul className="ps-0">
-                                        <li>Watch</li>
-                                        <li>TV</li>
-                                        <li>Camera</li>
-                                        <li>Laptop</li>
+                                        {Categories &&
+                                            [...new Set(Categories)].map(
+                                                (item, index) => {
+                                                    return (
+                                                        <li
+                                                            key={index}
+                                                            onClick={() =>
+                                                                setCategory(
+                                                                    item,
+                                                                )
+                                                            }
+                                                        >
+                                                            {item}
+                                                        </li>
+                                                    );
+                                                },
+                                            )}
                                     </ul>
                                 </div>
                             </div>
                             <div className="filter-card mb-3 ">
                                 <h3 className="filter-title">Filter By</h3>
                                 <div>
-                                    <h5 className="sub-title">Availablity</h5>
                                     <div>
-                                        <div className="form-check">
-                                            <input
-                                                className="form-check-input"
-                                                type="checkbox"
-                                                value=""
-                                                id=""
-                                            />
-                                            <label
-                                                className="form-check-label"
-                                                htmlFor=""
-                                            >
-                                                In Stock (1)
-                                            </label>
-                                        </div>
                                         <div className="form-check">
                                             <input
                                                 className="form-check-input"
@@ -82,10 +111,16 @@ const OutStore = () => {
                                     <div className="d-flex align-items-center gap-10">
                                         <div className="form-floating ">
                                             <input
-                                                type="email"
+                                                type="number"
                                                 className="form-control py-1"
-                                                id="floatingInput"
                                                 placeholder="From"
+                                                onChange={(e) =>
+                                                    setMinPrice(
+                                                        parseInt(
+                                                            e.target.value,
+                                                        ),
+                                                    )
+                                                }
                                             />
                                             <label htmlFor="floatingInput">
                                                 From
@@ -93,34 +128,21 @@ const OutStore = () => {
                                         </div>
                                         <div className="form-floating ">
                                             <input
-                                                type="email"
+                                                type="number"
                                                 className="form-control py-1"
-                                                id="floatingInput"
                                                 placeholder="To"
+                                                onChange={(e) =>
+                                                    setMaxPrice(
+                                                        parseInt(
+                                                            e.target.value,
+                                                        ),
+                                                    )
+                                                }
                                             />
                                             <label htmlFor="floatingInput1">
                                                 To
                                             </label>
                                         </div>
-                                    </div>
-                                    <h5 className="sub-title">Color</h5>
-                                    <div>
-                                        <Color></Color>
-                                    </div>
-                                    <h5 className="sub-title">Size</h5>
-                                    <div className="form-check">
-                                        <input
-                                            className="form-check-input"
-                                            type="checkbox"
-                                            value=""
-                                            id="color-1"
-                                        />
-                                        <label
-                                            className="form-check-label"
-                                            htmlFor="color-1"
-                                        >
-                                            S (2)
-                                        </label>
                                     </div>
                                     <div className="form-check">
                                         <input
@@ -137,75 +159,51 @@ const OutStore = () => {
                                         </label>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="filter-card mb-3 ">
-                                <h3 className="filter-title">Product Tags</h3>
-                                <div>
-                                    <div className="product-tags d-flex flex-wrap align-items-center gap-10">
-                                        <span className="badge bg-light text-secondary rounded-3 py-2 px-3">
-                                            Headphone
-                                        </span>
-                                        <span className="badge bg-light text-secondary rounded-3 py-2 px-3">
-                                            Laptop
-                                        </span>
-                                        <span className="badge bg-light text-secondary rounded-3 py-2 px-3">
-                                            Mobile
-                                        </span>
-                                        <span className="badge bg-light text-secondary rounded-3 py-2 px-3">
-                                            Wire
-                                        </span>
+                                <div className="mb-3 mt-4">
+                                    <h3 className="sub-title">Product Tags</h3>
+                                    <div>
+                                        <div className="product-tags d-flex flex-wrap align-items-center gap-10">
+                                            {Tags &&
+                                                [...new Set(Tags)].map(
+                                                    (item, index) => {
+                                                        return (
+                                                            <span
+                                                                className=" text-capitalize badge bg-light text-secondary rounded-3 py-2 px-3"
+                                                                key={index}
+                                                                onClick={() =>
+                                                                    setTag(item)
+                                                                }
+                                                            >
+                                                                {item}
+                                                            </span>
+                                                        );
+                                                    },
+                                                )}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="filter-card mb-3 ">
-                                <h3 className="filter-title">Random Product</h3>
-                                <div>
-                                    <div className="random-products d-flex">
-                                        <div className="w-50">
-                                            <img
-                                                src="images/watch.jpg"
-                                                className="img-fluid"
-                                                alt=""
-                                            ></img>
-                                        </div>
-                                        <div className="w-50">
-                                            <h5 className="">
-                                                Kids headphones bulk 10 pack
-                                                multi colored for students
-                                            </h5>
-                                            <ReactStars
-                                                count={5}
-                                                // onChange={ratingChanged}
-                                                size={24}
-                                                value={3}
-                                                activeColor="#ffd700"
-                                                edit={false}
-                                            />
-                                            <b>$300</b>
-                                        </div>
-                                    </div>
-                                    <div className="random-products d-flex">
-                                        <div className="w-50">
-                                            <img
-                                                src="images/watch.jpg"
-                                                className="img-fluid"
-                                                alt="watch"
-                                            ></img>
-                                        </div>
-                                        <div className="w-50">
-                                            <h5>
-                                                Kids headphones bulk 10 pack
-                                                multi colored for students
-                                            </h5>
-                                            <ReactStars
-                                                count={5}
-                                                // onChange={ratingChanged}
-                                                size={24}
-                                                value={3}
-                                                activeColor="#ffd700"
-                                                edit={false}
-                                            />
-                                            <b>$300</b>
+                                <div className="mb-3 ">
+                                    <h3 className="sub-title">Product Brand</h3>
+                                    <div>
+                                        <div className="product-tags d-flex flex-wrap align-items-center gap-10">
+                                            {Brands &&
+                                                [...new Set(Brands)].map(
+                                                    (item, index) => {
+                                                        return (
+                                                            <span
+                                                                className=" text-capitalize badge bg-light text-secondary rounded-3 py-2 px-3"
+                                                                key={index}
+                                                                onClick={() =>
+                                                                    setBrand(
+                                                                        item,
+                                                                    )
+                                                                }
+                                                            >
+                                                                {item}
+                                                            </span>
+                                                        );
+                                                    },
+                                                )}
                                         </div>
                                     </div>
                                 </div>
@@ -227,34 +225,26 @@ const OutStore = () => {
                                             className="form-control form-select"
                                             id=""
                                             defaultValue={'manual'}
+                                            onChange={(e) =>
+                                                setSort(e.target.value)
+                                            }
                                         >
-                                            <option value={'manual'}>
-                                                Featured
-                                            </option>
-                                            <option value={'best-selling'}>
-                                                Best selling
-                                            </option>
-                                            <option value={'title-ascending'}>
+                                            <option value={'title'}>
                                                 Alphabetically, A-Z
                                             </option>
-                                            <option value={'title-descending'}>
+                                            <option value={'-title'}>
                                                 Alphabetically, Z-A
                                             </option>
-                                            <option value={'price-ascending'}>
+                                            <option value={'price'}>
                                                 Price, low to high
                                             </option>
-                                            <option value={'price-descending'}>
+                                            <option value={'-price'}>
                                                 Price, high to low
                                             </option>
-                                            <option value={'created-ascending'}>
+                                            <option value={'createdAt'}>
                                                 Date, old to new
                                             </option>
-                                            <option value={'created-ascending'}>
-                                                Date, old to new
-                                            </option>
-                                            <option
-                                                value={'created-descending'}
-                                            >
+                                            <option value={'-createdAt'}>
                                                 Date, new to old
                                             </option>
                                         </select>

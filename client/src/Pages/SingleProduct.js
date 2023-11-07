@@ -113,16 +113,17 @@ const SingleProduct = () => {
                     prodId: getProductId,
                 }),
             );
+            setTimeout(() => {
+                dispatch(getAllProduct());
+            }, 1000);  
         }
         return false;
     };
 
-    console.log(productState);
-
     return (
         <>
             <Meta title={'Product Name'}></Meta>
-            <BreadCrumb title={'Product Name'}></BreadCrumb>
+            <BreadCrumb title={productState?.title}></BreadCrumb>
             <Container class1="main-product-wrapper py-5 home-wrapper-2">
                 <div className="container-xxl p-3 bg-white ">
                     <div className="row">

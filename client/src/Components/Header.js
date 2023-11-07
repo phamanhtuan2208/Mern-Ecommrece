@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getProdCart } from '~/features/User/userSlice';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
+import { getAProduct } from '~/features/Product/productSlice';
 
 const Header = () => {
     const dispatch = useDispatch();
@@ -96,7 +97,10 @@ const Header = () => {
                                     }
                                     onChange={(selected) => {
                                         navigate(
-                                            `/store/product/${selected[0].prod}`,
+                                            `/store/product/${selected[0]?.prod}`,
+                                        );
+                                        dispatch(
+                                            getAProduct(selected[0]?.prod),
                                         );
                                     }}
                                     options={productOpt}
