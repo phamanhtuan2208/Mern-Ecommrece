@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk, createAction } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
 import { authService } from './userService';
+import { useNavigate } from 'react-router-dom';
 
 export const registerUser = createAsyncThunk(
     'auth/register',
@@ -183,6 +184,7 @@ export const authSlice = createSlice({
                 state.loginUserData = action.payload;
                 if (state.isSuccess === true) {
                     toast.success('User Login Successfully');
+                    window.history.back();
                 }
             })
             .addCase(loginUser.rejected, (state, action) => {
@@ -192,7 +194,7 @@ export const authSlice = createSlice({
                 state.message = action.error;
                 if (state.isError === true) {
                     toast.error(
-                        `User Available or Something went Wrong, Error Code: ${action.payload.message}`,
+                        `User Available or Something went Wrong, Check again your gmail and password and try again`,
                     );
                 }
             })

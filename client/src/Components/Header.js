@@ -7,6 +7,7 @@ import { getProdCart } from '~/features/User/userSlice';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import { getAProduct } from '~/features/Product/productSlice';
+import { toast } from 'react-toastify';
 
 const Header = () => {
     const dispatch = useDispatch();
@@ -51,7 +52,8 @@ const Header = () => {
 
     const handleLogOut = () => {
         localStorage.clear();
-        window.location.reload();
+        navigate('/');
+        toast.success('Logout Success');
     };
 
     return (

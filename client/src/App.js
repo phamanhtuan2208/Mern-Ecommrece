@@ -13,7 +13,7 @@ import Wishlist from './Pages/Wishlist';
 import Signup from './Pages/Signup';
 import Login from './Pages/Login';
 import ForgotPassword from './Pages/ForgotPassword';
-import ResetPassword from './Pages/ResetPassword';
+import ResetPassword from './Pages/Resetpassword';
 import SingleBlog from './Pages/SingleBlog';
 import PrivacyPolicy from './Pages/PrivacyPolicy';
 import RefundPolicy from './Pages/RefundPolicy';
