@@ -30,7 +30,7 @@ const {
     updateProductQuantityFromCart,
     getMyOrders,
 } = require('../Controller/userCtrl');
-const { payMent, paymentVerification } = require('../Controller/payMentCtrl');
+// const { payMent, paymentVerification } = require('../Controller/payMentCtrl');
 
 const router = express.Router();
 
@@ -74,9 +74,9 @@ router.route('/:id').delete(deleteAUser);
 router.route('/blockuser/:id').put(authMiddleware, isAdmin, blockUser);
 router.route('/unblockuser/:id').put(authMiddleware, isAdmin, unBlockUser);
 
-router.route('/order/checkout').post(authMiddleware, payMent);
-router
-    .route('/order/paymentVerification')
-    .post(authMiddleware, paymentVerification);
+// router.route('/order/checkout').post(authMiddleware, payMent);
+// router
+//     .route('/order/paymentVerification')
+//     .post(authMiddleware, paymentVerification);
 
 module.exports = router;
